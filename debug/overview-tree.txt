@@ -1,0 +1,20 @@
+src/app/overview
+├── _sections
+│   ├── ChallengesSection.tsx
+│   ├── HeroSection.tsx
+│   ├── LifecycleSection.tsx
+│   └── UseCasesSection.tsx
+├── challenges
+│   ├── ChallengesHeader.tsx
+│   ├── ChallengesPanels.tsx
+│   ├── ChallengesTabs.tsx
+│   ├── OperationalPanel.tsx
+│   ├── PlanningPanel.tsx
+│   ├── PolicyPanel.tsx
+│   └── ui
+│       ├── BusinessBubble.tsx
+│       ├── EngineeringBubble.tsx
+│       └── ResultCard.tsx
+└── page.tsx
+
+4 directories, 14 files

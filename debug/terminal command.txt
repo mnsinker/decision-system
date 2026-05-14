@@ -1,0 +1,46 @@
+mkdir -p debug
+
+cat \
+src/app/overview/_components/HeroSection.tsx \
+src/app/overview/_components/ChallengesSection.tsx \
+> debug/overview-sections.txt
+
+
+
+
+# 抓取content 到: debug/overview-narrative.md
+mkdir -p debug
+
+(
+echo "# Overview Narrative Inventory"
+echo ""
+
+echo "## Hero"
+echo ""
+cat src/content/overview/hero.ts
+
+echo ""
+echo "---"
+echo ""
+
+echo "## Challenges"
+echo ""
+cat src/content/overview/challenges.ts
+
+echo ""
+echo "---"
+echo ""
+
+echo "## Lifecycle"
+echo ""
+cat src/content/overview/lifecycle.ts
+
+echo ""
+echo "---"
+echo ""
+
+echo "## Use Cases"
+echo ""
+cat src/content/overview/usecases.ts
+
+) > debug/overview-narrative.md
