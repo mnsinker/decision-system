@@ -1,3 +1,3 @@
-export type Language = "en" | "zh";
+export type Locale = "en" | "zh";
 
-export const defaultLanguage: Language = "en";
+export const defaultLocale: Locale = "en";

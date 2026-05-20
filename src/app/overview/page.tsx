@@ -1,27 +1,25 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-import HeroSection from "./_sections/HeroSection";
-import ChallengesSection from "./_sections/ChallengesSection";
-import LifecycleSection from "./_sections/LifecycleSection";
-import UseCasesSection from "./_sections/UseCasesSection";
+import OverviewHero from "./_sections/OverviewHero";
+import OverviewChallenges from "./_sections/OverviewChallenges";
+import OverviewLifecycle from "./_sections/OverviewLifecycle";
+import OverviewUseCases from "./_sections/OverviewUseCases";
 
 export default function OverviewPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A]">
-
       <Navbar />
 
-      <HeroSection />
+      <OverviewHero />
 
-      <ChallengesSection />
+      <OverviewChallenges />
 
-      <LifecycleSection />
+      <OverviewLifecycle />
 
-      <UseCasesSection />
+      <OverviewUseCases />
 
       <Footer />
-
     </div>
   );
 }

@@ -273,7 +273,7 @@ export default function UseCasesVisualEvolutionV2() {
 
         {/* CTA */}
 
-        <div className="mt-24 flex flex-col items-center">
+        <div className="mt-16 flex flex-col items-center">
 
           <div className="mb-12 h-20 w-px bg-gradient-to-b from-slate-200 to-transparent" />
 

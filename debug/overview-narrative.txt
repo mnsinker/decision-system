@@ -1,0 +1,564 @@
+src/app/overview/_sections/ChallengesSection.tsx: 
+
+"use client";
+
+import { useState } from "react";
+
+import TransitionLine from "@/components/TransitionLine";
+
+import { challengesContent } from "@/content/overview/challenges";
+
+import ChallengePanel1 from "../challenges/ChallengePanel1";
+import ChallengePanel2 from "../challenges/ChallengePanel2";
+import ChallengePanel3 from "../challenges/ChallengePanel3";
+
+export default function ChallengesSection() {
+
+  const content = challengesContent.en;
+
+  const [activeTab, setActiveTab] = useState("challenge1");
+
+  return (
+    <section className="py-8">
+
+      <TransitionLine
+        text={content.transition}
+      />
+
+      <div className="mx-auto max-w-7xl px-6">
+
+        {/* header */}
+
+        <div className="max-w-4xl">
+
+          <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+            {content.sectionLabel}
+          </div>
+
+          <h2 className="mt-4 text-4xl font-bold leading-[1.02] tracking-tight text-slate-900 md:text-6xl">
+
+            {content.title.line1}
+
+            <br />
+
+            {content.title.line2}
+
+          </h2>
+
+        </div>
+
+        {/* tabs */}
+
+        <div className="mt-12 inline-flex rounded-full bg-slate-100 p-2 shadow-inner">
+
+          {content.tabs.map((tab) => (
+
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`rounded-full px-8 py-4 text-sm font-semibold transition ${
+                activeTab === tab.id
+                  ? "bg-slate-900 text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+            >
+              {tab.label}
+            </button>
+
+          ))}
+
+        </div>
+
+        {/* panel */}
+
+        <div className="mt-10">
+
+          {activeTab === "challenge1" && (
+            <ChallengePanel1 />
+          )}
+
+          {activeTab === "challenge2" && (
+            <div className="rounded-[2rem] border border-dashed border-slate-300 p-16 text-slate-400">
+              <ChallengePanel2 />
+            </div>
+          )}
+
+          {activeTab === "challenge3" && (
+            <div className="rounded-[2rem] border border-dashed border-slate-300 p-16 text-slate-400">
+              <ChallengePanel3 />
+            </div>
+          )}
+
+        </div>
+
+      </div>
+
+    </section>
+  );
+}
+---
+
+src/app/overview/challenges/ChallengePanel1.tsx: 
+
+"use client";
+
+import { Terminal, ArrowDown, Activity, } from "lucide-react";
+import { challengesContent } from "@/content/overview/challenges";
+
+export default function ChallengePanel1() {
+  const challenge1 = challengesContent.en.challenge1;
+  const realityPoints = [
+    "Which VIP definition applies in this runtime context?",
+    "Does shipping status invalidate refund eligibility?",
+    "Should coupon recovery logic execute asynchronously?",
+    "Which multi-step approval path is required now?"
+  ];
+
+  return (
+    <div className="relative">
+
+      {/* 核心对峙容器 */}
+      <div className="overflow-hidden rounded-[3rem] border border-slate-200 bg-white shadow-[0_32px_80px_-20px_rgba(15,23,42,0.08)]">
+        <div className="grid lg:grid-cols-[1fr_1.2fr]">
+
+          {/* LEFT: Business Request */}
+          <div className="p-12 md:p-16 flex flex-col justify-center bg-white">
+            <div className="mb-8 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-slate-300" />
+              {challenge1.businessLabel}
+            </div>
+
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900 italic leading-[1.1]">
+              “We just need one extra refund condition.”
+            </h3>
+
+            <div className="mt-8 h-px w-12 bg-slate-100" />
+
+            <p className="mt-8 max-w-sm text-lg text-slate-500 leading-relaxed font-light">
+              On the surface, business requests are simple strings. In reality, they are entry points into complex dependency graphs.
+            </p>
+          </div>
+
+          {/* RIGHT: System Reality */}
+          <div className="bg-slate-900 p-12 md:p-16 text-white relative">
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
+
+            <div className="relative z-10">
+              <div className="mb-10 flex items-center justify-between">
+                <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-400">
+                  <Terminal size={14} /> {challenge1.systemLabel}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {realityPoints.map((point, i) => (
+                  <div key={i} className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-all hover:bg-white/[0.05] group/item">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-800 font-mono text-[9px] text-slate-500 group-hover/item:text-indigo-400 border border-white/5 transition-colors">
+                      0{i + 1}
+                    </div>
+                    <p className="text-sm font-medium text-slate-300 leading-snug">{point}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* OUTCOME_ANALYSIS: 引入“警示红”元素 */}
+        <div className="relative border-t border-slate-100 bg-slate-50/50 p-8 md:p-12 overflow-hidden">
+
+          {/* 红色微光背景 - 增加张力感 */}
+          <div className="absolute -left-20 -bottom-20 h-64 w-64 bg-rose-500/5 blur-[80px] rounded-full pointer-events-none" />
+
+          {/* 碰撞引导图标 */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:block">
+            <div className="flex flex-col items-center">
+               <div className="h-6 w-px bg-slate-200" />
+               <div className="rounded-full bg-slate-900 p-2.5 text-white shadow-xl ring-4 ring-white">
+                 <ArrowDown size={14} className="text-rose-400" fill="currentColor" />
+               </div>
+            </div>
+          </div>
+
+          <div className="mx-auto max-w-4xl relative z-10">
+            <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
+              <div>
+                <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-rose-600 bg-rose-50 px-2 py-1 rounded">
+                  <Activity size={12} /> {challenge1.consequenceLabel}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+                  {challenge1.consequenceTitleBeg} <span className="relative inline-block">
+                    <span className="relative z-10 text-rose-700">{challenge1.consequenceHighlight}</span>
+                    <span className="absolute bottom-1 left-0 h-2 w-full bg-rose-100 -z-0" />
+                  </span> {challenge1.consequenceTitleEnd}.
+                </h4>
+                <p className="text-slate-500 leading-relaxed text-sm">
+                  {challenge1.consequenceDescription}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 系统注脚 */}
+      <div className="mt-8 flex justify-center opacity-40">
+        <div className="flex items-center gap-3 font-mono text-[9px] text-slate-500 uppercase tracking-[0.4em]">
+        </div>
+      </div>
+    </div>
+  );
+}
+---
+
+src/app/overview/challenges/ChallengePanel2.tsx: 
+
+"use client";
+
+import { Terminal, ArrowDown, Activity, } from "lucide-react";
+import { challengesContent } from "@/content/overview/challenges";
+
+export default function ChallengePanel2() {
+  const challenge2 = challengesContent.en.challenge2;
+  const realityPoints = [
+    "Which VIP definition applies in this runtime context?",
+    "Does shipping status invalidate refund eligibility?",
+    "Should coupon recovery logic execute asynchronously?",
+    "Which multi-step approval path is required now?"
+  ];
+
+  return (
+    <div className="relative">
+
+      {/* 核心对峙容器 */}
+      <div className="overflow-hidden rounded-[3rem] border border-slate-200 bg-white shadow-[0_32px_80px_-20px_rgba(15,23,42,0.08)]">
+        <div className="grid lg:grid-cols-[1fr_1.2fr]">
+
+          {/* LEFT: Business Request */}
+          <div className="p-12 md:p-16 flex flex-col justify-center bg-white">
+            <div className="mb-8 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-slate-300" />
+              {challenge2.businessLabel}
+            </div>
+
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900 italic leading-[1.1]">
+              “We just need one extra refund condition.”
+            </h3>
+
+            <div className="mt-8 h-px w-12 bg-slate-100" />
+
+            <p className="mt-8 max-w-sm text-lg text-slate-500 leading-relaxed font-light">
+              On the surface, business requests are simple strings. In reality, they are entry points into complex dependency graphs.
+            </p>
+          </div>
+
+          {/* RIGHT: System Reality */}
+          <div className="bg-slate-900 p-12 md:p-16 text-white relative">
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
+
+            <div className="relative z-10">
+              <div className="mb-10 flex items-center justify-between">
+                <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-400">
+                  <Terminal size={14} /> {challenge2.systemLabel}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {realityPoints.map((point, i) => (
+                  <div key={i} className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-all hover:bg-white/[0.05] group/item">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-800 font-mono text-[9px] text-slate-500 group-hover/item:text-indigo-400 border border-white/5 transition-colors">
+                      0{i + 1}
+                    </div>
+                    <p className="text-sm font-medium text-slate-300 leading-snug">{point}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* OUTCOME_ANALYSIS: 引入“警示红”元素 */}
+        <div className="relative border-t border-slate-100 bg-slate-50/50 p-8 md:p-12 overflow-hidden">
+
+          {/* 红色微光背景 - 增加张力感 */}
+          <div className="absolute -left-20 -bottom-20 h-64 w-64 bg-rose-500/5 blur-[80px] rounded-full pointer-events-none" />
+
+          {/* 碰撞引导图标 */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:block">
+            <div className="flex flex-col items-center">
+               <div className="h-6 w-px bg-slate-200" />
+               <div className="rounded-full bg-slate-900 p-2.5 text-white shadow-xl ring-4 ring-white">
+                 <ArrowDown size={14} className="text-rose-400" fill="currentColor" />
+               </div>
+            </div>
+          </div>
+
+          <div className="mx-auto max-w-4xl relative z-10">
+            <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
+              <div>
+                <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-rose-600 bg-rose-50 px-2 py-1 rounded">
+                  <Activity size={12} /> {challenge2.consequenceLabel}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+                  {challenge2.consequenceTitleBeg} <span className="relative inline-block">
+                    <span className="relative z-10 text-rose-700">{challenge2.consequenceHighlight}</span>
+                    <span className="absolute bottom-1 left-0 h-2 w-full bg-rose-100 -z-0" />
+                  </span> {challenge2.consequenceTitleEnd}.
+                </h4>
+                <p className="text-slate-500 leading-relaxed text-sm">
+                  {challenge2.consequenceDescription}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 系统注脚 */}
+      <div className="mt-8 flex justify-center opacity-40">
+        <div className="flex items-center gap-3 font-mono text-[9px] text-slate-500 uppercase tracking-[0.4em]">
+        </div>
+      </div>
+    </div>
+  );
+}
+---
+
+src/app/overview/challenges/ChallengePanel3.tsx: 
+
+"use client";
+
+import { Terminal, ArrowDown, Activity, } from "lucide-react";
+import { challengesContent } from "@/content/overview/challenges";
+
+export default function ChallengePanel3() {
+  const challenge3 = challengesContent.en.challenge3;
+  const realityPoints = [
+    "Which VIP definition applies in this runtime context?",
+    "Does shipping status invalidate refund eligibility?",
+    "Should coupon recovery logic execute asynchronously?",
+    "Which multi-step approval path is required now?"
+  ];
+
+  return (
+    <div className="relative">
+
+      {/* 核心对峙容器 */}
+      <div className="overflow-hidden rounded-[3rem] border border-slate-200 bg-white shadow-[0_32px_80px_-20px_rgba(15,23,42,0.08)]">
+        <div className="grid lg:grid-cols-[1fr_1.2fr]">
+
+          {/* LEFT: Business Request */}
+          <div className="p-12 md:p-16 flex flex-col justify-center bg-white">
+            <div className="mb-8 flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400">
+              <span className="h-1 w-1 rounded-full bg-slate-300" />
+              {challenge3.businessLabel}
+            </div>
+
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tighter text-slate-900 italic leading-[1.1]">
+              “We just need one extra refund condition.”
+            </h3>
+
+            <div className="mt-8 h-px w-12 bg-slate-100" />
+
+            <p className="mt-8 max-w-sm text-lg text-slate-500 leading-relaxed font-light">
+              On the surface, business requests are simple strings. In reality, they are entry points into complex dependency graphs.
+            </p>
+          </div>
+
+          {/* RIGHT: System Reality */}
+          <div className="bg-slate-900 p-12 md:p-16 text-white relative">
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]" />
+
+            <div className="relative z-10">
+              <div className="mb-10 flex items-center justify-between">
+                <div className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-400">
+                  <Terminal size={14} /> {challenge3.systemLabel}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {realityPoints.map((point, i) => (
+                  <div key={i} className="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-all hover:bg-white/[0.05] group/item">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-slate-800 font-mono text-[9px] text-slate-500 group-hover/item:text-indigo-400 border border-white/5 transition-colors">
+                      0{i + 1}
+                    </div>
+                    <p className="text-sm font-medium text-slate-300 leading-snug">{point}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* OUTCOME_ANALYSIS: 引入“警示红”元素 */}
+        <div className="relative border-t border-slate-100 bg-slate-50/50 p-8 md:p-12 overflow-hidden">
+
+          {/* 红色微光背景 - 增加张力感 */}
+          <div className="absolute -left-20 -bottom-20 h-64 w-64 bg-rose-500/5 blur-[80px] rounded-full pointer-events-none" />
+
+          {/* 碰撞引导图标 */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:block">
+            <div className="flex flex-col items-center">
+               <div className="h-6 w-px bg-slate-200" />
+               <div className="rounded-full bg-slate-900 p-2.5 text-white shadow-xl ring-4 ring-white">
+                 <ArrowDown size={14} className="text-rose-400" fill="currentColor" />
+               </div>
+            </div>
+          </div>
+
+          <div className="mx-auto max-w-4xl relative z-10">
+            <div className="grid md:grid-cols-[200px_1fr] gap-8 items-start">
+              <div>
+                <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-rose-600 bg-rose-50 px-2 py-1 rounded">
+                  <Activity size={12} /> {challenge3.consequenceLabel}
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-2xl font-bold tracking-tight text-slate-900 leading-tight">
+                  {challenge3.consequenceTitleBeg} <span className="relative inline-block">
+                    <span className="relative z-10 text-rose-700">{challenge3.consequenceHighlight}</span>
+                    <span className="absolute bottom-1 left-0 h-2 w-full bg-rose-100 -z-0" />
+                  </span> {challenge3.consequenceTitleEnd}.
+                </h4>
+                <p className="text-slate-500 leading-relaxed text-sm">
+                  {challenge3.consequenceDescription}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 系统注脚 */}
+      <div className="mt-8 flex justify-center opacity-40">
+        <div className="flex items-center gap-3 font-mono text-[9px] text-slate-500 uppercase tracking-[0.4em]">
+        </div>
+      </div>
+    </div>
+  );
+}
+---
+
+cat src/content/overview/challenges.ts: 
+
+export const challengesContent = {
+
+    en: {
+
+        transition:
+            "WHERE DO PROBLEMS COME FROM?",
+
+        sectionLabel:
+            "Operational Complexity",
+
+        title: {
+            line1: "Business logic becomes harder",
+            line2: "as systems evolve together.",
+        },
+
+        tabs: [
+            {id: "challenge1", label: "Dependency Explosion",},
+            {id: "challenge2", label: "Policy Fragmentation",},
+            {id: "challenge3", label: "Operational Volatility",},
+        ],
+
+        challenge1: {
+            businessLabel: "Business Request",
+            businessQuote: "We just need one extra refund condition.",
+
+            businessDescription:
+                "Operational changes often appear small, but quickly spread across policies, dependencies, workflows.",
+
+            systemLabel: "System Reality",
+            systemQuestions: [
+                "Which VIP definition should apply?",
+                "Does shipping status affect eligibility?",
+                "Should coupon recovery execute too?",
+                "Which approval path should run?",
+            ],
+
+            consequenceLabel: "Consequence",
+            consequenceTitleBeg: "What started as a single rule evolved into a ",
+            consequenceHighlight: "dependency collision",
+            consequenceTitleEnd: "across multiple execution paths.",
+
+            consequenceDescription: 'A small operational change now affects multiple systems, runtime dependencies and execution paths.',
+
+        },
+
+        challenge2: {
+            businessLabel: "Business Request",
+
+            businessQuote:
+                "VIP refunds should follow a different policy.",
+
+            businessDescription:
+                "Business rules gradually spread across tools, services, workflows and operational exceptions.",
+
+            systemLabel: "System Reality",
+
+            systemQuestions: [
+                "Refund rules differ by region",
+                "Coupon recovery has separate logic",
+                "CRM defines VIP differently",
+                "Approval rules exist elsewhere",
+            ],
+
+            consequenceLabel: "Consequence",
+
+            consequenceTitleBeg:
+                "What started as a simple policy evolved into ",
+
+            consequenceHighlight:
+                "fragmented decision logic",
+
+            consequenceTitleEnd:
+                "across multiple operational systems.",
+
+            consequenceDescription:
+                "Business rules become duplicated, inconsistent and increasingly difficult to audit reliably.",
+        },
+
+        challenge3: {
+            businessLabel: "Business Request",
+
+            businessQuote:
+                "We need a new approval path for overseas orders.",
+
+            businessDescription:
+                "Operational workflows constantly evolve as business conditions, channels and regulations change.",
+
+            systemLabel: "System Reality",
+
+            systemQuestions: [
+                "New routing logic must be added",
+                "Regional approvals require exceptions",
+                "Audit requirements continue evolving",
+                "Manual coordination increases over time",
+            ],
+
+            consequenceLabel: "Consequence",
+
+            consequenceTitleBeg:
+                "What started as a workflow update evolved into ",
+
+            consequenceHighlight:
+                "fragile execution flows",
+
+            consequenceTitleEnd:
+                "across changing operational environments.",
+
+            consequenceDescription:
+                "Execution workflows become increasingly difficult to maintain as operational changes propagate across systems.",
+        },
+
+
+    },
+};

@@ -1,5 +1,4 @@
-export const heroContent = {
-
+export const overviewHeroContent = {
   en: {
     badge: "AI Decision System",
 
@@ -10,7 +9,7 @@ export const heroContent = {
     },
 
     subtitle:
-      "A reusable architecture for operational workflows, policy evaluation, dependency resolution, and multi-step execution..",
+      "A reusable architecture for operational workflows, policy evaluation, dependency resolution, and multi-step execution.",
 
     primaryButton: "View Demo",
 
@@ -27,7 +26,7 @@ export const heroContent = {
     },
 
     subtitle:
-      "一种面向复杂业务决策的 ontology-driven 架构，用于支持可复用的规划能力与结构化执行流程。",
+      "一种可复用的 AI 系统架构，用于支持策略评估、依赖解析、工作流编排与多步骤执行。",
 
     primaryButton: "查看 Demo",
 

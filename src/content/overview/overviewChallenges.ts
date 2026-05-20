@@ -1,0 +1,247 @@
+export const overviewChallengesContent = {
+  en: {
+    transition: "WHERE DO PROBLEMS COME FROM?",
+
+    sectionLabel: "Operational Complexity",
+
+    title: {
+      line1: "Business logic becomes harder",
+      line2: "as systems evolve together.",
+    },
+
+    tabs: [
+      { id: "challenge1", label: "Dependency Explosion" },
+      { id: "challenge2", label: "Policy Fragmentation" },
+      { id: "challenge3", label: "Workflow Drift" },
+    ],
+
+    challenge1: {
+      variant: "variant1",
+      businessLabel: "Business Request",
+      businessQuote: "We only need one extra refund condition.",
+
+      businessDescription:
+        "Operational changes often appear small, but quickly spread across policies, dependencies, workflows.",
+
+      systemLabel: "System Reality",
+      systemQuestions: [
+        "Which VIP definition should apply?",
+        "Does shipping status affect eligibility?",
+        "Should coupon recovery execute too?",
+        "Which approval path should run?",
+      ],
+
+      consequenceLabel: "Consequence",
+      consequenceTitleBeg: "What started as a single rule evolved into a ",
+      consequenceHighlight: "dependency collision",
+      consequenceTitleEnd: "across multiple execution paths.",
+
+      consequenceDescription:
+        "A small operational change now affects multiple systems, runtime dependencies and execution paths.",
+    },
+
+    challenge2: {
+      variant: "variant2",
+
+      businessLabel: "Business Request",
+
+      businessQuote: "VIP users should receive priority customer support.",
+
+      businessDescription:
+        "Business rules gradually spread across tools, services, workflows and operational exceptions.",
+
+      systemLabel: "System Reality",
+
+      systemCards: [
+        {
+          label: "CRM_RULES",
+          items: [
+            "VIP tiers are defined differently",
+            "Customer priority logic lives inside CRM",
+          ],
+        },
+        {
+          label: "TICKET_WORKFLOW",
+          items: [
+            "Escalation rules exist inside ticket flows",
+            "SLA policies are maintained separately",
+          ],
+        },
+        {
+          label: "HISTORICAL_EXCEPTIONS",
+          items: [
+            "Manual override rules still apply",
+            "Special-case workflows bypass standard routing",
+          ],
+        },
+      ],
+
+      consequenceLabel: "Consequence",
+
+      consequenceTitleBeg: "What started as a simple policy evolved into ",
+
+      consequenceHighlight: "fragmented decision logic",
+
+      consequenceTitleEnd: "across multiple operational systems.",
+
+      consequenceDescription:
+        "Business rules become duplicated, inconsistent and increasingly difficult to audit reliably.",
+    },
+
+    challenge3: {
+      variant: "variant3",
+      businessLabel: "Business Request",
+
+      businessQuote: "We need a special campaign flow for inactive VIP users.",
+
+      businessDescription:
+        "Marketing operations constantly evolve as targeting rules, campaign strategies, and execution constraints continue changing.",
+
+      systemLabel: "System Reality",
+
+      systemQuestions: [
+        "VIP definitions now differ across systems",
+        "A/B routing logic must support multiple campaign paths",
+        "Coupon eligibility rules require dynamic filtering",
+        "Campaign execution now depends on real-time user state",
+      ],
+
+      consequenceLabel: "Consequence",
+
+      consequenceTitleBeg: "What started as a workflow update evolved into ",
+
+      consequenceHighlight: "unstable campaign rules",
+
+      consequenceTitleEnd: "across changing operational environments.",
+
+      consequenceDescription:
+        "Execution workflows become increasingly difficult to maintain as operational changes propagate across systems.",
+    },
+  },
+
+  zh: {
+    transition: "问题从哪里开始出现？",
+
+    sectionLabel: "运营复杂度",
+
+    title: {
+      line1: "随着系统不断演化，",
+      line2: "业务逻辑也会变得越来越复杂。",
+    },
+
+    tabs: [
+      { id: "challenge1", label: "依赖扩散" },
+      { id: "challenge2", label: "策略碎片化" },
+      { id: "challenge3", label: "工作流漂移" },
+    ],
+
+    challenge1: {
+      variant: "variant1",
+
+      businessLabel: "业务需求",
+
+      businessQuote: "我们只需要再加一个退款条件。",
+
+      businessDescription:
+        "运营需求往往看似很小，但会迅速扩散到依赖关系、工作流以及执行路径中。",
+
+      systemLabel: "系统现实",
+
+      systemQuestions: [
+        "应该采用哪一种 VIP 定义？",
+        "物流状态是否会影响退款资格？",
+        "是否还需要执行优惠券回收？",
+        "当前应该走哪条审批路径？",
+      ],
+
+      consequenceLabel: "结果",
+
+      consequenceTitleBeg: "最初只是一个简单规则，最终却演变成了",
+
+      consequenceHighlight: "依赖冲突",
+
+      consequenceTitleEnd: "并扩散到多个运营系统之中。",
+
+      consequenceDescription:
+        "一个看似独立的变更，最终会影响策略、执行流程以及系统中的运行时协调关系。",
+    },
+
+    challenge2: {
+      variant: "variant2",
+
+      businessLabel: "业务需求",
+
+      businessQuote: "VIP 用户应该获得优先客服支持。",
+
+      businessDescription:
+        "业务规则会逐渐分散到不同系统、工作流以及历史遗留逻辑中。",
+
+      systemLabel: "系统现实",
+
+      systemCards: [
+        {
+          label: "CRM_RULES",
+
+          items: [
+            "不同系统中的 VIP 等级定义并不一致",
+            "客户优先级逻辑存在于 CRM 系统内部",
+          ],
+        },
+
+        {
+          label: "TICKET_WORKFLOW",
+
+          items: ["升级规则存在于工单流程中", "SLA 策略被单独维护"],
+        },
+
+        {
+          label: "HISTORICAL_EXCEPTIONS",
+
+          items: ["人工 override 规则依然存在", "特殊流程绕过了标准路由逻辑"],
+        },
+      ],
+
+      consequenceLabel: "结果",
+
+      consequenceTitleBeg: "最初只是一个简单策略，最终却演变成了",
+
+      consequenceHighlight: "碎片化的运营逻辑",
+
+      consequenceTitleEnd: "并散落在多个割裂的系统中。",
+
+      consequenceDescription:
+        "业务规则开始重复、冲突，并越来越难以被安全地审计与演化。",
+    },
+
+    challenge3: {
+      variant: "variant3",
+
+      businessLabel: "业务需求",
+
+      businessQuote: "我们需要为沉默 VIP 用户增加一条特殊营销流程。",
+
+      businessDescription:
+        "随着目标策略、执行路径以及运行时条件不断变化，运营工作流也会持续演化。",
+
+      systemLabel: "系统现实",
+
+      systemQuestions: [
+        "不同系统中的 VIP 定义已经开始不一致",
+        "A/B 路由逻辑需要支持多条营销路径",
+        "优惠券资格规则需要动态过滤",
+        "营销执行开始依赖实时用户状态",
+      ],
+
+      consequenceLabel: "结果",
+
+      consequenceTitleBeg: "最初只是一次工作流更新，最终却演变成了",
+
+      consequenceHighlight: "不稳定的运行时行为",
+
+      consequenceTitleEnd: "并扩散到不断变化的运营环境中。",
+
+      consequenceDescription:
+        "随着复杂度在系统与运行时状态之间不断传播，执行工作流会变得越来越脆弱。",
+    },
+  },
+};

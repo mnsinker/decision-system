@@ -6,41 +6,74 @@ src/app/overview/_components/ChallengesSection.tsx \
 > debug/overview-sections.txt
 
 
+mkdir -p debug
+
+cat \
+src/app/overview/_components/ChallengesSection.tsx \
+src/app/overview/challenges/ChallengePanel1.tsx \
+src/app/overview/challenges/ChallengePanel2.tsx \
+src/app/overview/challenges/ChallengePanel3.tsx \
+cat src/content/overview/challenges.ts
+> debug/overview-challenge.txt
 
 
-# 抓取content 到: debug/overview-narrative.md
+
+
+# 抓取content 到: debug/overview-xxxxx.md
 mkdir -p debug
 
 (
-echo "# Overview Narrative Inventory"
+echo "src/app/architecture/_sections/ArchitecturePressure.tsx: "
 echo ""
-
-echo "## Hero"
-echo ""
-cat src/content/overview/hero.ts
+cat src/app/architecture/_sections/ArchitecturePressure.tsx
 
 echo ""
 echo "---"
 echo ""
 
-echo "## Challenges"
+echo "src/app/architecture/pressure/PressureLeftCard.tsx: "
 echo ""
-cat src/content/overview/challenges.ts
+cat src/app/architecture/pressure/PressureLeftCard.tsx
 
 echo ""
 echo "---"
 echo ""
 
-echo "## Lifecycle"
+echo "src/app/architecture/pressure/PressureRightCard.tsx: "
 echo ""
-cat src/content/overview/lifecycle.ts
+cat src/app/architecture/pressure/PressureRightCard.tsx
 
 echo ""
 echo "---"
 echo ""
 
-echo "## Use Cases"
+echo "src/app/architecture/pressure/PressureLeftVisual2.tsx.tsx: "
 echo ""
-cat src/content/overview/usecases.ts
+cat src/app/architecture/pressure/PressureLeftVisual2.tsx.tsx
 
-) > debug/overview-narrative.md
+echo ""
+echo "---"
+echo ""
+
+echo "src/app/architecture/pressure/PressureRightVisual2.tsx: "
+echo ""
+cat src/app/architecture/pressure/PressureRightVisual2.tsx
+
+echo ""
+echo "---"
+echo ""
+
+echo "src/app/architecture/pressure/PressureExplanationCard.tsx: "
+echo ""
+cat src/app/architecture/pressure/PressureExplanationCard.tsx.tsx
+
+echo ""
+echo "---"
+echo ""
+
+
+echo "src/content/architecture/architecturePressure.ts: "
+echo ""
+cat src/content/architecture/architecturePressure.ts
+
+) > debug/archi-pressure.txt
