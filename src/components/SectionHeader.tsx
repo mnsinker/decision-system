@@ -1,7 +1,10 @@
 "use client";
+
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { sectionTitle } from "@/lib/typography";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 
 type Props = {
   eyebrow?: string;
@@ -29,13 +32,15 @@ export default function SectionHeader({
   dark = false,
   size = "lg",
 }: Props) {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
+
   const titleSize =
     size === "xl"
-      ? "text-5xl md:text-7xl"
+      ? theme.typography.sectionTitleXl
       : size === "lg"
-        ? "text-3xl md:text-5xl"
-        : "text-3xl md:text-4xl";
+        ? theme.typography.sectionTitleResponsive
+        : theme.typography.sectionTitleMd;
 
   return (
     <div
@@ -45,18 +50,23 @@ export default function SectionHeader({
     >
       {eyebrow && (
         <div
-          className={`mb-3 font-mono text-[11px] font-bold tracking-[0.3em] uppercase ${
-            dark ? "text-indigo-300" : "text-indigo-500"
-          } `}
+          className={cn(
+            theme.spacing.eyebrowMargin,
+            theme.typography.sectionEyebrow,
+            dark ? theme.colors.textAccentSoft : theme.colors.textAccent,
+          )}
         >
           {eyebrow}
         </div>
       )}
 
       <h2
-        className={` ${titleSize} ${sectionTitle(locale)} font-bold tracking-tight ${
-          dark ? "text-white" : "text-slate-900"
-        } `}
+        className={cn(
+          titleSize,
+          sectionTitle(locale),
+          theme.typography.titleWeight,
+          dark ? theme.colors.textOnDark : theme.colors.textSecondary,
+        )}
       >
         {title.split("\n").map((line, index) => {
           const isHighlight = highlight && line.includes(highlight);
@@ -72,8 +82,7 @@ export default function SectionHeader({
               {isHighlight && (
                 <span
                   className={
-                    highlightClassName ||
-                    "bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent"
+                    highlightClassName || theme.colors.textHighlightGradient
                   }
                 >
                   {highlight}
@@ -86,9 +95,13 @@ export default function SectionHeader({
 
       {subtitle && (
         <p
-          className={`mt-4 max-w-2xl text-base leading-7 ${
-            dark ? "text-slate-400" : "text-slate-500"
-          } ${align === "center" ? "mx-auto" : ""} `}
+          className={cn(
+            theme.spacing.subtitleMargin,
+            "max-w-2xl",
+            theme.typography.sectionSubtitle,
+            dark ? theme.colors.textOnDarkMuted : theme.colors.textMuted,
+            align === "center" && "mx-auto",
+          )}
         >
           {subtitle}
         </p>

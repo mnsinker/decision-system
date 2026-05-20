@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 
 type Props = {
   children: React.ReactNode;
@@ -13,10 +17,20 @@ export default function SecondaryButton({
   icon,
   className = "",
 }: Props) {
+  const { theme } = useTheme();
+
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-8 py-4 text-base font-bold text-slate-700 transition-all hover:bg-slate-50 ${className} `}
+      className={cn(
+        "flex items-center transition-all",
+        theme.spacing.inlineGapTight,
+        theme.radius.buttonLg,
+        theme.spacing.buttonPadding,
+        theme.typography.button,
+        theme.colors.interactiveSecondary,
+        className,
+      )}
     >
       {children}
 

@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 
 type Props = {
   children: React.ReactNode;
@@ -13,10 +17,21 @@ export default function PrimaryButton({
   icon,
   className = "",
 }: Props) {
+  const { theme } = useTheme();
+
   return (
     <button
       onClick={onClick}
-      className={`group flex items-center gap-2 rounded-2xl bg-slate-900 px-8 py-4 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:shadow-slate-200 ${className} `}
+      className={cn(
+        "group flex items-center transition-all",
+        theme.spacing.inlineGapTight,
+        theme.radius.buttonLg,
+        theme.spacing.buttonPadding,
+        theme.typography.button,
+        theme.colors.interactivePrimary,
+        theme.shadows.buttonPrimaryHover,
+        className,
+      )}
     >
       {children}
 

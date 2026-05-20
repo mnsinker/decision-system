@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/design-system/runtime/ThemeProvider";
 import { LanguageProvider } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", inter.variable)}>
       <body>
-        <LanguageProvider>{children}</LanguageProvider>
+        <ThemeProvider initialTheme="premiumDense">
+          <LanguageProvider>{children}</LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 
 type Tab = {
   id: string;
@@ -26,11 +28,7 @@ export default function SegmentedTabs({
   autoPlay = false,
   interval = 3000,
 }: Props) {
-  /**
-   * =========================================================
-   * AUTO PLAY
-   * =========================================================
-   */
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -47,16 +45,34 @@ export default function SegmentedTabs({
   }, [activeTab, autoPlay, interval, onChange, tabs]);
 
   return (
-    <div className="inline-flex rounded-full bg-slate-100 p-1 shadow-inner">
+    <div
+      className={cn(
+        "inline-flex",
+        theme.radius.pill,
+        theme.colors.surfaceTabTrack,
+        theme.spacing.tabShellPadding,
+        theme.shadows.tabTrackInset,
+      )}
+    >
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
-          className={`rounded-full px-5 py-2.5 text-xs font-semibold transition-all duration-300 ${
+          className={cn(
+            theme.radius.pill,
+            theme.spacing.tabItemPadding,
+            theme.typography.tabLabel,
+            "transition-all duration-300",
             activeTab === tab.id
-              ? "bg-slate-900 text-white shadow-sm"
-              : "text-slate-600 hover:text-slate-900"
-          }`}
+              ? cn(
+                  theme.colors.surfaceTabActive,
+                  theme.shadows.sm,
+                )
+              : cn(
+                  theme.colors.textTabInactive,
+                  theme.colors.textTabInactiveHover,
+                ),
+          )}
         >
           {tab.label}
         </button>
