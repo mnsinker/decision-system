@@ -47,11 +47,12 @@ export default function SegmentedTabs({
   return (
     <div
       className={cn(
-        "inline-flex",
+        "inline-flex border",
         theme.radius.pill,
+        theme.colors.borderPrimary,
         theme.colors.surfaceTabTrack,
         theme.spacing.tabShellPadding,
-        theme.shadows.tabTrackInset,
+        theme.shadows.control,
       )}
     >
       {tabs.map((tab) => (
@@ -66,7 +67,7 @@ export default function SegmentedTabs({
             activeTab === tab.id
               ? cn(
                   theme.colors.surfaceTabActive,
-                  theme.shadows.sm,
+                  theme.shadows.controlActive,
                 )
               : cn(
                   theme.colors.textTabInactive,

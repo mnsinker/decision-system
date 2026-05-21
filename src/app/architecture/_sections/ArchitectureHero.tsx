@@ -77,9 +77,10 @@ export default function ArchitectureHero() {
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b px-4 pt-10 pb-10",
+        "relative overflow-hidden border-b pt-10 pb-9",
+        theme.spacing.sectionXComfort,
         theme.colors.borderPrimary,
-        theme.colors.surfacePageCool,
+        theme.colors.surfacePageTinted,
       )}
     >
       {/* soft gradient */}
@@ -103,7 +104,12 @@ export default function ArchitectureHero() {
 
         <div className="relative z-10">
           <div
-            className={`mb-8 font-mono text-[11px] font-bold text-indigo-500 uppercase ${eyebrowText(locale)}`}
+            className={cn(
+              theme.spacing.headerBottomWide,
+              theme.typography.sectionEyebrow,
+              theme.colors.textAccent,
+              eyebrowText(locale),
+            )}
           >
             {content.eyebrow}
           </div>
@@ -117,7 +123,11 @@ export default function ArchitectureHero() {
           </h1>
 
           <p
-            className={`mt-8 max-w-2xl text-xl font-light text-slate-500 ${bodyText(locale)}`}
+            className={cn(
+              "mt-7 max-w-2xl text-xl font-light",
+              theme.colors.textMuted,
+              bodyText(locale),
+            )}
           >
             {content.subtitle}
           </p>

@@ -76,7 +76,7 @@ export const typography = {
     "font-mono text-[10px] font-bold tracking-[0.3em] uppercase",
 
   /** Segmented tab label */
-  tabLabel: "text-xs font-semibold",
+  tabLabel: "text-[13px] font-semibold",
 
   /** Footer copy */
   footerText: "text-sm text-slate-500",

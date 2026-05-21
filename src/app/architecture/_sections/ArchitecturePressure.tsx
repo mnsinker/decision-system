@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { sectionTitle } from "@/lib/typography";
 import { cn } from "@/lib/cn";
 
 import SectionHeader from "@/components/SectionHeader";
@@ -46,6 +47,7 @@ export default function ArchitecturePressure() {
           eyebrow={content.eyebrow}
           title={content.sectionTitle}
           label={content.label}
+          size="md"
         />
 
         <div className={theme.spacing.tabsTop}>
@@ -60,25 +62,38 @@ export default function ArchitecturePressure() {
           className={cn(
             "overflow-hidden border",
             theme.spacing.panelTop,
-            theme.radius.panelLg,
+            theme.radius.shell,
             theme.colors.borderPrimary,
             theme.colors.surfacePrimary,
-            theme.shadows.panel,
+            theme.shadows.shell,
           )}
         >
           {/* business case */}
 
           <div
             className={cn(
-              "border-b px-8 py-7 bg-slate-50",
+              "border-b px-8 py-6",
               theme.colors.borderMuted,
+              theme.colors.surfaceMuted,
             )}
           >
-            <div className="mb-2 font-mono text-[10px] font-bold tracking-[0.3em] text-indigo-500 uppercase">
+            <div
+              className={cn(
+                theme.spacing.eyebrowBottom,
+                theme.typography.monoLabelAccent,
+              )}
+            >
               {content.label}
             </div>
 
-            <h3 className="max-w-5xl text-3xl leading-[1.08] font-black italic">
+            <h3
+              className={cn(
+                "max-w-5xl",
+                theme.typography.quote,
+                theme.colors.textPrimary,
+                sectionTitle(locale),
+              )}
+            >
               {current.bizCase}
             </h3>
           </div>
