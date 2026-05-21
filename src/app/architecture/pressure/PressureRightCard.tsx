@@ -1,6 +1,8 @@
 "use client";
 
 import { Layers, GitBranch } from "lucide-react";
+import { semanticVisual } from "@/design-system/semanticVisual";
+import { cn } from "@/lib/cn";
 
 type Props = {
   sectionLabel: string;
@@ -42,7 +44,7 @@ export default function PressureRightCard({
         {/* TOP STAGE CONTAINER */}
         <div className="w-full shrink-0">
           {/* label */}
-          <div className="mb-6 font-mono text-xs font-bold tracking-[0.3em] text-emerald-400 uppercase">
+          <div className={cn("mb-6", semanticVisual.pressureVoice.emerald)}>
             {sectionLabel}
           </div>
 
@@ -75,7 +77,9 @@ export default function PressureRightCard({
               <div className="grid grid-cols-[20px_1fr] gap-3">
                 <GitBranch size={16} className="mt-0.5 text-emerald-400" />
                 <div>
-                  <div className="mb-1 font-mono text-[10px] font-bold tracking-[0.22em] text-emerald-400 uppercase">
+                  <div
+                    className={`mb-1 ${semanticVisual.pressureVoice.emeraldInset}`}
+                  >
                     {architectureShiftTitle}
                   </div>
                   <p className="text-[11px] leading-5 font-medium text-slate-300">

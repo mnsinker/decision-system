@@ -15,8 +15,6 @@ export const overviewUseCasesContent = {
     ctaLead:
       "See how isolation, topology, and policy boundaries are defined in the architecture specification.",
 
-    ctaNote: "Continue to Architecture",
-
     cards: [
       {
         label: "USE CASE 01",
@@ -71,8 +69,6 @@ export const overviewUseCasesContent = {
     runtimeFooter: "> decision_flow --executed",
 
     cta: "Explore in Architecture",
-
-    bottomLabel: "Formalized Logic & Auditability",
   },
 
   zh: {
@@ -89,8 +85,6 @@ export const overviewUseCasesContent = {
       "同一套理解 → 规划 → 决策 → 执行流程，可以通过可复用的决策层与执行层，支持不同类型的运营工作流。",
 
     ctaLead: "查看执行隔离、拓扑结构与策略边界在架构规格中的定义方式。",
-
-    ctaNote: "继续阅读系统架构",
 
     cards: [
       {
@@ -131,7 +125,5 @@ export const overviewUseCasesContent = {
     runtimeFooter: "> decision_flow --executed",
 
     cta: "查看系统架构",
-
-    bottomLabel: "结构化逻辑与可审计性",
   },
 };

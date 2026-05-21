@@ -60,6 +60,8 @@ export const spacing = {
 
   /** Primary / secondary button padding */
   buttonPadding: "px-8 py-4",
+  /** Editorial system control — hero walkthrough CTAs, not landing conversion */
+  buttonPaddingEditorial: "px-4 py-2",
   buttonPaddingCompact: "px-5 py-2",
   buttonPaddingLocale: "px-4 py-2",
 

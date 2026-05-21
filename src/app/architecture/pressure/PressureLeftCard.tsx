@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react"; // 确保引入了 React
+import React from "react";
+import { semanticVisual } from "@/design-system/semanticVisual";
+import { cn } from "@/lib/cn";
 
 type Props = {
   visual: React.ReactNode;
@@ -17,9 +19,7 @@ export default function PressureLeftCard({
     // 1. 外层包裹注入 flex-col h-full，响应 Grid 的 items-stretch 等高拉伸
     <div className="flex h-full flex-col border-r border-slate-100 p-7">
       {/* label */}
-      <div className="mb-6 font-mono text-xs font-bold tracking-[0.3em] text-rose-500 uppercase">
-        {label}
-      </div>
+      <div className={cn("mb-6", semanticVisual.pressureVoice.rose)}>{label}</div>
 
       {/* card */}
       {/* 2. 浅粉色底板转化为纵向伸缩列，为内部的 visual 提供满高度支撑 */}

@@ -2,7 +2,7 @@
 
 **Baseline:** `premiumDense` · **Runtime:** `useTheme()` from `@/design-system/runtime/useTheme`
 
-Single source of truth for **what exists** in the visual system. For usage patterns see [USAGE_GUIDE.md](./USAGE_GUIDE.md). For ownership see [COMPONENT_RULES.md](./COMPONENT_RULES.md).
+Single source of truth for **what exists** in the visual system. For visual philosophy and forbidden patterns see [VISUAL_SPEC.md](./VISUAL_SPEC.md). For usage patterns see [USAGE_GUIDE.md](./USAGE_GUIDE.md). For ownership see [COMPONENT_RULES.md](./COMPONENT_RULES.md).
 
 ---
 

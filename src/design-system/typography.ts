@@ -37,6 +37,13 @@ export const typography = {
   /** 6 — Dark-section orchestration headline */
   runtimeNarrative,
 
+  /**
+   * Canonical semantic zone label geometry (see semanticVisual.semanticLabel).
+   * Default indigo chroma for page/module eyebrows only.
+   */
+  semanticLabel:
+    "font-mono text-[10px] uppercase tracking-[0.18em] font-bold",
+
   /** 7 — Eyebrow, runtime, and module chrome labels */
   moduleLabel:
     "font-mono text-[10px] uppercase tracking-[0.18em] font-bold text-indigo-500",

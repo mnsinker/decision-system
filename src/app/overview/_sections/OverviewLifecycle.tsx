@@ -39,7 +39,7 @@ export default function OverviewLifecycle() {
         <TransitionLine text={content.transition} dark />
 
         {/* narrative */}
-        <div className="mt-6">
+        <div className="mt-4">
           <SectionHeader
             eyebrow={content.sectionLabel}
             title={`${content.title.line1}\n${content.title.line2}`}

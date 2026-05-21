@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 import SectionHeader from "@/components/SectionHeader";
 import TransitionLine from "@/components/TransitionLine";
+import { systemControlChrome } from "@/design-system/controlChrome";
 import { overviewUseCasesContent } from "@/content/overview/overviewUsecases";
 import {
   ArrowRight,
@@ -30,19 +31,17 @@ export default function OverviewUseCases() {
   return (
     <section
       className={cn(
-        "relative border-t border-slate-200/70 bg-gradient-to-b from-[#e9eef6] via-[#f4f6fa] to-white py-14 pb-20",
+        "border-t py-10 pb-16",
+        theme.colors.borderPrimary,
+        theme.colors.surfacePrimary,
         theme.colors.textSecondary,
         theme.spacing.sectionXComfort,
       )}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-[0.02]">
-        <div className="h-full w-full bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:40px_40px]" />
-      </div>
-
-      <div className={cn("relative mx-auto", theme.spacing.container)}>
+      <div className={cn("mx-auto", theme.spacing.container)}>
         <TransitionLine text={content.transition} />
 
-        <div className="mt-5">
+        <div className="mt-4">
           <SectionHeader
             eyebrow={content.sectionLabel}
             title={`${content.title.line1}\n${content.title.line2}`}
@@ -172,47 +171,14 @@ export default function OverviewUseCases() {
 
           <Link
             href="/architecture"
-            className={cn(
-              "group mt-6 inline-flex items-center transition-colors hover:bg-indigo-600",
-              theme.spacing.inlineGap,
-              theme.radius.buttonLg,
-              theme.spacing.buttonPadding,
-              theme.typography.button,
-              theme.colors.interactivePrimary,
-              theme.shadows.buttonPrimaryHover,
-            )}
+            className={cn("group mt-6", systemControlChrome.navPrimary)}
           >
             {content.cta}
             <ArrowRight
-              size={20}
-              className="transition-transform group-hover:translate-x-1"
+              size={16}
+              className="transition-transform duration-200 group-hover:translate-x-1"
             />
           </Link>
-
-          <div
-            className={cn(
-              "mt-6 flex items-center justify-center",
-              theme.spacing.inlineGapTight,
-            )}
-          >
-            <span
-              className={cn(
-                "h-1 w-1 rounded-full",
-                theme.colors.textAccent,
-              )}
-            />
-            <span
-              className={cn(theme.typography.moduleLabel, "text-slate-400")}
-            >
-              {content.ctaNote}
-            </span>
-            <span className="text-slate-300">·</span>
-            <span
-              className={cn(theme.typography.moduleLabel, "text-slate-400")}
-            >
-              {content.bottomLabel}
-            </span>
-          </div>
         </div>
       </div>
     </section>

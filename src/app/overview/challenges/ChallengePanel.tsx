@@ -18,7 +18,7 @@ export default function ChallengePanel({
 }) {
   const { theme } = useTheme();
   const business = semanticVisual.businessVoice;
-  const businessCase = semanticVisual.businessCase;
+  const outcome = semanticVisual.outcomeVoice;
   const interpretationLines: string[] =
     challenge.interpretationPoints ?? [];
 
@@ -34,16 +34,22 @@ export default function ChallengePanel({
         )}
       >
         <div className="grid lg:grid-cols-[1fr_1.2fr]">
-          <div className={cn(business.zone, "p-8 md:p-10 lg:pr-10")}>
-            <div className="max-w-[15.5rem] space-y-5">
+          <div className={cn(business.zone, "p-6 md:p-7 lg:pr-8")}>
+            <div className={business.cornerBloom} aria-hidden />
+            <div className="relative max-w-[15.5rem] space-y-3.5">
               <div className={business.moduleLabel}>
                 <MessageSquare size={14} className={business.moduleIcon} />
                 {challenge.businessLabel}
               </div>
 
-              <blockquote className={business.quote}>
-                “{challenge.businessQuote}”
-              </blockquote>
+              <div className={business.editorialQuote.zone}>
+                <span className={business.editorialQuote.mark} aria-hidden>
+                  &ldquo;
+                </span>
+                <blockquote className={business.editorialQuote.body}>
+                  {challenge.businessQuote}
+                </blockquote>
+              </div>
 
               <div className="space-y-2">
                 <div className={business.scanLabel}>{interpretationLabel}</div>
@@ -73,23 +79,9 @@ export default function ChallengePanel({
           )}
         </div>
 
-        <div
-          className={cn(
-            "relative overflow-hidden border-t p-6 md:p-8",
-            theme.colors.borderMuted,
-            theme.colors.surfaceMuted,
-          )}
-        >
-          <div
-            className="
-              absolute -bottom-20 -left-20
-              h-64 w-64
-              rounded-full
-              bg-rose-500/5
-              blur-[80px]
-              pointer-events-none
-            "
-          />
+        <div className={cn(outcome.zone, "p-5 md:p-6")}>
+          <div className={outcome.atmosphere} aria-hidden />
+          <div className={outcome.atmosphereEdge} aria-hidden />
 
           <div
             className="
@@ -101,21 +93,12 @@ export default function ChallengePanel({
             "
           >
             <div className="flex flex-col items-center">
-              <div className="h-6 w-px bg-slate-200" />
+              <div className={outcome.connectorLine} />
 
-              <div
-                className="
-                  rounded-full
-                  bg-slate-900
-                  p-2.5
-                  text-white
-                  shadow-xl
-                  ring-4 ring-white
-                "
-              >
+              <div className={outcome.connectorNode}>
                 <ArrowDown
                   size={14}
-                  className="text-rose-400"
+                  className="text-rose-300"
                   fill="currentColor"
                 />
               </div>
@@ -125,19 +108,19 @@ export default function ChallengePanel({
           <div className="relative z-10 mx-auto max-w-4xl">
             <div
               className="
-                grid items-start gap-8
-                md:grid-cols-[200px_1fr]
+                grid items-start gap-5
+                md:grid-cols-[180px_1fr]
               "
             >
               <div>
-                <div className={businessCase.moduleLabel}>
-                  <Activity size={12} className={businessCase.moduleIcon} />
+                <div className={outcome.moduleLabel}>
+                  <Activity size={12} className={outcome.moduleIcon} />
 
                   {challenge.consequenceLabel}
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-2.5">
                 <h4
                   className={cn(
                     theme.typography.cardTitle,
@@ -146,11 +129,11 @@ export default function ChallengePanel({
                 >
                   {challenge.consequenceTitleBeg}{" "}
                   <span className="relative inline-block">
-                    <span className={businessCase.outcomeHighlight}>
+                    <span className={outcome.outcomeHighlight}>
                       {challenge.consequenceHighlight}
                     </span>
 
-                    <span className={businessCase.outcomeHighlightRule} />
+                    <span className={outcome.outcomeHighlightRule} />
                   </span>{" "}
                   {challenge.consequenceTitleEnd}
                 </h4>

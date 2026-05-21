@@ -23,13 +23,13 @@ export default function OverviewChallenges() {
       className={cn(
         theme.spacing.sectionXComfort,
         theme.colors.surfacePrimary,
-        "scroll-mt-20 py-6",
+        "scroll-mt-20 pt-4 pb-5",
       )}
     >
-      <TransitionLine text={content.transition} />
-
       <div className={cn("mx-auto", theme.spacing.container)}>
-        <div className="mt-5">
+        <TransitionLine text={content.transition} />
+
+        <div className="mt-3">
           <SectionHeader
             eyebrow={content.sectionLabel}
             title={`${content.title.line1}\n${content.title.line2}`}
@@ -37,9 +37,7 @@ export default function OverviewChallenges() {
           />
         </div>
 
-        {/* tabs */}
-
-        <div className="mt-5">
+        <div className="sticky top-16 z-20 mt-3 bg-white py-1">
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
@@ -47,9 +45,7 @@ export default function OverviewChallenges() {
           />
         </div>
 
-        {/* panel */}
-
-        <div className="mt-7">
+        <div className="mt-4">
           {activeTab === "challenge1" && (
             <ChallengePanel
               challenge={content.challenge1}

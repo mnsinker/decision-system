@@ -77,7 +77,7 @@ export default function ArchitectureHero() {
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b pt-10 pb-9",
+        "relative overflow-hidden border-b pt-7 pb-7",
         theme.spacing.sectionXComfort,
         theme.colors.borderPrimary,
         theme.colors.surfacePageTinted,
@@ -95,13 +95,13 @@ export default function ArchitectureHero() {
 
       <div
         className={cn(
-          "relative mx-auto grid items-start gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center",
+          "relative mx-auto grid items-start gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-center",
           theme.spacing.container,
         )}
       >
         {/* left content */}
 
-        <div className="relative z-10 lg:py-2">
+        <div className="relative z-10 lg:py-0.5">
           <div
             className={cn(
               theme.spacing.eyebrowBottom,

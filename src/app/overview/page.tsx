@@ -15,7 +15,7 @@ export default function OverviewPage() {
 
   return (
     <div
-      className={cn("min-h-screen", theme.colors.surfacePageSubtle, theme.colors.textSecondary)}
+      className={cn("min-h-screen", theme.colors.surfacePrimary, theme.colors.textSecondary)}
     >
       <Navbar />
 

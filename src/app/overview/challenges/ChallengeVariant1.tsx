@@ -14,7 +14,7 @@ export default function ChallengeVariant1({
 
   return (
 
-    <div className="relative bg-slate-900 p-12 md:p-16 text-white">
+    <div className="relative bg-slate-900 p-8 md:p-10 text-white">
 
       {/* grid */}
 
@@ -32,7 +32,7 @@ export default function ChallengeVariant1({
 
         {/* header */}
 
-        <div className="mb-10">
+        <div className="mb-5">
 
           <div className={semanticVisual.runtimeVoice.moduleLabel}>
             <Terminal size={14} className={semanticVisual.runtimeVoice.moduleIcon} />
@@ -44,7 +44,7 @@ export default function ChallengeVariant1({
 
         {/* questions */}
 
-        <div className="space-y-3">
+        <div className="space-y-2">
 
           {realityPoints.map(
             (
@@ -60,7 +60,7 @@ export default function ChallengeVariant1({
                   rounded-2xl
                   border border-white/5
                   bg-white/[0.02]
-                  p-5
+                  p-4
                   transition-all
                   hover:bg-white/[0.05]
                 "

@@ -6,8 +6,8 @@ import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 import { overviewHeroContent } from "@/content/overview/overviewHero";
+import { systemControlChrome } from "@/design-system/controlChrome";
 import { Activity, ArrowRight } from "lucide-react";
-import PrimaryButton from "@/components/PrimaryButton";
 
 export default function OverviewHero() {
   const { theme } = useTheme();
@@ -21,10 +21,9 @@ export default function OverviewHero() {
   };
 
   return (
-    <section className="relative pt-10 pb-6">
-      <div className="absolute top-0 left-1/2 -z-10 h-[420px] w-full -translate-x-1/2 opacity-25">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,#e2e8f0_0%,transparent_50%)]" />
-        <div className="absolute top-12 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-indigo-200/40 blur-[100px]" />
+    <section className="relative pt-10 pb-4">
+      <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-64 w-full max-w-4xl -translate-x-1/2 opacity-100">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_0%,rgba(226,232,240,0.2),transparent)]" />
       </div>
 
       <div
@@ -73,29 +72,27 @@ export default function OverviewHero() {
           {content.subtitle}
         </p>
 
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <PrimaryButton
+        <div
+          className={cn(
+            "mt-6 flex flex-wrap items-center",
+            theme.spacing.inlineGap,
+          )}
+        >
+          <button
+            type="button"
             onClick={scrollToChallenges}
-            icon={
-              <ArrowRight
-                size={18}
-                className="transition-transform group-hover:translate-x-1"
-              />
-            }
+            className={cn("group", systemControlChrome.navPrimary)}
           >
             {content.primaryButton}
-          </PrimaryButton>
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-200 group-hover:translate-x-1"
+            />
+          </button>
 
           <Link
             href="/architecture"
-            className={cn(
-              "flex items-center transition-all",
-              theme.spacing.inlineGapTight,
-              theme.radius.buttonLg,
-              theme.spacing.buttonPadding,
-              theme.typography.button,
-              theme.colors.interactiveSecondary,
-            )}
+            className={systemControlChrome.navSecondary}
           >
             {content.secondaryButton}
           </Link>

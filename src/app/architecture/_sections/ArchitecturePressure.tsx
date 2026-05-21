@@ -16,6 +16,7 @@ import PressureRightVisual1 from "../pressure/PressureRightVisual1";
 import PressureRightVisual2 from "../pressure/PressureRightVisual2";
 import PressureRightVisual3 from "../pressure/PressureRightVisual3";
 import { architecturePressureContent } from "@/content/architecture/architecturePressure";
+import { semanticVisual } from "@/design-system/semanticVisual";
 import PressureLeftVisual3 from "@/app/architecture/pressure/PressureLeftVisual3";
 
 export default function ArchitecturePressure() {
@@ -37,6 +38,7 @@ export default function ArchitecturePressure() {
   const LeftVisual = leftVisuals[activeTab];
   const RightVisual = rightVisuals[activeTab];
   const current = content.modules[activeTab as keyof typeof content.modules];
+  const business = semanticVisual.businessVoice;
 
   return (
     <section className={cn(theme.spacing.sectionXComfort, "py-12")}>
@@ -75,25 +77,23 @@ export default function ArchitecturePressure() {
               theme.colors.surfaceMuted,
             )}
           >
-            <div
-              className={cn(
-                theme.spacing.eyebrowBottom,
-                theme.typography.moduleLabel,
-              )}
-            >
+            <div className={cn(theme.spacing.eyebrowBottom, business.moduleLabel)}>
               {content.label}
             </div>
 
-            <h3
-              className={cn(
-                "max-w-5xl italic",
-                theme.typography.narrativeHero,
-                theme.colors.textPrimary,
-                sectionTitle(locale),
-              )}
-            >
-              {current.bizCase}
-            </h3>
+            <div className={cn("max-w-4xl", business.editorialQuote.zone)}>
+              <span className={business.editorialQuote.mark} aria-hidden>
+                &ldquo;
+              </span>
+              <p
+                className={cn(
+                  business.editorialQuote.body,
+                  sectionTitle(locale),
+                )}
+              >
+                {current.bizCase}
+              </p>
+            </div>
           </div>
 
           {/* split */}
