@@ -19,10 +19,11 @@ export default function OverviewChallenges() {
 
   return (
     <section
+      id="overview-challenges"
       className={cn(
         theme.spacing.sectionXComfort,
         theme.colors.surfacePrimary,
-        "py-6",
+        "scroll-mt-20 py-6",
       )}
     >
       <TransitionLine text={content.transition} />
@@ -50,15 +51,24 @@ export default function OverviewChallenges() {
 
         <div className="mt-7">
           {activeTab === "challenge1" && (
-            <ChallengePanel challenge={content.challenge1} />
+            <ChallengePanel
+              challenge={content.challenge1}
+              interpretationLabel={content.interpretationLabel}
+            />
           )}
 
           {activeTab === "challenge2" && (
-            <ChallengePanel challenge={content.challenge2} />
+            <ChallengePanel
+              challenge={content.challenge2}
+              interpretationLabel={content.interpretationLabel}
+            />
           )}
 
           {activeTab === "challenge3" && (
-            <ChallengePanel challenge={content.challenge3} />
+            <ChallengePanel
+              challenge={content.challenge3}
+              interpretationLabel={content.interpretationLabel}
+            />
           )}
         </div>
       </div>

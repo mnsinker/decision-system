@@ -47,13 +47,11 @@ export default function SegmentedTabs({
   return (
     <div
       className={cn(
-        "inline-flex gap-1 border",
-        theme.radius.panel,
+        "inline-flex gap-0.5 border bg-white",
+        theme.radius.pill,
         theme.colors.borderPrimary,
-        theme.colors.surfaceTabTrack,
-        "p-1.5",
+        theme.spacing.tabShellPadding,
         theme.shadows.control,
-        theme.shadows.tabTrackInset,
       )}
     >
       {tabs.map((tab) => {
@@ -64,13 +62,12 @@ export default function SegmentedTabs({
             key={tab.id}
             onClick={() => onChange(tab.id)}
             className={cn(
-              isActive ? theme.radius.card : theme.radius.cardMd,
+              theme.radius.pill,
               theme.spacing.tabItemPadding,
               theme.typography.tabLabel,
-              "transition-[color,box-shadow,transform] duration-200",
+              "transition-[color,box-shadow] duration-200",
               isActive
                 ? cn(
-                    "ring-1 ring-black/[0.04]",
                     theme.colors.surfaceTabActive,
                     theme.shadows.controlActive,
                   )

@@ -11,7 +11,7 @@ export const overviewHeroContent = {
     subtitle:
       "A reusable architecture for operational workflows, policy evaluation, dependency resolution, and multi-step execution.",
 
-    primaryButton: "View Demo",
+    primaryButton: "See operational pressure",
 
     secondaryButton: "Architecture",
   },
@@ -28,7 +28,7 @@ export const overviewHeroContent = {
     subtitle:
       "一种可复用的 AI 系统架构，用于支持策略评估、依赖解析、工作流编排与多步骤执行。",
 
-    primaryButton: "查看 Demo",
+    primaryButton: "查看运营压力",
 
     secondaryButton: "系统架构",
   },

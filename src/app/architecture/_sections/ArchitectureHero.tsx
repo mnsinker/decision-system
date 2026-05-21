@@ -20,7 +20,7 @@ export default function ArchitectureHero() {
    */
 
   const visualPositionClass =
-    "translate-x-[0px] translate-y-[-28px] scale-[0.74]";
+    "translate-x-[0px] translate-y-[-8px] scale-[0.76]";
 
   const layerGap = 96;
   const layerTopOffset = 52;
@@ -77,7 +77,7 @@ export default function ArchitectureHero() {
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b pt-10 pb-7",
+        "relative overflow-hidden border-b pt-10 pb-9",
         theme.spacing.sectionXComfort,
         theme.colors.borderPrimary,
         theme.colors.surfacePageTinted,
@@ -95,14 +95,13 @@ export default function ArchitectureHero() {
 
       <div
         className={cn(
-          "relative mx-auto grid items-start lg:grid-cols-[1fr_0.95fr]",
+          "relative mx-auto grid items-start gap-10 lg:grid-cols-[1fr_0.95fr] lg:items-center",
           theme.spacing.container,
-          theme.spacing.gridSplit,
         )}
       >
         {/* left content */}
 
-        <div className="relative z-10">
+        <div className="relative z-10 lg:py-2">
           <div
             className={cn(
               theme.spacing.eyebrowBottom,
@@ -142,9 +141,9 @@ export default function ArchitectureHero() {
         {/* right visual */}
 
         <div
-          className={`relative flex items-start justify-center overflow-hidden pt-2 lg:max-h-[400px] lg:pt-0 ${visualPositionClass}`}
+          className={`relative flex min-h-[340px] items-center justify-center lg:min-h-[360px] ${visualPositionClass}`}
         >
-          <div className="relative h-[400px] w-full max-w-[360px] [perspective:1500px]">
+          <div className="relative h-[380px] w-full max-w-[360px] [perspective:1500px]">
             <div
               className="relative h-full w-full [transform:rotateX(58deg)_rotateZ(-28deg)] [transform-style:preserve-3d]"
               style={

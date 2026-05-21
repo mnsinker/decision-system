@@ -1,5 +1,7 @@
 export const overviewUseCasesContent = {
   en: {
+    transition: "WHERE THE RUNTIME GETS APPLIED",
+
     sectionLabel: "Business Applications",
 
     title: {
@@ -8,7 +10,12 @@ export const overviewUseCasesContent = {
     },
 
     subtitle:
-      "The same planning and execution architecture can support different operational workflows through reusable decision and execution layers.",
+      "The same interpret → plan → decide → execute flow supports different operational workflows through reusable decision and execution layers.",
+
+    ctaLead:
+      "See how isolation, topology, and policy boundaries are defined in the architecture specification.",
+
+    ctaNote: "Continue to Architecture",
 
     cards: [
       {
@@ -69,6 +76,8 @@ export const overviewUseCasesContent = {
   },
 
   zh: {
+    transition: "运行时的业务落点",
+
     sectionLabel: "业务应用场景",
 
     title: {
@@ -77,7 +86,11 @@ export const overviewUseCasesContent = {
     },
 
     subtitle:
-      "同一套规划与执行架构，可以通过可复用的决策层与执行层，支持不同类型的运营工作流。",
+      "同一套理解 → 规划 → 决策 → 执行流程，可以通过可复用的决策层与执行层，支持不同类型的运营工作流。",
+
+    ctaLead: "查看执行隔离、拓扑结构与策略边界在架构规格中的定义方式。",
+
+    ctaNote: "继续阅读系统架构",
 
     cards: [
       {

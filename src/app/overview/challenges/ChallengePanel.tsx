@@ -1,7 +1,8 @@
 "use client";
 
-import { ArrowDown, Activity } from "lucide-react";
+import { ArrowDown, Activity, MessageSquare } from "lucide-react";
 import { useTheme } from "@/design-system/runtime/useTheme";
+import { semanticVisual } from "@/design-system/semanticVisual";
 import { cn } from "@/lib/cn";
 
 import ChallengeVariant1 from "./ChallengeVariant1";
@@ -10,10 +11,16 @@ import ChallengeVariant3 from "./ChallengeVariant3";
 
 export default function ChallengePanel({
   challenge,
+  interpretationLabel = "System interpretation",
 }: {
   challenge: any;
+  interpretationLabel?: string;
 }) {
   const { theme } = useTheme();
+  const business = semanticVisual.businessVoice;
+  const businessCase = semanticVisual.businessCase;
+  const interpretationLines: string[] =
+    challenge.interpretationPoints ?? [];
 
   return (
     <div className="relative">
@@ -27,44 +34,29 @@ export default function ChallengePanel({
         )}
       >
         <div className="grid lg:grid-cols-[1fr_1.2fr]">
-          <div
-            className={cn(
-              "flex flex-col justify-start p-8 md:p-9 lg:pr-8",
-              theme.colors.surfacePrimary,
-            )}
-          >
-            <div className="max-w-[14.5rem] space-y-4">
-              <div
-                className={cn(
-                  "flex items-center gap-2",
-                  cn(theme.typography.moduleLabel, "text-slate-400"),
-                )}
-              >
-                <span className="h-1 w-1 rounded-full bg-slate-300" />
-
+          <div className={cn(business.zone, "p-8 md:p-10 lg:pr-10")}>
+            <div className="max-w-[15.5rem] space-y-5">
+              <div className={business.moduleLabel}>
+                <MessageSquare size={14} className={business.moduleIcon} />
                 {challenge.businessLabel}
               </div>
 
-              <blockquote
-                className={cn(
-                  "border-l border-slate-200/80 pl-3.5",
-                  theme.typography.cardTitle,
-                  "text-[19px] font-medium leading-[1.45] tracking-normal text-slate-600 not-italic",
-                )}
-              >
+              <blockquote className={business.quote}>
                 “{challenge.businessQuote}”
               </blockquote>
 
-              <div className="h-px w-8 bg-slate-100" />
+              <div className="space-y-2">
+                <div className={business.scanLabel}>{interpretationLabel}</div>
 
-              <p
-                className={cn(
-                  theme.typography.explainer,
-                  "max-w-[15.5rem] font-medium leading-[1.65] text-slate-600",
-                )}
-              >
-                {challenge.businessDescription}
-              </p>
+                <ul className={business.scanList}>
+                  {interpretationLines.map((line: string) => (
+                    <li key={line} className={business.scanLine}>
+                      <span className={business.scanMarker} aria-hidden />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -138,19 +130,8 @@ export default function ChallengePanel({
               "
             >
               <div>
-                <div
-                  className="
-                    inline-flex items-center gap-2
-                    rounded
-                    bg-rose-50
-                    px-2 py-1
-                    font-mono text-[10px]
-                    font-bold uppercase
-                    tracking-[0.3em]
-                    text-rose-600
-                  "
-                >
-                  <Activity size={12} />
+                <div className={businessCase.moduleLabel}>
+                  <Activity size={12} className={businessCase.moduleIcon} />
 
                   {challenge.consequenceLabel}
                 </div>
@@ -165,18 +146,11 @@ export default function ChallengePanel({
                 >
                   {challenge.consequenceTitleBeg}{" "}
                   <span className="relative inline-block">
-                    <span className="relative z-10 text-rose-700">
+                    <span className={businessCase.outcomeHighlight}>
                       {challenge.consequenceHighlight}
                     </span>
 
-                    <span
-                      className="
-                        absolute bottom-1 left-0
-                        h-2 w-full
-                        bg-rose-100
-                        -z-0
-                      "
-                    />
+                    <span className={businessCase.outcomeHighlightRule} />
                   </span>{" "}
                   {challenge.consequenceTitleEnd}
                 </h4>

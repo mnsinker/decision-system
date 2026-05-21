@@ -2,6 +2,8 @@ export const overviewChallengesContent = {
   en: {
     transition: "WHERE DO PROBLEMS COME FROM?",
 
+    interpretationLabel: "System interpretation",
+
     sectionLabel: "Operational Complexity",
 
     title: {
@@ -20,8 +22,11 @@ export const overviewChallengesContent = {
       businessLabel: "Business Request",
       businessQuote: "We only need one extra refund condition.",
 
-      businessDescription:
-        "Operational changes often appear small, but quickly spread across policies, dependencies, workflows.",
+      interpretationPoints: [
+        "Appears as one localized rule change.",
+        "Spreads across policies and dependency chains.",
+        "Adds execution paths that must stay coordinated.",
+      ],
 
       systemLabel: "System Reality",
       systemQuestions: [
@@ -47,8 +52,11 @@ export const overviewChallengesContent = {
 
       businessQuote: "VIP users should receive priority customer support.",
 
-      businessDescription:
-        "Business rules gradually spread across tools, services, workflows and operational exceptions.",
+      interpretationPoints: [
+        "Starts as a single support-policy intent.",
+        "Fragments across CRM, tickets, and overrides.",
+        "Becomes difficult to audit as one logic surface.",
+      ],
 
       systemLabel: "System Reality",
 
@@ -94,8 +102,11 @@ export const overviewChallengesContent = {
 
       businessQuote: "We need a special campaign flow for inactive VIP users.",
 
-      businessDescription:
-        "Marketing operations constantly evolve as targeting rules, campaign strategies, and execution constraints continue changing.",
+      interpretationPoints: [
+        "Begins as a campaign workflow request.",
+        "Couples targeting, eligibility, and live user state.",
+        "Propagates across multiple execution systems.",
+      ],
 
       systemLabel: "System Reality",
 
@@ -122,6 +133,8 @@ export const overviewChallengesContent = {
   zh: {
     transition: "问题从哪里开始出现？",
 
+    interpretationLabel: "系统解读",
+
     sectionLabel: "运营复杂度",
 
     title: {
@@ -142,8 +155,11 @@ export const overviewChallengesContent = {
 
       businessQuote: "我们只需要再加一个退款条件。",
 
-      businessDescription:
-        "运营需求往往看似很小，但会迅速扩散到依赖关系、工作流以及执行路径中。",
+      interpretationPoints: [
+        "表面上只是一个局部规则变更。",
+        "会扩散到策略与依赖链路。",
+        "并引入需要协同的执行路径。",
+      ],
 
       systemLabel: "系统现实",
 
@@ -173,8 +189,11 @@ export const overviewChallengesContent = {
 
       businessQuote: "VIP 用户应该获得优先客服支持。",
 
-      businessDescription:
-        "业务规则会逐渐分散到不同系统、工作流以及历史遗留逻辑中。",
+      interpretationPoints: [
+        "最初只是一个客服策略诉求。",
+        "分散到 CRM、工单与 override 逻辑。",
+        "越来越难作为统一逻辑面审计。",
+      ],
 
       systemLabel: "系统现实",
 
@@ -220,8 +239,11 @@ export const overviewChallengesContent = {
 
       businessQuote: "我们需要为沉默 VIP 用户增加一条特殊营销流程。",
 
-      businessDescription:
-        "随着目标策略、执行路径以及运行时条件不断变化，运营工作流也会持续演化。",
+      interpretationPoints: [
+        "最初只是一条营销活动流程需求。",
+        "耦合分群、资格判断与实时用户状态。",
+        "并扩散到多个执行系统。",
+      ],
 
       systemLabel: "系统现实",
 

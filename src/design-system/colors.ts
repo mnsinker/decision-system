@@ -171,7 +171,7 @@ export const colors = {
 
   /** Secondary action (outline button) */
   interactiveSecondary:
-    "border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
+    "border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-white hover:text-slate-900 hover:shadow-md",
 
   /**
    * Active toggle / tab selection fill.

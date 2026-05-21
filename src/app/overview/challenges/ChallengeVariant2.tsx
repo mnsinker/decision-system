@@ -1,6 +1,7 @@
 "use client";
 
 import { Terminal } from "lucide-react";
+import { semanticVisual } from "@/design-system/semanticVisual";
 
 export default function ChallengeVariant2({ challenge }: { challenge: any }) {
   const cards = challenge.systemCards || [];
@@ -15,8 +16,8 @@ export default function ChallengeVariant2({ challenge }: { challenge: any }) {
         {/* header */}
 
         <div className="mb-10">
-          <div className="flex items-center gap-2 font-mono text-[10px] font-bold tracking-[0.4em] text-indigo-400 uppercase">
-            <Terminal size={14} />
+          <div className={semanticVisual.runtimeVoice.moduleLabel}>
+            <Terminal size={14} className={semanticVisual.runtimeVoice.moduleIcon} />
 
             {challenge.systemLabel}
           </div>
