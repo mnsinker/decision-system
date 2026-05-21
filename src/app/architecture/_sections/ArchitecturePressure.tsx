@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 
 import SectionHeader from "@/components/SectionHeader";
 import SegmentedTabs from "@/components/SegmentedTabs";
@@ -16,6 +18,7 @@ import { architecturePressureContent } from "@/content/architecture/architecture
 import PressureLeftVisual3 from "@/app/architecture/pressure/PressureLeftVisual3";
 
 export default function ArchitecturePressure() {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
   const content = architecturePressureContent[locale];
   const leftVisuals = {
@@ -35,15 +38,17 @@ export default function ArchitecturePressure() {
   const current = content.modules[activeTab as keyof typeof content.modules];
 
   return (
-    <section className="px-6 py-14">
-      <div className="mx-auto max-w-7xl">
+    <section
+      className={cn(theme.spacing.sectionXComfort, theme.spacing.sectionYMid)}
+    >
+      <div className={cn("mx-auto", theme.spacing.container)}>
         <SectionHeader
           eyebrow={content.eyebrow}
           title={content.sectionTitle}
           label={content.label}
         />
 
-        <div className="mt-6">
+        <div className={theme.spacing.tabsTop}>
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
@@ -51,10 +56,24 @@ export default function ArchitecturePressure() {
           />
         </div>
 
-        <div className="mt-6 overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white shadow-[0_40px_100px_-30px_rgba(15,23,42,0.14)]">
+        <div
+          className={cn(
+            "overflow-hidden border",
+            theme.spacing.panelTop,
+            theme.radius.panelLg,
+            theme.colors.borderPrimary,
+            theme.colors.surfacePrimary,
+            theme.shadows.panel,
+          )}
+        >
           {/* business case */}
 
-          <div className="border-b border-slate-100 bg-slate-50 px-8 py-7">
+          <div
+            className={cn(
+              "border-b px-8 py-7 bg-slate-50",
+              theme.colors.borderMuted,
+            )}
+          >
             <div className="mb-2 font-mono text-[10px] font-bold tracking-[0.3em] text-indigo-500 uppercase">
               {content.label}
             </div>

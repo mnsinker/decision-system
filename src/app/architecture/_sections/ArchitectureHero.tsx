@@ -1,11 +1,14 @@
 "use client";
 
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { displayTitle, bodyText, eyebrowText } from "@/lib/typography";
 import { architectureHeroContent } from "@/content/architecture/architectureHero";
+import { cn } from "@/lib/cn";
 
 export default function ArchitectureHero() {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
 
   const content = architectureHeroContent[locale];
@@ -72,7 +75,13 @@ export default function ArchitectureHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-slate-200 bg-[#FBFDFF] px-4 pt-10 pb-10">
+    <section
+      className={cn(
+        "relative overflow-hidden border-b px-4 pt-10 pb-10",
+        theme.colors.borderPrimary,
+        theme.colors.surfacePageCool,
+      )}
+    >
       {/* soft gradient */}
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(99,102,241,0.14),transparent_58%)]" />
@@ -83,7 +92,13 @@ export default function ArchitectureHero() {
         <div className="h-full w-full bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:40px_40px]" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1fr_0.95fr]">
+      <div
+        className={cn(
+          "relative mx-auto grid items-center lg:grid-cols-[1fr_0.95fr]",
+          theme.spacing.container,
+          theme.spacing.gridSplit,
+        )}
+      >
         {/* left content */}
 
         <div className="relative z-10">

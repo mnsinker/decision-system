@@ -1,67 +1,95 @@
 /**
  * Semantic color roles — no raw palette naming (rose, emerald, indigo).
  * Values preserve the current restrained slate / indigo / emerald / rose feel exactly.
+ *
+ * Surface hierarchy (see GOVERNANCE.md § Semantic Surface Rules):
+ *   Tier 0 — page canvas
+ *   Tier 1 — structural elevation (primary → inset)
+ *   Tier 2 — semantic state (accent, critical, success)
+ *   Tier 3 — cinematic dark stack
+ *   Chrome — nav, tabs, brand mark (specialized; not page hierarchy)
  */
 export const colors = {
-  // ── Surfaces ──────────────────────────────────────────────────────────────
+  // ── Surfaces · Tier 0 — Page canvas ───────────────────────────────────────
 
-  /** Default page canvas */
+  /** Default application page background */
   surfacePage: "bg-[#F6F7FA]",
 
-  /** Cool-tinted page canvas (architecture hero) */
+  /** Neutral subtle page canvas (e.g. slate-50 wash) */
+  surfacePageSubtle: "bg-[#F8FAFC]",
+
+  /** Cool-tinted page or hero-section canvas */
+  surfacePageTinted: "bg-[#FBFDFF]",
+
+  /**
+   * @deprecated Use `surfacePageTinted`. Alias retained for unmigrated consumers.
+   */
   surfacePageCool: "bg-[#FBFDFF]",
 
-  /** Primary elevated surface (cards, panels) */
+  // ── Surfaces · Tier 1 — Structural elevation ──────────────────────────────
+
+  /** Top-level elevated surface — cards, panels, shells */
   surfacePrimary: "bg-white",
 
-  /** Secondary surface layer */
+  /** Secondary structural layer — split columns, side bands */
   surfaceSecondary: "bg-[#FCFCFD]",
 
-  /** Muted surface (panel headers, soft backgrounds) */
+  /** Muted band — panel headers, soft horizontal strips */
   surfaceMuted: "bg-[#FAFBFD]",
 
-  /** Inset / nested surface (code blocks, footnotes) */
+  /** Inset well — nested blocks, code panels, footnotes */
   surfaceInset: "bg-[#FAFBFC]",
+
+  // ── Surfaces · Tier 2 — Semantic state ────────────────────────────────────
+
+  /** Accent-state surface tint */
+  surfaceAccent: "bg-indigo-50/50",
+
+  /** Accent-state surface — opaque */
+  surfaceAccentSolid: "bg-indigo-50",
 
   /** Critical / pressure-state surface tint */
   surfaceCritical: "bg-rose-50/40",
 
-  /** Critical surface — solid variant */
+  /** Critical-state surface — opaque */
   surfaceCriticalSolid: "bg-rose-50",
-
-  /** Accent surface tint */
-  surfaceAccent: "bg-indigo-50/50",
-
-  /** Accent surface — solid variant */
-  surfaceAccentSolid: "bg-indigo-50",
 
   /** Success / resolved-state surface tint */
   surfaceSuccess: "bg-emerald-500/[0.05]",
 
-  /** Cinematic dark section */
+  // ── Surfaces · Tier 3 — Cinematic dark ────────────────────────────────────
+
+  /** Full-bleed dark section */
   surfaceDark: "bg-[#071133]",
 
   /** Dark nested panel */
   surfaceDarkPanel: "bg-[#0F172A]",
 
-  /** Dark elevated node / card */
+  /** Dark elevated node */
   surfaceDarkElevated: "bg-[#0B183D]",
 
-  /** Cinematic dark gradient panel */
+  /**
+   * Dark gradient panel — intentional exception; not a flat surface role.
+   * Use only for cinematic right-rail / pressure visuals.
+   */
   surfaceDarkGradient:
     "bg-gradient-to-br from-[#071011] via-[#04100E] to-[#020807]",
 
-  /** Navbar frosted surface */
+  // ── Surfaces · Chrome (specialized) ───────────────────────────────────────
+
+  /** Sticky navigation bar — includes border + frosted fill */
   surfaceNav: "border-b border-slate-200/60 bg-white/70 backdrop-blur-xl",
 
-  /** Navbar logo mark */
+  /**
+   * Brand logo mark — intentional gradient exception; not a layout surface.
+   */
   surfaceLogo:
     "bg-gradient-to-br from-indigo-600 to-violet-600 text-white",
 
   /** Segmented control track */
   surfaceTabTrack: "bg-slate-100",
 
-  /** Segmented control active pill */
+  /** Segmented control active pill fill */
   surfaceTabActive: "bg-slate-900 text-white",
 
   // ── Text ──────────────────────────────────────────────────────────────────
@@ -145,7 +173,10 @@ export const colors = {
   interactiveSecondary:
     "border-slate-200 bg-white text-slate-700 hover:bg-slate-50",
 
-  /** Active tab / toggle state */
+  /**
+   * Active toggle / tab selection fill.
+   * Shares fill with `interactivePrimary` but names selection chrome, not CTA buttons.
+   */
   interactiveActive: "bg-slate-900 text-white",
 
   /** Inactive tab label */

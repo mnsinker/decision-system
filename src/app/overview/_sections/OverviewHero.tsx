@@ -1,13 +1,16 @@
 "use client";
 
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 import { overviewHeroContent } from "@/content/overview/overviewHero";
 import { Activity, ArrowRight } from "lucide-react";
 import PrimaryButton from "@/components/PrimaryButton";
 import SecondaryButton from "@/components/SecondaryButton";
 
 export default function OverviewHero() {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
   const content = overviewHeroContent[locale];
 
@@ -19,7 +22,9 @@ export default function OverviewHero() {
         <div className="absolute top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-200/50 blur-[120px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-6">
+      <div
+        className={cn("mx-auto", theme.spacing.container, theme.spacing.sectionXComfort)}
+      >
         {/* Top Badge */}
         <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50/50 px-4 py-1.5 text-xs font-bold tracking-wider text-indigo-600 uppercase shadow-sm">
           <Activity size={14} />

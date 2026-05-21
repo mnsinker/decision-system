@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 import SectionHeader from "@/components/SectionHeader";
 import { overviewUseCasesContent } from "@/content/overview/overviewUsecases";
 import {
@@ -13,6 +15,7 @@ import {
 } from "lucide-react";
 
 export default function OverviewUseCases() {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
   const content = overviewUseCasesContent[locale];
   const useCases = content.cards;
@@ -23,14 +26,21 @@ export default function OverviewUseCases() {
   ];
 
   return (
-    <div className="min-h-screen bg-white px-6 py-28 text-slate-900">
+    <div
+      className={cn(
+        "min-h-screen py-28",
+        theme.colors.surfacePrimary,
+        theme.colors.textSecondary,
+        theme.spacing.sectionXComfort,
+      )}
+    >
       {/* subtle grid */}
 
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-[0.025]">
         <div className="h-full w-full bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:40px_40px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl">
+      <div className={cn("mx-auto", theme.spacing.container)}>
         {/* header */}
 
         <SectionHeader
@@ -54,7 +64,13 @@ export default function OverviewUseCases() {
           {useCases.map((item, idx) => (
             <div
               key={idx}
-              className="group flex flex-col rounded-[2.5rem] border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-200"
+              className={cn(
+                "group flex flex-col border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-200",
+                theme.radius.panelLg,
+                theme.colors.borderPrimary,
+                theme.colors.surfacePrimary,
+                theme.shadows.sm,
+              )}
             >
               {/* top white surface */}
 

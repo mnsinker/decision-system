@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 import {
   Layers,
   GitBranch,
@@ -15,6 +17,7 @@ import {
 } from "lucide-react";
 
 export default function ArchitecturePage() {
+  const { theme } = useTheme();
   const [activePressure, setActivePressure] = useState("planning");
 
   const pressures = [
@@ -141,7 +144,13 @@ export default function ArchitecturePage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#F8FAFC] text-slate-950">
+    <main
+      className={cn(
+        "min-h-screen",
+        theme.colors.surfacePageSubtle,
+        theme.colors.textStrong,
+      )}
+    >
       {/* HERO */}
       <section className="px-8 pt-28 pb-20">
         <div className="mx-auto max-w-7xl">
@@ -190,8 +199,21 @@ export default function ArchitecturePage() {
             ))}
           </div>
 
-          <div className="overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white shadow-[0_40px_100px_-30px_rgba(15,23,42,0.14)]">
-            <div className="border-b border-slate-100 bg-slate-50 px-10 py-10">
+          <div
+            className={cn(
+              "overflow-hidden border",
+              theme.radius.panelLg,
+              theme.colors.borderPrimary,
+              theme.colors.surfacePrimary,
+              theme.shadows.panel,
+            )}
+          >
+            <div
+              className={cn(
+                "border-b px-10 py-10 bg-slate-50",
+                theme.colors.borderMuted,
+              )}
+            >
               <div className="mb-4 font-mono text-xs font-bold tracking-[0.3em] text-indigo-500 uppercase">
                 Business Case
               </div>

@@ -1,6 +1,10 @@
 "use client";
 
+"use client";
+
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 import {
   ArrowRight,
   SearchCode,
@@ -11,6 +15,7 @@ import {
 } from "lucide-react";
 
 export default function UseCasesVisualEvolutionV2() {
+  const { theme } = useTheme();
 
   const useCases = [
     {
@@ -70,7 +75,14 @@ export default function UseCasesVisualEvolutionV2() {
 
   return (
 
-    <div className="min-h-screen bg-white px-6 py-28 text-slate-900">
+    <div
+      className={cn(
+        "min-h-screen py-28",
+        theme.colors.surfacePrimary,
+        theme.colors.textSecondary,
+        theme.spacing.sectionXComfort,
+      )}
+    >
 
       {/* subtle grid */}
 
@@ -80,7 +92,7 @@ export default function UseCasesVisualEvolutionV2() {
 
       </div>
 
-      <div className="mx-auto max-w-7xl">
+      <div className={cn("mx-auto", theme.spacing.container)}>
 
         {/* header */}
 
@@ -127,17 +139,13 @@ export default function UseCasesVisualEvolutionV2() {
 
             <div
               key={idx}
-              className="
-                group flex flex-col
-                rounded-[2.5rem]
-                border border-slate-200
-                bg-white
-                shadow-sm
-                transition-all duration-500
-                hover:-translate-y-2
-                hover:shadow-2xl
-                hover:shadow-slate-200
-              "
+              className={cn(
+                "group flex flex-col transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-200",
+                theme.radius.panelLg,
+                theme.colors.borderPrimary,
+                theme.colors.surfacePrimary,
+                theme.shadows.sm,
+              )}
             >
 
               {/* top white surface */}

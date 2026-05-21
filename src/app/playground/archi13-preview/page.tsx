@@ -1,8 +1,13 @@
 "use client";
 
+"use client";
+
 import React from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 
 export default function ArchitectureHeroV3() {
+  const { theme } = useTheme();
   /**
    * =========================================================
    * GLOBAL CONTROLS
@@ -21,7 +26,13 @@ export default function ArchitectureHeroV3() {
   const layerTopOffset = 70;
 
   return (
-    <section className="relative flex min-h-[85vh] items-center overflow-hidden border-b border-slate-200 bg-[#FBFDFF] px-8 pt-20 pb-16">
+    <section
+      className={cn(
+        "relative flex min-h-[85vh] items-center overflow-hidden border-b px-8 pt-20 pb-16",
+        theme.colors.borderPrimary,
+        theme.colors.surfacePageTinted,
+      )}
+    >
       {/* 1. 环境底纹 (Atmospheric Background) */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 [background-image:radial-gradient(#000_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03]" />

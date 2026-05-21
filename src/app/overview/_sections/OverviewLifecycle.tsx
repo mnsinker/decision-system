@@ -1,16 +1,27 @@
 "use client";
 
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 import { overviewLifecycleContent } from "@/content/overview/overviewLifecycle";
 import TransitionLine from "@/components/TransitionLine";
 import SectionHeader from "@/components/SectionHeader";
 
 export default function OverviewLifecycle() {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
   const content = overviewLifecycleContent[locale];
 
   return (
-    <section className="relative overflow-hidden bg-[#071133] px-6 py-32 text-white">
+    <section
+      className={cn(
+        "relative overflow-hidden",
+        theme.colors.surfaceDark,
+        theme.colors.textOnDark,
+        theme.spacing.sectionXComfort,
+        theme.spacing.sectionYDark,
+      )}
+    >
       {/* subtle grid */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -23,7 +34,7 @@ export default function OverviewLifecycle() {
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className={cn("relative mx-auto", theme.spacing.container)}>
         {/* trace line */}
         <TransitionLine text={content.transition} dark />
 

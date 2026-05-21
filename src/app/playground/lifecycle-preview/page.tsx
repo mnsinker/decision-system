@@ -1,4 +1,10 @@
+"use client";
+
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
+
 export default function LifecyclePreview() {
+  const { theme } = useTheme();
   const steps = [
     {
       num: "01",
@@ -23,9 +29,20 @@ export default function LifecyclePreview() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#071133] text-white">
-
-      <section className="relative overflow-hidden px-6 py-32">
+    <div
+      className={cn(
+        "min-h-screen",
+        theme.colors.surfaceDark,
+        theme.colors.textOnDark,
+      )}
+    >
+      <section
+        className={cn(
+          "relative overflow-hidden",
+          theme.spacing.sectionXComfort,
+          theme.spacing.sectionYDark,
+        )}
+      >
 
         {/* subtle grid */}
         <div
@@ -39,7 +56,7 @@ export default function LifecyclePreview() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl">
+        <div className={cn("relative mx-auto", theme.spacing.container)}>
 
           {/* trace line */}
           <div className="mb-24 flex flex-col items-center">

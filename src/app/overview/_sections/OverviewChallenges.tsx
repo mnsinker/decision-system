@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 import SectionHeader from "@/components/SectionHeader";
 import TransitionLine from "@/components/TransitionLine";
 import SegmentedTabs from "@/components/SegmentedTabs";
@@ -9,6 +11,7 @@ import SegmentedTabs from "@/components/SegmentedTabs";
 import ChallengePanel from "../challenges/ChallengePanel";
 import { overviewChallengesContent } from "@/content/overview/overviewChallenges";
 export default function OverviewChallenges() {
+  const { theme } = useTheme();
   const { locale } = useLanguage();
   const content = overviewChallengesContent[locale];
 
@@ -18,7 +21,7 @@ export default function OverviewChallenges() {
     <section className="py-8">
       <TransitionLine text={content.transition} />
 
-      <div className="mx-auto max-w-7xl px-6">
+      <div className={cn("mx-auto", theme.spacing.container, theme.spacing.sectionXComfort)}>
         {/* header */}
 
         <SectionHeader
@@ -29,7 +32,7 @@ export default function OverviewChallenges() {
 
         {/* tabs */}
 
-        <div className="mt-12">
+        <div className={theme.spacing.sectionHeaderTop}>
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}

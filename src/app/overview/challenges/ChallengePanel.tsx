@@ -1,55 +1,39 @@
 "use client";
 
-import {
-    ArrowDown,
-    Activity,
-} from "lucide-react";
+import { ArrowDown, Activity } from "lucide-react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 
 import ChallengeVariant1 from "./ChallengeVariant1";
 import ChallengeVariant2 from "./ChallengeVariant2";
 import ChallengeVariant3 from "./ChallengeVariant3";
 
-
 export default function ChallengePanel({
-                                           challenge,
-                                       }: {
-    challenge: any;
+  challenge,
+}: {
+  challenge: any;
 }) {
+  const { theme } = useTheme();
 
-    return (
-
-        <div className="relative">
-
-            {/* container */}
-
+  return (
+    <div className="relative">
+      <div
+        className={cn(
+          "overflow-hidden rounded-[3rem] border",
+          theme.colors.borderPrimary,
+          theme.colors.surfacePrimary,
+          theme.shadows.container,
+        )}
+      >
+        <div className="grid lg:grid-cols-[1fr_1.2fr]">
+          <div
+            className={cn(
+              "flex flex-col justify-center p-12 md:p-16",
+              theme.colors.surfacePrimary,
+            )}
+          >
             <div
-                className="
-          overflow-hidden
-          rounded-[3rem]
-          border border-slate-200
-          bg-white
-          shadow-[0_32px_80px_-20px_rgba(15,23,42,0.08)]
-        "
-            >
-
-                {/* ========================================= */}
-                {/* TOP GRID */}
-                {/* ========================================= */}
-
-                <div className="grid lg:grid-cols-[1fr_1.2fr]">
-
-                    {/* LEFT */}
-
-                    <div
-                        className="
-              flex flex-col justify-center
-              bg-white
-              p-12 md:p-16
-            "
-                    >
-
-                        <div
-                            className="
+              className="
                 mb-8
                 flex items-center gap-2
                 font-mono text-[10px]
@@ -57,83 +41,59 @@ export default function ChallengePanel({
                 tracking-[0.3em]
                 text-slate-400
               "
-                        >
+            >
+              <span className="h-1 w-1 rounded-full bg-slate-300" />
 
-                            <span className="h-1 w-1 rounded-full bg-slate-300"/>
+              {challenge.businessLabel}
+            </div>
 
-                            {challenge.businessLabel}
-
-                        </div>
-
-                        <h3
-                            className="
+            <h3
+              className="
                 text-4xl md:text-5xl
                 font-bold italic
                 leading-[1.1]
                 tracking-tighter
                 text-slate-900
               "
-                        >
+            >
+              “{challenge.businessQuote}”
+            </h3>
 
-                            “{challenge.businessQuote}”
+            <div className="mt-8 h-px w-12 bg-slate-100" />
 
-                        </h3>
-
-                        <div className="mt-8 h-px w-12 bg-slate-100"/>
-
-                        <p
-                            className="
+            <p
+              className="
                 mt-8 max-w-sm
                 text-lg font-light
                 leading-relaxed
                 text-slate-500
               "
-                        >
+            >
+              {challenge.businessDescription}
+            </p>
+          </div>
 
-                            {challenge.businessDescription}
+          {challenge.variant === "variant1" && (
+            <ChallengeVariant1 challenge={challenge} />
+          )}
 
-                        </p>
+          {challenge.variant === "variant2" && (
+            <ChallengeVariant2 challenge={challenge} />
+          )}
 
-                    </div>
+          {challenge.variant === "variant3" && (
+            <ChallengeVariant3 challenge={challenge} />
+          )}
+        </div>
 
-                    {/* RIGHT VARIANT */}
-                    {challenge.variant === "variant1" && (
-                        <ChallengeVariant1
-                            challenge={challenge}
-                        />
-                    )}
-
-                    {challenge.variant === "variant2" && (
-                        <ChallengeVariant2
-                            challenge={challenge}
-                        />
-                    )}
-
-                    {challenge.variant === "variant3" && (
-                        <ChallengeVariant3
-                            challenge={challenge}
-                        />
-                    )}
-
-                </div>
-
-                {/* ========================================= */}
-                {/* CONSEQUENCE */}
-                {/* ========================================= */}
-
-                <div
-                    className="
-            relative overflow-hidden
-            border-t border-slate-100
-            bg-slate-50/50
-            p-8 md:p-12
-          "
-                >
-
-                    {/* glow */}
-
-                    <div
-                        className="
+        <div
+          className={cn(
+            "relative overflow-hidden border-t p-8 md:p-12 bg-slate-50/50",
+            theme.colors.borderMuted,
+          )}
+        >
+          <div
+            className="
               absolute -bottom-20 -left-20
               h-64 w-64
               rounded-full
@@ -141,26 +101,22 @@ export default function ChallengePanel({
               blur-[80px]
               pointer-events-none
             "
-                    />
+          />
 
-                    {/* connector */}
-
-                    <div
-                        className="
+          <div
+            className="
               absolute left-1/2 top-0
               hidden
               -translate-x-1/2
               -translate-y-1/2
               lg:block
             "
-                    >
+          >
+            <div className="flex flex-col items-center">
+              <div className="h-6 w-px bg-slate-200" />
 
-                        <div className="flex flex-col items-center">
-
-                            <div className="h-6 w-px bg-slate-200"/>
-
-                            <div
-                                className="
+              <div
+                className="
                   rounded-full
                   bg-slate-900
                   p-2.5
@@ -168,37 +124,26 @@ export default function ChallengePanel({
                   shadow-xl
                   ring-4 ring-white
                 "
-                            >
+              >
+                <ArrowDown
+                  size={14}
+                  className="text-rose-400"
+                  fill="currentColor"
+                />
+              </div>
+            </div>
+          </div>
 
-                                <ArrowDown
-                                    size={14}
-                                    className="text-rose-400"
-                                    fill="currentColor"
-                                />
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* content */}
-
-                    <div className="relative z-10 mx-auto max-w-4xl">
-
-                        <div
-                            className="
+          <div className="relative z-10 mx-auto max-w-4xl">
+            <div
+              className="
                 grid items-start gap-8
                 md:grid-cols-[200px_1fr]
               "
-                        >
-
-                            {/* label */}
-
-                            <div>
-
-                                <div
-                                    className="
+            >
+              <div>
+                <div
+                  className="
                     inline-flex items-center gap-2
                     rounded
                     bg-rose-50
@@ -208,82 +153,54 @@ export default function ChallengePanel({
                     tracking-[0.3em]
                     text-rose-600
                   "
-                                >
+                >
+                  <Activity size={12} />
 
-                                    <Activity size={12}/>
+                  {challenge.consequenceLabel}
+                </div>
+              </div>
 
-                                    {challenge.consequenceLabel}
-
-                                </div>
-
-                            </div>
-
-                            {/* text */}
-
-                            <div className="space-y-4">
-
-                                <h4
-                                    className="
+              <div className="space-y-4">
+                <h4
+                  className="
                     text-2xl font-bold
                     leading-tight
                     tracking-tight
                     text-slate-900
                   "
-                                >
-
-                                    {challenge.consequenceTitleBeg}
-
-                                    {" "}
-
-                                    <span className="relative inline-block">
-
+                >
+                  {challenge.consequenceTitleBeg}{" "}
+                  <span className="relative inline-block">
                     <span className="relative z-10 text-rose-700">
-
                       {challenge.consequenceHighlight}
-
                     </span>
 
                     <span
-                        className="
+                      className="
                         absolute bottom-1 left-0
                         h-2 w-full
                         bg-rose-100
                         -z-0
                       "
                     />
+                  </span>{" "}
+                  {challenge.consequenceTitleEnd}
+                </h4>
 
-                  </span>
-
-                                    {" "}
-
-                                    {challenge.consequenceTitleEnd}
-
-                                </h4>
-
-                                <p
-                                    className="
+                <p
+                  className="
                     text-sm
                     leading-relaxed
                     text-slate-500
                   "
-                                >
-
-                                    {challenge.consequenceDescription}
-
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                >
+                  {challenge.consequenceDescription}
+                </p>
+              </div>
             </div>
-
+          </div>
         </div>
-
-    );
-
+      </div>
+    </div>
+  );
 }

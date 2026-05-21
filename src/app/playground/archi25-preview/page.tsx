@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 import {
   Cpu,
   Layers,
@@ -18,16 +20,30 @@ const tabs = [
 ] as const;
 
 export default function RuntimeArchitectureDense() {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState<TabKey>("topology");
 
   return (
-    <div className="min-h-screen bg-[#F6F7FA] text-[#0B1020] antialiased">
+    <div
+      className={cn(
+        "min-h-screen antialiased",
+        theme.colors.surfacePage,
+        theme.colors.textPrimary,
+      )}
+    >
       {/* ================================================= */}
       {/* NAV */}
       {/* ================================================= */}
 
       <nav className="border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-[64px] max-w-7xl items-center justify-between px-10">
+        <div
+          className={cn(
+            "mx-auto flex items-center justify-between",
+            theme.spacing.container,
+            theme.spacing.navHeightDense,
+            theme.spacing.sectionX,
+          )}
+        >
           <div className="flex items-center gap-9">
             <div className="flex items-center gap-2.5">
               <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#0B1020] text-white">
@@ -61,8 +77,8 @@ export default function RuntimeArchitectureDense() {
       {/* HERO */}
       {/* ================================================= */}
 
-      <header className="px-10 pt-10 pb-7">
-        <div className="mx-auto max-w-7xl">
+      <header className={cn(theme.spacing.sectionX, "pt-10 pb-7")}>
+        <div className={cn("mx-auto", theme.spacing.container)}>
           <div className="mb-2.5 font-mono text-[10px] font-bold tracking-[0.22em] text-indigo-500 uppercase">
             Runtime Architecture Framework
           </div>
@@ -79,13 +95,19 @@ export default function RuntimeArchitectureDense() {
       {/* MAIN */}
       {/* ================================================= */}
 
-      <main className="px-10 pb-24">
-        <div className="mx-auto max-w-7xl">
+      <main className={cn(theme.spacing.sectionX, theme.spacing.sectionY)}>
+        <div className={cn("mx-auto", theme.spacing.container)}>
           {/* ================================================= */}
           {/* CONTROL BAR */}
           {/* ================================================= */}
 
-          <div className="flex flex-col gap-5 border-b border-slate-200 pb-5 lg:flex-row lg:items-end lg:justify-between">
+          <div
+            className={cn(
+              "flex flex-col gap-5 border-b pb-5 lg:flex-row lg:items-end lg:justify-between",
+              theme.colors.borderPrimary,
+              theme.spacing.panelGap,
+            )}
+          >
             <div className="max-w-2xl">
               <div className="mb-2 font-mono text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase">
                 Runtime Isolation Protocol
@@ -122,12 +144,27 @@ export default function RuntimeArchitectureDense() {
           {/* MAIN CONTAINER */}
           {/* ================================================= */}
 
-          <div className="mt-6 overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_25px_70px_-40px_rgba(15,23,42,0.14)]">
+          <div
+            className={cn(
+              "overflow-hidden border",
+              theme.spacing.panelTop,
+              theme.radius.shell,
+              theme.colors.borderPrimary,
+              theme.colors.surfacePrimary,
+              theme.shadows.shell,
+            )}
+          >
             {/* ================================================= */}
             {/* TOP HEADER */}
             {/* ================================================= */}
 
-            <div className="border-b border-slate-100 bg-[#FAFBFD] px-8 py-6">
+            <div
+              className={cn(
+                "border-b px-8 py-6",
+                theme.colors.borderMuted,
+                theme.colors.surfaceMuted,
+              )}
+            >
               <div className="mb-2 font-mono text-[10px] font-bold tracking-[0.2em] text-indigo-500 uppercase">
                 Runtime Impression Profile
               </div>

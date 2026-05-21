@@ -131,8 +131,76 @@ Add a token **only if all three** are true:
 Before adding a token:
 
 - Search existing tokens for the **same class string**.
-- If the value exists, **reuse** the token — do not alias.
+- If the value exists, **reuse** the token — do not create a second name for the same role.
 - If the meaning differs, document why in the PR — do not silently duplicate.
+- **Deprecation aliases** are allowed temporarily (`surfacePageCool` → `surfacePageTinted`) with identical values; remove after consumers migrate.
+
+---
+
+## 3.1 Semantic Surface Rules
+
+Surface tokens describe **structural and state roles** — not aesthetic adjectives, temperature words, or page-specific names.
+
+### Surface hierarchy (canonical)
+
+| Tier | Token | Role |
+|------|-------|------|
+| **0 — Page canvas** | `surfacePage` | Default app background (`#F6F7FA`) |
+| | `surfacePageSubtle` | Neutral subtle page wash (`#F8FAFC` / slate-50) |
+| | `surfacePageTinted` | Cool-tinted page or hero-section canvas (`#FBFDFF`) |
+| **1 — Elevation** | `surfacePrimary` | Cards, panels, top shells (white) |
+| | `surfaceSecondary` | Split columns, secondary bands |
+| | `surfaceMuted` | Panel header strips, soft horizontal bands |
+| | `surfaceInset` | Nested wells, code blocks, footnotes |
+| **2 — State** | `surfaceAccent` / `surfaceAccentSolid` | Accent-tinted regions |
+| | `surfaceCritical` / `surfaceCriticalSolid` | Pressure / risk regions |
+| | `surfaceSuccess` | Resolved / positive tint regions |
+| **3 — Dark** | `surfaceDark` | Full-bleed cinematic section |
+| | `surfaceDarkPanel` | Nested dark panel |
+| | `surfaceDarkElevated` | Elevated node on dark |
+| | `surfaceDarkGradient` | **Exception** — gradient panel only |
+| **Chrome** | `surfaceNav` | Frosted navigation bar (border + fill) |
+| | `surfaceTabTrack` / `surfaceTabActive` | Segmented control track / pill |
+| | `surfaceLogo` | **Exception** — brand mark gradient only |
+
+**Not surface hierarchy:** `interactivePrimary`, `interactiveSecondary`, `interactiveActive` — these are **actions and selection**, not layout canvases. `interactiveActive` may share a fill value with `surfaceTabActive`; the names must not merge.
+
+### Resolved ambiguities
+
+| Former confusion | Resolution |
+|------------------|------------|
+| `surfacePage` vs `surfacePageCool` | Different tiers: default page vs tinted canvas. `surfacePageCool` **deprecated** → `surfacePageTinted`. |
+| `surfacePage` vs hardcoded `#F8FAFC` | Same role as `surfacePageSubtle` — migrate hardcoded page shells to this token. |
+| `surfacePrimary` vs `surfaceMuted` vs `surfaceInset` | **Keep all** — adjacent hex values are intentional elevation steps, not duplicates. |
+| `surfaceTabActive` vs `interactiveActive` | **Keep both** — chrome selection vs interactive role naming. |
+
+### When a new surface token is allowed
+
+Add a surface token **only if all four** are true:
+
+1. **Hierarchy fit** — It maps to Tier 0–3 or a governed Chrome exception.
+2. **Reused** — Multiple components or sections need the same structural role.
+3. **Stable** — The role survives design iterations (not a one-off screen).
+4. **Not expressible** — Existing tier token cannot cover the role without misleading naming.
+
+### When a new surface token is forbidden
+
+| Anti-pattern | Example | Use instead |
+|--------------|---------|-------------|
+| Temperature / mood naming | `surfacePageCool`, `surfaceWarm` | `surfacePageTinted` or theme override |
+| Marketing / luxury naming | `surfacePremium`, `surfaceLuxury` | `surfacePrimary` |
+| Density naming | `surfaceDense`, `surfaceReadable` | `density` profile + existing tiers |
+| Shade micro-variants | `surfacePageSoft`, `surfacePageLight` | Closest tier; do not splinter hex steps |
+| Component-local naming | `surfacePressureHeader` | `surfaceMuted` or `surfacePageSubtle` |
+| Gradient as generic surface | `surfaceHeroGradient` | `surfaceDarkGradient` exception pattern only |
+| One-off arbitrary hex | `bg-[#F8FAFC]` in components | `surfacePageSubtle` |
+
+### Surface token budget
+
+- **Tier 0:** at most three page canvases (`Page`, `PageSubtle`, `PageTinted`).
+- **Tier 1:** four elevation steps — do not add `surfaceTertiary` without deprecating an existing step.
+- **Tier 2:** state roles only (`Accent`, `Critical`, `Success`) — no new palette names.
+- **Chrome:** add only for global UI chrome reused across pages.
 
 ---
 
@@ -141,13 +209,14 @@ Before adding a token:
 ### Required
 
 ```ts
-import { activeTheme } from "@/design-system/theme";
+import { useTheme } from "@/design-system/runtime/useTheme";
 import { cn } from "@/lib/cn";
 
-const theme = activeTheme;
+const { theme } = useTheme();
 ```
 
 - All **visual** styling comes from `theme.spacing`, `theme.typography`, `theme.radius`, `theme.shadows`, `theme.colors`, and when appropriate `theme.density`.
+- `activeTheme` in `theme.ts` is a **static fallback** only until all consumers migrate to `useTheme()`.
 - Props like `className` may extend layout or positioning — not replace core visual tokens.
 
 ### Forbidden in components
@@ -243,10 +312,12 @@ Use this checklist on every PR that touches `src/design-system/**` or component 
 - [ ] Does this create **duplication** with an existing token?
 - [ ] Does the name avoid **density/marketing/emotional** words?
 - [ ] Does the name use **role-based** color words (not palette names)?
+- [ ] If a **surface** token: does it fit the hierarchy table (§3.1)?
+- [ ] If a **surface** token: is it a Tier 0–3 or governed Chrome exception?
 
 ### Before merging component changes
 
-- [ ] Component uses `activeTheme` (not raw visual Tailwind)?
+- [ ] Component uses `useTheme()` (or approved static fallback during migration)?
 - [ ] Only layout/behavior utilities are raw?
 - [ ] `className` overrides do not replace core visual tokens?
 - [ ] No new visual values smuggled in via arbitrary classes?
