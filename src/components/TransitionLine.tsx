@@ -11,51 +11,46 @@ type Props = {
 export default function TransitionLine({ text, dark = false }: Props) {
   const { theme } = useTheme();
 
+  const lineTone = dark
+    ? "bg-gradient-to-b from-transparent via-indigo-400/35 to-transparent"
+    : "bg-gradient-to-b from-transparent via-indigo-300/70 to-transparent";
+
+  const axisTone = dark
+    ? "bg-gradient-to-r from-transparent via-indigo-400/30 to-transparent"
+    : "bg-gradient-to-r from-transparent via-slate-300 to-transparent";
+
   return (
-    <div className="mb-10 flex flex-col items-center">
-      {/* top line */}
+    <div className="mb-4 flex flex-col items-center py-3">
+      <div className={cn("h-5 w-px", lineTone)} />
 
-      <div
-        className={
-          dark
-            ? "h-16 w-px bg-gradient-to-b from-transparent via-indigo-400/40 to-transparent"
-            : "h-16 w-px bg-gradient-to-b from-transparent via-indigo-200 to-transparent"
-        }
-      />
+      <div className="flex items-center gap-2.5">
+        <div className={cn("h-px w-8", axisTone)} />
 
-      {/* pill */}
+        <div
+          className={cn(
+            theme.radius.chip,
+            theme.typography.transitionBridge,
+            "border px-3.5 py-1",
+            dark
+              ? cn(
+                  theme.colors.borderOnDark,
+                  theme.colors.textAccentSoft,
+                  "bg-white/[0.04]",
+                )
+              : cn(
+                  theme.colors.borderAccent,
+                  theme.colors.surfacePrimary,
+                  theme.colors.textAccentStrong,
+                ),
+          )}
+        >
+          {text}
+        </div>
 
-      <div
-        className={cn(
-          theme.radius.pill,
-          theme.typography.sectionEyebrow,
-          "font-semibold tracking-[0.18em]",
-          theme.shadows.sm,
-          dark
-            ? cn(
-                theme.colors.borderOnDark,
-                theme.colors.textAccentSoft,
-                "bg-white/5 backdrop-blur-sm",
-              )
-            : cn(
-                theme.colors.borderAccent,
-                theme.colors.surfacePrimary,
-                theme.colors.textAccentStrong,
-              ),
-        )}
-      >
-        <span className="px-5 py-2">{text}</span>
+        <div className={cn("h-px w-8", axisTone)} />
       </div>
 
-      {/* bottom line */}
-
-      <div
-        className={
-          dark
-            ? "h-16 w-px bg-gradient-to-b from-transparent via-indigo-400/40 to-transparent"
-            : "h-16 w-px bg-gradient-to-b from-transparent via-indigo-200 to-transparent"
-        }
-      />
+      <div className={cn("h-5 w-px", lineTone)} />
     </div>
   );
 }

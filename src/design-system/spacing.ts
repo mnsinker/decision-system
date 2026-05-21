@@ -65,7 +65,7 @@ export const spacing = {
 
   /** Segmented tab item padding */
   tabItemPadding: "px-5 py-2.5",
-  tabShellPadding: "p-1",
+  tabShellPadding: "p-[5px]",
 
   /** Footer vertical padding */
   footerPaddingY: "py-12",
@@ -79,4 +79,14 @@ export const spacing = {
 
   /** Nav link row gap */
   navLinkGap: "gap-8",
+
+  /** Narrative rhythm — intentional vertical flow between regions */
+  narrativeBridgeBlock: "flex flex-col items-center py-5",
+  narrativeBridgeMargin: "mb-6",
+  narrativeBridgeLine: "h-9 w-px",
+  narrativeBridgeAxis: "h-px w-10",
+  narrativeBridgeInset: "gap-3",
+  narrativeAfterBridge: "mt-8",
+  narrativeSectionContent: "mt-12",
+  narrativeExplainerTop: "mt-5",
 } as const;

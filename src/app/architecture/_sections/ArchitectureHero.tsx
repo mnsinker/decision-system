@@ -20,10 +20,10 @@ export default function ArchitectureHero() {
    */
 
   const visualPositionClass =
-    "translate-x-[0px] translate-y-[-50px] scale-[0.7]";
+    "translate-x-[0px] translate-y-[-28px] scale-[0.74]";
 
-  const layerGap = 130;
-  const layerTopOffset = 70;
+  const layerGap = 96;
+  const layerTopOffset = 52;
   const layers = [
     {
       label: content.layers[0].label,
@@ -77,7 +77,7 @@ export default function ArchitectureHero() {
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b pt-10 pb-9",
+        "relative overflow-hidden border-b pt-10 pb-7",
         theme.spacing.sectionXComfort,
         theme.colors.borderPrimary,
         theme.colors.surfacePageTinted,
@@ -95,7 +95,7 @@ export default function ArchitectureHero() {
 
       <div
         className={cn(
-          "relative mx-auto grid items-center lg:grid-cols-[1fr_0.95fr]",
+          "relative mx-auto grid items-start lg:grid-cols-[1fr_0.95fr]",
           theme.spacing.container,
           theme.spacing.gridSplit,
         )}
@@ -105,16 +105,20 @@ export default function ArchitectureHero() {
         <div className="relative z-10">
           <div
             className={cn(
-              theme.spacing.headerBottomWide,
-              theme.typography.sectionEyebrow,
-              theme.colors.textAccent,
+              theme.spacing.eyebrowBottom,
+              theme.typography.moduleLabel,
               eyebrowText(locale),
             )}
           >
             {content.eyebrow}
           </div>
           <h1
-            className={`max-w-[1200px] text-7xl font-black text-slate-950 ${displayTitle(locale)}`}
+            className={cn(
+              "max-w-4xl",
+              theme.typography.pageHero,
+              theme.colors.textPrimary,
+              displayTitle(locale),
+            )}
           >
             {content.title.line1} <br />
             <span className="bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
@@ -124,7 +128,9 @@ export default function ArchitectureHero() {
 
           <p
             className={cn(
-              "mt-7 max-w-2xl text-xl font-light",
+              "max-w-2xl",
+              theme.spacing.narrativeExplainerTop,
+              theme.typography.explainer,
               theme.colors.textMuted,
               bodyText(locale),
             )}
@@ -136,9 +142,9 @@ export default function ArchitectureHero() {
         {/* right visual */}
 
         <div
-          className={`relative flex items-center justify-center pt-8 lg:pt-0 ${visualPositionClass}`}
+          className={`relative flex items-start justify-center overflow-hidden pt-2 lg:max-h-[400px] lg:pt-0 ${visualPositionClass}`}
         >
-          <div className="relative h-[600px] w-full max-w-[450px] [perspective:1500px]">
+          <div className="relative h-[400px] w-full max-w-[360px] [perspective:1500px]">
             <div
               className="relative h-full w-full [transform:rotateX(58deg)_rotateZ(-28deg)] [transform-style:preserve-3d]"
               style={
@@ -151,7 +157,7 @@ export default function ArchitectureHero() {
               {layers.map((layer, index) => (
                 <div
                   key={layer.label}
-                  className={`layer-float absolute left-0 h-44 w-full`}
+                  className={`layer-float absolute left-0 h-[9.5rem] w-full`}
                   style={
                     {
                       top: layer.top,
@@ -200,7 +206,7 @@ export default function ArchitectureHero() {
           }
 
           50% {
-            transform: translateZ(var(--z)) translateY(-12px);
+            transform: translateZ(var(--z)) translateY(-8px);
           }
         }
       `}</style>

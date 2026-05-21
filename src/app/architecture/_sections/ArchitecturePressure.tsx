@@ -39,18 +39,16 @@ export default function ArchitecturePressure() {
   const current = content.modules[activeTab as keyof typeof content.modules];
 
   return (
-    <section
-      className={cn(theme.spacing.sectionXComfort, theme.spacing.sectionYMid)}
-    >
+    <section className={cn(theme.spacing.sectionXComfort, "py-12")}>
       <div className={cn("mx-auto", theme.spacing.container)}>
         <SectionHeader
           eyebrow={content.eyebrow}
           title={content.sectionTitle}
           label={content.label}
-          size="md"
+          role="section"
         />
 
-        <div className={theme.spacing.tabsTop}>
+        <div className="mt-5">
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
@@ -80,7 +78,7 @@ export default function ArchitecturePressure() {
             <div
               className={cn(
                 theme.spacing.eyebrowBottom,
-                theme.typography.monoLabelAccent,
+                theme.typography.moduleLabel,
               )}
             >
               {content.label}
@@ -88,8 +86,8 @@ export default function ArchitecturePressure() {
 
             <h3
               className={cn(
-                "max-w-5xl",
-                theme.typography.quote,
+                "max-w-5xl italic",
+                theme.typography.narrativeHero,
                 theme.colors.textPrimary,
                 sectionTitle(locale),
               )}

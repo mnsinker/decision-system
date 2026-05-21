@@ -19,7 +19,7 @@ export default function OverviewLifecycle() {
         theme.colors.surfaceDark,
         theme.colors.textOnDark,
         theme.spacing.sectionXComfort,
-        theme.spacing.sectionYDark,
+        "py-20 md:py-24",
       )}
     >
       {/* subtle grid */}
@@ -39,17 +39,19 @@ export default function OverviewLifecycle() {
         <TransitionLine text={content.transition} dark />
 
         {/* narrative */}
-        <SectionHeader
-          eyebrow={content.sectionLabel}
-          title={`${content.title.line1}\n${content.title.line2}`}
-          subtitle={content.subtitle}
-          align="center"
-          dark
-          size="xl"
-        />
+        <div className="mt-6">
+          <SectionHeader
+            eyebrow={content.sectionLabel}
+            title={`${content.title.line1}\n${content.title.line2}`}
+            subtitle={content.subtitle}
+            align="center"
+            dark
+            role="runtime"
+          />
+        </div>
 
         {/* lifecycle rail */}
-        <div className="relative mt-20">
+        <div className="relative mt-10">
           {/* center line */}
           <div className="absolute top-7 left-0 h-px w-full bg-gradient-to-r from-transparent via-indigo-300/30 to-transparent" />
 
@@ -83,11 +85,22 @@ export default function OverviewLifecycle() {
                     theme.spacing.cardPaddingSpacious,
                   )}
                 >
-                  <div className="text-2xl font-bold text-white">
+                  <div
+                    className={cn(
+                      theme.typography.cardTitle,
+                      "text-white",
+                    )}
+                  >
                     {step.title}
                   </div>
 
-                  <p className="mt-4 leading-relaxed text-slate-400">
+                  <p
+                    className={cn(
+                      "mt-4",
+                      theme.typography.explainer,
+                      theme.colors.textOnDarkMuted,
+                    )}
+                  >
                     {step.desc}
                   </p>
                 </div>

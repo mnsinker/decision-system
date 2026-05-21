@@ -15,11 +15,11 @@ export default function OverviewHero() {
   const content = overviewHeroContent[locale];
 
   return (
-    <section className="relative pt-20 pb-16">
+    <section className="relative pt-10 pb-8">
       {/* Background */}
-      <div className="absolute top-0 left-1/2 -z-10 h-[600px] w-full -translate-x-1/2 opacity-40">
+      <div className="absolute top-0 left-1/2 -z-10 h-[420px] w-full -translate-x-1/2 opacity-25">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,#e2e8f0_0%,transparent_50%)]" />
-        <div className="absolute top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-indigo-200/50 blur-[120px]" />
+        <div className="absolute top-12 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-indigo-200/40 blur-[100px]" />
       </div>
 
       <div
@@ -28,22 +28,27 @@ export default function OverviewHero() {
         {/* Top Badge */}
         <div
           className={cn(
-            theme.spacing.headerBottomWide,
-            "inline-flex items-center px-4 py-1.5 uppercase shadow-sm",
+            theme.spacing.eyebrowBottom,
+            "inline-flex items-center px-3 py-1 uppercase",
             theme.spacing.inlineGapTight,
-            theme.radius.pill,
+            theme.radius.chip,
             theme.colors.borderAccent,
             theme.colors.surfaceAccent,
-            theme.typography.tabLabel,
-            theme.colors.textAccentStrong,
+            theme.typography.moduleLabel,
           )}
         >
-          <Activity size={14} />
+          <Activity size={12} />
           {content.badge}
         </div>
 
         {/* Heading */}
-        <h1 className="max-w-5xl text-5xl leading-[1.1] font-bold tracking-tight text-slate-900 md:text-7xl">
+        <h1
+          className={cn(
+            "max-w-4xl",
+            theme.typography.pageHero,
+            theme.colors.textPrimary,
+          )}
+        >
           {content.title.normal}
 
           <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
@@ -55,12 +60,19 @@ export default function OverviewHero() {
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-slate-600 md:text-xl">
+        <p
+          className={cn(
+            "max-w-2xl",
+            theme.spacing.narrativeExplainerTop,
+            theme.typography.explainer,
+            theme.colors.textMuted,
+          )}
+        >
           {content.subtitle}
         </p>
 
         {/* CTA */}
-        <div className="mt-12 flex flex-wrap items-center gap-4">
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <PrimaryButton
             icon={
               <ArrowRight

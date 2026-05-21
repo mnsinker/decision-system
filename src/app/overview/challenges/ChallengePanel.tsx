@@ -20,58 +20,52 @@ export default function ChallengePanel({
       <div
         className={cn(
           "overflow-hidden border",
-          theme.radius.panelLg,
+          theme.radius.shell,
           theme.colors.borderPrimary,
           theme.colors.surfacePrimary,
-          theme.shadows.container,
+          theme.shadows.shell,
         )}
       >
         <div className="grid lg:grid-cols-[1fr_1.2fr]">
           <div
             className={cn(
-              "flex flex-col justify-center p-12 md:p-16",
+              "flex flex-col justify-start p-8 md:p-9 lg:pr-8",
               theme.colors.surfacePrimary,
             )}
           >
-            <div
-              className="
-                mb-8
-                flex items-center gap-2
-                font-mono text-[10px]
-                font-bold uppercase
-                tracking-[0.3em]
-                text-slate-400
-              "
-            >
-              <span className="h-1 w-1 rounded-full bg-slate-300" />
+            <div className="max-w-[14.5rem] space-y-4">
+              <div
+                className={cn(
+                  "flex items-center gap-2",
+                  cn(theme.typography.moduleLabel, "text-slate-400"),
+                )}
+              >
+                <span className="h-1 w-1 rounded-full bg-slate-300" />
 
-              {challenge.businessLabel}
+                {challenge.businessLabel}
+              </div>
+
+              <blockquote
+                className={cn(
+                  "border-l border-slate-200/80 pl-3.5",
+                  theme.typography.cardTitle,
+                  "text-[19px] font-medium leading-[1.45] tracking-normal text-slate-600 not-italic",
+                )}
+              >
+                “{challenge.businessQuote}”
+              </blockquote>
+
+              <div className="h-px w-8 bg-slate-100" />
+
+              <p
+                className={cn(
+                  theme.typography.explainer,
+                  "max-w-[15.5rem] font-medium leading-[1.65] text-slate-600",
+                )}
+              >
+                {challenge.businessDescription}
+              </p>
             </div>
-
-            <h3
-              className="
-                text-4xl md:text-5xl
-                font-bold italic
-                leading-[1.1]
-                tracking-tighter
-                text-slate-900
-              "
-            >
-              “{challenge.businessQuote}”
-            </h3>
-
-            <div className="mt-8 h-px w-12 bg-slate-100" />
-
-            <p
-              className="
-                mt-8 max-w-sm
-                text-lg font-light
-                leading-relaxed
-                text-slate-500
-              "
-            >
-              {challenge.businessDescription}
-            </p>
           </div>
 
           {challenge.variant === "variant1" && (
@@ -89,7 +83,7 @@ export default function ChallengePanel({
 
         <div
           className={cn(
-            "relative overflow-hidden border-t p-8 md:p-12",
+            "relative overflow-hidden border-t p-6 md:p-8",
             theme.colors.borderMuted,
             theme.colors.surfaceMuted,
           )}
@@ -164,12 +158,10 @@ export default function ChallengePanel({
 
               <div className="space-y-4">
                 <h4
-                  className="
-                    text-2xl font-bold
-                    leading-tight
-                    tracking-tight
-                    text-slate-900
-                  "
+                  className={cn(
+                    theme.typography.cardTitle,
+                    theme.colors.textPrimary,
+                  )}
                 >
                   {challenge.consequenceTitleBeg}{" "}
                   <span className="relative inline-block">
@@ -189,13 +181,7 @@ export default function ChallengePanel({
                   {challenge.consequenceTitleEnd}
                 </h4>
 
-                <p
-                  className="
-                    text-sm
-                    leading-relaxed
-                    text-slate-500
-                  "
-                >
+                <p className={theme.typography.bodySmall}>
                   {challenge.consequenceDescription}
                 </p>
               </div>

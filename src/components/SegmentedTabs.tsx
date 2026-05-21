@@ -47,37 +47,43 @@ export default function SegmentedTabs({
   return (
     <div
       className={cn(
-        "inline-flex border",
-        theme.radius.pill,
+        "inline-flex gap-1 border",
+        theme.radius.panel,
         theme.colors.borderPrimary,
         theme.colors.surfaceTabTrack,
-        theme.spacing.tabShellPadding,
+        "p-1.5",
         theme.shadows.control,
+        theme.shadows.tabTrackInset,
       )}
     >
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => onChange(tab.id)}
-          className={cn(
-            theme.radius.pill,
-            theme.spacing.tabItemPadding,
-            theme.typography.tabLabel,
-            "transition-all duration-300",
-            activeTab === tab.id
-              ? cn(
-                  theme.colors.surfaceTabActive,
-                  theme.shadows.controlActive,
-                )
-              : cn(
-                  theme.colors.textTabInactive,
-                  theme.colors.textTabInactiveHover,
-                ),
-          )}
-        >
-          {tab.label}
-        </button>
-      ))}
+      {tabs.map((tab) => {
+        const isActive = activeTab === tab.id;
+
+        return (
+          <button
+            key={tab.id}
+            onClick={() => onChange(tab.id)}
+            className={cn(
+              isActive ? theme.radius.card : theme.radius.cardMd,
+              theme.spacing.tabItemPadding,
+              theme.typography.tabLabel,
+              "transition-[color,box-shadow,transform] duration-200",
+              isActive
+                ? cn(
+                    "ring-1 ring-black/[0.04]",
+                    theme.colors.surfaceTabActive,
+                    theme.shadows.controlActive,
+                  )
+                : cn(
+                    theme.colors.textTabInactive,
+                    theme.colors.textTabInactiveHover,
+                  ),
+            )}
+          >
+            {tab.label}
+          </button>
+        );
+      })}
     </div>
   );
 }

@@ -2,7 +2,7 @@
  * Semantic color roles — no raw palette naming (rose, emerald, indigo).
  * Values preserve the current restrained slate / indigo / emerald / rose feel exactly.
  *
- * Surface hierarchy (see GOVERNANCE.md § Semantic Surface Rules):
+ * Surface hierarchy (see DESIGN_SYSTEM.md):
  *   Tier 0 — page canvas
  *   Tier 1 — structural elevation (primary → inset)
  *   Tier 2 — semantic state (accent, critical, success)

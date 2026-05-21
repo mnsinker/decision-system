@@ -1,37 +1,59 @@
 /**
- * Semantic typography tokens — compact, premium, restrained.
- * Sized for information-dense architecture content, not marketing hero scale.
+ * Narrative typography roles — premiumDense semantic hierarchy.
+ *
+ * pageHero > runtimeNarrative ≈ narrativeHero > sectionHero > quote > cardTitle
+ * transitionBridge · explainer · moduleLabel support rhythm, not dominance.
  */
+
+const pageHero =
+  "text-[42px] md:text-[46px] leading-[0.94] tracking-[-0.065em] font-[620] text-[#0B1020]";
+
+const sectionHero =
+  "text-[25px] md:text-[27px] leading-[1.04] tracking-[-0.045em] font-[620] text-[#0B1020]";
+
+const narrativeHero =
+  "text-[30px] md:text-[32px] leading-[1.02] tracking-[-0.05em] font-[620] text-[#0B1020]";
+
+const runtimeNarrative =
+  "text-[30px] md:text-[32px] leading-[1.03] tracking-[-0.048em] font-[620]";
+
 export const typography = {
-  /** Page-level hero headline */
-  hero: "text-[32px] leading-[0.95] tracking-[-0.06em] font-[620] text-[#0B1020]",
+  /** 1 — Page entry statement (Overview + Architecture heroes only) */
+  pageHero,
 
-  /** Large marketing hero (overview pages) */
-  heroDisplay: "text-5xl leading-[1.1] font-bold tracking-tight text-slate-900 md:text-7xl",
+  /** 2 — Structural section title; analytical, never emotional */
+  sectionHero,
 
-  /** Section headline */
-  sectionTitle:
-    "text-[25px] leading-[1.02] tracking-[-0.05em] font-[620] text-[#0B1020]",
+  /** 3 — In-section emotional / runtime emphasis (light surfaces) */
+  narrativeHero,
 
-  /** Section headline — responsive variant */
-  sectionTitleResponsive: "text-3xl leading-[1.02] font-bold tracking-tight text-slate-900 md:text-5xl",
+  /** 4 — Inter-section bridge label */
+  transitionBridge:
+    "font-mono text-[11px] font-semibold tracking-[0.2em] uppercase",
 
-  /** Card / module headline */
+  /** 5 — Supporting explanatory copy under heroes / headers */
+  explainer: "text-[15px] leading-[1.65] text-slate-500",
+
+  /** 6 — Dark-section orchestration headline */
+  runtimeNarrative,
+
+  /** 7 — Eyebrow, runtime, and module chrome labels */
+  moduleLabel:
+    "font-mono text-[10px] uppercase tracking-[0.18em] font-bold text-indigo-500",
+
+  /** Business-case pull quote */
+  quote:
+    "text-[23px] leading-[1.08] font-[620] tracking-[-0.04em] italic text-[#0B1020]",
+
+  /** Card / module structured title */
   cardTitle:
     "text-[20px] leading-tight tracking-[-0.03em] font-[620] text-slate-900",
-
-  /** Pull quote / business case emphasis */
-  quote:
-    "text-[25px] leading-[1.08] font-[620] tracking-[-0.04em] italic text-[#0B1020]",
 
   /** Primary body copy */
   body: "text-[14px] leading-6 text-slate-500",
 
   /** Secondary / supporting body copy */
   bodySmall: "text-[13px] leading-6 text-slate-500",
-
-  /** Comfortable subtitle (overview hero) */
-  subtitle: "text-lg leading-relaxed text-slate-600 md:text-xl",
 
   /** Section subtitle under headers */
   sectionSubtitle: "text-base leading-7 text-slate-500",
@@ -40,7 +62,7 @@ export const typography = {
   monoLabel:
     "font-mono text-[10px] uppercase tracking-[0.18em] font-bold",
 
-  /** Mono label — accent (indigo) */
+  /** @deprecated Use moduleLabel */
   monoLabelAccent:
     "font-mono text-[10px] uppercase tracking-[0.18em] font-bold text-indigo-500",
 
@@ -61,12 +83,6 @@ export const typography = {
   bodyDark: "leading-relaxed text-slate-400",
   sectionTitleDark: "font-bold tracking-tight text-white",
 
-  /** Section header — xl size */
-  sectionTitleXl: "text-5xl md:text-7xl",
-
-  /** Section header — md size */
-  sectionTitleMd: "text-3xl md:text-4xl",
-
   /** Section header eyebrow */
   sectionEyebrow:
     "font-mono text-[11px] font-bold tracking-[0.3em] uppercase",
@@ -81,6 +97,29 @@ export const typography = {
   /** Footer copy */
   footerText: "text-sm text-slate-500",
 
-  /** Section title weight / tracking */
-  titleWeight: "font-bold tracking-tight",
+  // —— Legacy aliases (do not use in new code) ——
+
+  /** @deprecated Use pageHero */
+  hero: pageHero,
+
+  /** @deprecated Use pageHero */
+  heroDisplay: pageHero,
+
+  /** @deprecated Use sectionHero */
+  sectionTitle: sectionHero,
+
+  /** @deprecated Use sectionHero */
+  sectionTitleMd: sectionHero,
+
+  /** @deprecated Use sectionHero */
+  sectionTitleResponsive: sectionHero,
+
+  /** @deprecated Use narrativeHero */
+  sectionTitleXl: narrativeHero,
+
+  /** @deprecated Tokens carry weight; avoid stacking bold */
+  titleWeight: "tracking-tight",
+
+  /** @deprecated Use sectionSubtitle */
+  subtitle: "text-base leading-7 text-slate-500",
 } as const;

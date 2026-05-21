@@ -28,7 +28,7 @@ export default function OverviewUseCases() {
   return (
     <div
       className={cn(
-        "min-h-screen py-28",
+        "min-h-screen py-16",
         theme.colors.surfacePrimary,
         theme.colors.textSecondary,
         theme.spacing.sectionXComfort,
@@ -55,23 +55,24 @@ export default function OverviewUseCases() {
               bg-clip-text
               text-transparent
               "
-          size="xl"
+          role="section"
         />
 
         {/* cards */}
 
         <div
           className={cn(
-            "mt-22 grid lg:grid-cols-3",
-            theme.spacing.containerGapWide,
+            "grid lg:grid-cols-3",
+            theme.spacing.narrativeSectionContent,
+            theme.spacing.containerGap,
           )}
         >
           {useCases.map((item, idx) => (
             <div
               key={idx}
               className={cn(
-                "group flex flex-col border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-slate-200",
-                theme.radius.panelLg,
+                "group flex flex-col border transition-shadow duration-200 hover:shadow-md",
+                theme.radius.shell,
                 theme.colors.borderPrimary,
                 theme.colors.surfacePrimary,
                 theme.shadows.sm,
@@ -83,7 +84,12 @@ export default function OverviewUseCases() {
                 {/* top row */}
 
                 <div className="flex items-center justify-between">
-                  <span className={theme.typography.monoLabelMuted}>
+                  <span
+                    className={cn(
+                      theme.typography.moduleLabel,
+                      "text-slate-400",
+                    )}
+                  >
                     {item.label}
                   </span>
 
@@ -102,13 +108,19 @@ export default function OverviewUseCases() {
 
                 {/* title */}
 
-                <h3 className="mt-10 text-4xl font-bold tracking-tight text-slate-900">
+                <h3
+                  className={cn(
+                    "mt-6",
+                    theme.typography.cardTitle,
+                    theme.colors.textPrimary,
+                  )}
+                >
                   {item.title}
                 </h3>
 
                 {/* desc */}
 
-                <p className="mt-4 text-base leading-relaxed text-slate-500">
+                <p className={cn("mt-3", theme.typography.body)}>
                   {item.description}
                 </p>
               </div>
@@ -172,11 +184,11 @@ export default function OverviewUseCases() {
         {/* CTA */}
 
         <div className="mt-1 flex flex-col items-center">
-          <div className="mb-12 h-18 w-px bg-gradient-to-b from-slate-200 to-transparent" />
+          <div className="mb-8 h-14 w-px bg-gradient-to-b from-slate-200 to-transparent" />
 
           <button
             className={cn(
-              "group flex items-center transition-all hover:scale-[1.02] hover:bg-indigo-600 active:scale-95",
+              "group flex items-center transition-colors hover:bg-indigo-600",
               theme.spacing.inlineGap,
               theme.radius.buttonLg,
               theme.spacing.buttonPadding,
@@ -205,7 +217,9 @@ export default function OverviewUseCases() {
               )}
             />
 
-            <span className={theme.typography.monoLabelMuted}>
+            <span
+              className={cn(theme.typography.moduleLabel, "text-slate-400")}
+            >
               Formalized Logic & Auditability
             </span>
           </div>
