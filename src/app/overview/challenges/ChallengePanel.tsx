@@ -19,7 +19,8 @@ export default function ChallengePanel({
     <div className="relative">
       <div
         className={cn(
-          "overflow-hidden rounded-[3rem] border",
+          "overflow-hidden border",
+          theme.radius.panelLg,
           theme.colors.borderPrimary,
           theme.colors.surfacePrimary,
           theme.shadows.container,
@@ -88,8 +89,9 @@ export default function ChallengePanel({
 
         <div
           className={cn(
-            "relative overflow-hidden border-t p-8 md:p-12 bg-slate-50/50",
+            "relative overflow-hidden border-t p-8 md:p-12",
             theme.colors.borderMuted,
+            theme.colors.surfaceMuted,
           )}
         >
           <div

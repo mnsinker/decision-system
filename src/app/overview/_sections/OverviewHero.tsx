@@ -26,7 +26,18 @@ export default function OverviewHero() {
         className={cn("mx-auto", theme.spacing.container, theme.spacing.sectionXComfort)}
       >
         {/* Top Badge */}
-        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50/50 px-4 py-1.5 text-xs font-bold tracking-wider text-indigo-600 uppercase shadow-sm">
+        <div
+          className={cn(
+            theme.spacing.headerBottomWide,
+            "inline-flex items-center px-4 py-1.5 uppercase shadow-sm",
+            theme.spacing.inlineGapTight,
+            theme.radius.pill,
+            theme.colors.borderAccent,
+            theme.colors.surfaceAccent,
+            theme.typography.tabLabel,
+            theme.colors.textAccentStrong,
+          )}
+        >
           <Activity size={14} />
           {content.badge}
         </div>

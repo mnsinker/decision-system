@@ -53,16 +53,36 @@ export default function OverviewLifecycle() {
           {/* center line */}
           <div className="absolute top-7 left-0 h-px w-full bg-gradient-to-r from-transparent via-indigo-300/30 to-transparent" />
 
-          <div className="relative grid gap-8 md:grid-cols-4">
+          <div
+            className={cn(
+              "relative grid md:grid-cols-4",
+              theme.spacing.containerGapWide,
+            )}
+          >
             {content.steps.map((step) => (
               <div key={step.num} className="group relative">
                 {/* node */}
-                <div className="relative z-10 mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-[#0B183D] text-sm font-bold text-indigo-300 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
+                <div
+                  className={cn(
+                    "relative z-10 mx-auto flex h-14 w-14 items-center justify-center text-sm font-bold shadow-[0_0_0_1px_rgba(255,255,255,0.02)]",
+                    theme.radius.buttonLg,
+                    theme.colors.borderOnDark,
+                    theme.colors.surfaceDarkElevated,
+                    theme.colors.textAccentSoft,
+                  )}
+                >
                   {step.num}
                 </div>
 
                 {/* card */}
-                <div className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-indigo-300/20 group-hover:bg-white/[0.05]">
+                <div
+                  className={cn(
+                    "mt-8 border bg-white/[0.03] backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-indigo-300/20 group-hover:bg-white/[0.05]",
+                    theme.radius.buttonLg,
+                    theme.colors.borderOnDark,
+                    theme.spacing.cardPaddingSpacious,
+                  )}
+                >
                   <div className="text-2xl font-bold text-white">
                     {step.title}
                   </div>

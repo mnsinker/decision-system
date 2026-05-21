@@ -18,10 +18,16 @@ export default function OverviewChallenges() {
   const [activeTab, setActiveTab] = useState("challenge1");
 
   return (
-    <section className="py-8">
+    <section
+      className={cn(
+        theme.spacing.sectionXComfort,
+        theme.colors.surfacePrimary,
+        "py-8",
+      )}
+    >
       <TransitionLine text={content.transition} />
 
-      <div className={cn("mx-auto", theme.spacing.container, theme.spacing.sectionXComfort)}>
+      <div className={cn("mx-auto", theme.spacing.container)}>
         {/* header */}
 
         <SectionHeader

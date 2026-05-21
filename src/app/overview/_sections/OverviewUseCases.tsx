@@ -60,7 +60,12 @@ export default function OverviewUseCases() {
 
         {/* cards */}
 
-        <div className="mt-22 grid gap-8 lg:grid-cols-3">
+        <div
+          className={cn(
+            "mt-22 grid lg:grid-cols-3",
+            theme.spacing.containerGapWide,
+          )}
+        >
           {useCases.map((item, idx) => (
             <div
               key={idx}
@@ -74,15 +79,23 @@ export default function OverviewUseCases() {
             >
               {/* top white surface */}
 
-              <div className="p-7 pb-6">
+              <div className={cn(theme.spacing.cardPaddingComfort, "pb-6")}>
                 {/* top row */}
 
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] font-bold tracking-widest text-slate-400">
+                  <span className={theme.typography.monoLabelMuted}>
                     {item.label}
                   </span>
 
-                  <div className="rounded-xl border border-slate-100 bg-slate-50 p-2 text-indigo-600">
+                  <div
+                    className={cn(
+                      "p-2",
+                      theme.radius.icon,
+                      theme.colors.borderMuted,
+                      theme.colors.surfaceInset,
+                      theme.colors.textAccentStrong,
+                    )}
+                  >
                     {icons[idx]}
                   </div>
                 </div>
@@ -102,7 +115,14 @@ export default function OverviewUseCases() {
 
               {/* runtime strip */}
 
-              <div className="mx-2 mt-auto mb-2 overflow-hidden rounded-[2rem] bg-[#0F172A] p-7">
+              <div
+                className={cn(
+                  "mx-2 mt-auto mb-2 overflow-hidden",
+                  theme.radius.buttonLg,
+                  theme.colors.surfaceDarkPanel,
+                  theme.spacing.cardPaddingComfort,
+                )}
+              >
                 {/* runtime top */}
 
                 <div className="mb-6 flex items-center justify-between">
@@ -154,7 +174,17 @@ export default function OverviewUseCases() {
         <div className="mt-1 flex flex-col items-center">
           <div className="mb-12 h-18 w-px bg-gradient-to-b from-slate-200 to-transparent" />
 
-          <button className="group flex items-center gap-3 rounded-2xl bg-slate-900 px-10 py-5 text-lg font-bold text-white shadow-xl shadow-slate-200 transition-all hover:scale-[1.02] hover:bg-indigo-600 active:scale-95">
+          <button
+            className={cn(
+              "group flex items-center transition-all hover:scale-[1.02] hover:bg-indigo-600 active:scale-95",
+              theme.spacing.inlineGap,
+              theme.radius.buttonLg,
+              theme.spacing.buttonPadding,
+              theme.typography.button,
+              theme.colors.interactivePrimary,
+              theme.shadows.buttonPrimaryHover,
+            )}
+          >
             Explore in Architecture
             <ArrowRight
               size={20}
@@ -162,10 +192,20 @@ export default function OverviewUseCases() {
             />
           </button>
 
-          <div className="mt-8 flex items-center gap-2">
-            <span className="h-1 w-1 rounded-full bg-indigo-500" />
+          <div
+            className={cn(
+              "mt-8 flex items-center",
+              theme.spacing.inlineGapTight,
+            )}
+          >
+            <span
+              className={cn(
+                "h-1 w-1 rounded-full",
+                theme.colors.textAccent,
+              )}
+            />
 
-            <span className="font-mono text-[10px] tracking-widest text-slate-400 uppercase">
+            <span className={theme.typography.monoLabelMuted}>
               Formalized Logic & Auditability
             </span>
           </div>
