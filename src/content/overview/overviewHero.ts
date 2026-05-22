@@ -11,7 +11,7 @@ export const overviewHeroContent = {
     subtitle:
       "A reusable architecture for operational workflows, policy evaluation, dependency resolution, and multi-step execution.",
 
-    primaryButton: "See operational pressure",
+    primaryButton: "See operational challenges",
 
     secondaryButton: "Architecture",
   },

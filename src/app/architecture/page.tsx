@@ -7,6 +7,7 @@ import { cn } from "@/lib/cn";
 
 import ArchitectureHero from "./_sections/ArchitectureHero";
 import ArchitecturePressure from "./_sections/ArchitecturePressure";
+import ArchitectureLayers from "./_sections/ArchitectureLayers";
 
 export default function ArchitecturePage() {
   const { theme } = useTheme();
@@ -24,6 +25,8 @@ export default function ArchitecturePage() {
       <ArchitectureHero />
 
       <ArchitecturePressure />
+
+      <ArchitectureLayers />
 
       <Footer />
     </main>

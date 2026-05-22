@@ -3,7 +3,10 @@
 import React from "react";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import type { SectionNarrativeRole } from "@/design-system/narrative";
-import { sectionTitle } from "@/lib/typography";
+import {
+  sectionHeaderHierarchy,
+  semanticHierarchy,
+} from "@/design-system/semanticVisual";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 
@@ -18,18 +21,18 @@ type Props = {
   subtitle?: string;
   align?: "left" | "center";
   dark?: boolean;
-  /** Semantic title role — overrides legacy size when set */
-  role?: SectionNarrativeRole;
-  /** @deprecated Prefer role; xl→narrative/runtime, lg/md→section */
+  /** Semantic narrativeRole — overrides legacy size when set */
+  narrativeRole?: SectionNarrativeRole;
+  /** @deprecated Prefer narrativeRole; xl→narrative/runtime, lg/md→section */
   size?: "md" | "lg" | "xl";
 };
 
-function resolveRole(
-  role: SectionNarrativeRole | undefined,
+function resolveNarrativeRole(
+  narrativeRole: SectionNarrativeRole | undefined,
   size: Props["size"],
   dark: boolean,
 ): SectionNarrativeRole {
-  if (role) return role;
+  if (narrativeRole) return narrativeRole;
   if (size === "xl") return dark ? "runtime" : "narrative";
   return "section";
 }
@@ -44,31 +47,44 @@ export default function SectionHeader({
   subtitle,
   align = "left",
   dark = false,
-  role,
+  narrativeRole,
   size = "lg",
 }: Props) {
   const { theme } = useTheme();
   const { locale } = useLanguage();
-  const narrativeRole = resolveRole(role, size, dark);
+  const resolvedNarrativeRole = resolveNarrativeRole(narrativeRole, size, dark);
+  const hierarchyKey = sectionHeaderHierarchy[resolvedNarrativeRole];
+  const hierarchy = semanticHierarchy[hierarchyKey] as
+    | typeof semanticHierarchy.sectionHero
+    | typeof semanticHierarchy.narrativeStatement
+    | typeof semanticHierarchy.runtimeLabel;
+  const annotation = semanticHierarchy.systemAnnotation;
 
-  const titleClass =
-    narrativeRole === "runtime"
-      ? cn(theme.typography.runtimeNarrative, dark && "text-white")
-      : narrativeRole === "narrative"
-        ? theme.typography.narrativeHero
-        : theme.typography.sectionHero;
+  const localeTitleAdjust =
+    locale === "zh" ? hierarchy.localeTypography.zh : undefined;
+
+  const titleClass = cn(
+    hierarchy.typography,
+    localeTitleAdjust,
+    resolvedNarrativeRole === "section" &&
+      (dark ? theme.colors.textOnDark : theme.colors.textPrimary),
+    resolvedNarrativeRole !== "section" &&
+      (dark ? "text-white" : theme.colors.textPrimary),
+    resolvedNarrativeRole === "runtime" && dark && "text-white",
+  );
+
+  const containerClass = cn(
+    hierarchy.spacing.container,
+    align === "center" && "mx-auto text-center",
+  );
 
   return (
-    <div
-      className={
-        align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"
-      }
-    >
+    <div className={containerClass}>
       {eyebrow && (
         <div
           className={cn(
-            theme.spacing.eyebrowMargin,
-            theme.typography.moduleLabel,
+            hierarchy.spacing.eyebrow,
+            hierarchy.eyebrowTypography,
             dark ? theme.colors.textAccentSoft : undefined,
           )}
         >
@@ -76,16 +92,7 @@ export default function SectionHeader({
         </div>
       )}
 
-      <h2
-        className={cn(
-          titleClass,
-          sectionTitle(locale),
-          narrativeRole === "section" &&
-            (dark ? theme.colors.textOnDark : theme.colors.textPrimary),
-          narrativeRole !== "section" &&
-            (dark ? "text-white" : theme.colors.textPrimary),
-        )}
-      >
+      <h2 className={titleClass}>
         {title.split("\n").map((line, index) => {
           const isHighlight = highlight && line.includes(highlight);
 
@@ -114,9 +121,9 @@ export default function SectionHeader({
       {subtitle && (
         <p
           className={cn(
-            theme.spacing.subtitleMargin,
-            "max-w-2xl",
-            theme.typography.explainer,
+            annotation.spacing.marginTop,
+            annotation.spacing.maxWidth,
+            annotation.typography,
             dark ? theme.colors.textOnDarkMuted : theme.colors.textMuted,
             align === "center" && "mx-auto",
           )}

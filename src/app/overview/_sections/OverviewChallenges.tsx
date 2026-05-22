@@ -5,11 +5,11 @@ import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 import SectionHeader from "@/components/SectionHeader";
-import TransitionLine from "@/components/TransitionLine";
 import SegmentedTabs from "@/components/SegmentedTabs";
 
 import ChallengePanel from "../challenges/ChallengePanel";
 import { overviewChallengesContent } from "@/content/overview/overviewChallenges";
+import { semanticHierarchy } from "@/design-system/semanticVisual";
 export default function OverviewChallenges() {
   const { theme } = useTheme();
   const { locale } = useLanguage();
@@ -27,13 +27,11 @@ export default function OverviewChallenges() {
       )}
     >
       <div className={cn("mx-auto", theme.spacing.container)}>
-        <TransitionLine text={content.transition} />
-
-        <div className="mt-3">
+        <div className={semanticHierarchy.sectionHero.spacing.afterBridge}>
           <SectionHeader
             eyebrow={content.sectionLabel}
             title={`${content.title.line1}\n${content.title.line2}`}
-            role="section"
+            narrativeRole="section"
           />
         </div>
 
