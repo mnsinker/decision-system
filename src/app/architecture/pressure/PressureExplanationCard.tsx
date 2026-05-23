@@ -35,34 +35,18 @@ function ExplanationCard({
   }[];
 }) {
   const isCode = viewMode === "code";
+  const showConsequences = (consequences?.length ?? 0) > 0;
 
-  return (
-    <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50/50 p-4 shadow-2xs transition-all duration-200">
-      {isCode ? (
-        <div className="grid grid-cols-[20px_1fr] gap-2.5">
-          <ShieldAlert size={16} className="mt-0.5 text-amber-500" />
-          <div>
-            <div className="mb-1 font-mono text-[10px] font-bold tracking-widest text-amber-600 uppercase">
-              {label || "Root Cause (Procedural Coupling)"}
-            </div>
-            <p className="text-xs leading-relaxed font-medium text-slate-600">
-              {description ||
-                "Dependency graph only exists implicitly in code."}
-            </p>
-          </div>
+  const consequencePills = showConsequences ? (
+    <div className={isCode ? "mt-4 border-t border-slate-100 pt-4" : ""}>
+      <div className="mb-3 flex items-center gap-2">
+        <GitBranch size={15} className="text-amber-500" />
+        <div className="font-mono text-[10px] font-bold tracking-[0.25em] text-amber-600 uppercase">
+          {engineeringTitle || "Engineering Consequences"}
         </div>
-      ) : (
-        <div>
-          {/* title */}
-          <div className="mb-5 flex items-center gap-2">
-            <GitBranch size={15} className="text-amber-500" />
-            <div className="font-mono text-[10px] font-bold tracking-[0.25em] text-amber-600 uppercase">
-              {engineeringTitle || "Engineering Consequences"}
-            </div>
-          </div>
+      </div>
 
-          {/* compact pills container */}
-          <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
             {/* pill 1 */}
             <HoverCard openDelay={80} closeDelay={60}>
               <HoverCardTrigger asChild>
@@ -140,8 +124,30 @@ function ExplanationCard({
                 </p>
               </HoverCardContent>
             </HoverCard>
+      </div>
+    </div>
+  ) : null;
+
+  return (
+    <div className="mt-4 rounded-lg border border-slate-200/80 bg-white p-3.5 shadow-[0_1px_2px_0_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
+      {isCode ? (
+        <>
+          <div className="grid grid-cols-[20px_1fr] gap-2.5">
+            <ShieldAlert size={16} className="mt-0.5 text-amber-500" />
+            <div>
+              <div className="mb-1 font-mono text-[10px] font-bold tracking-widest text-amber-600 uppercase">
+                {label || "Root Cause (Procedural Coupling)"}
+              </div>
+              <p className="text-xs leading-relaxed font-medium text-slate-700">
+                {description ||
+                  "Dependency graph only exists implicitly in code."}
+              </p>
+            </div>
           </div>
-        </div>
+          {consequencePills}
+        </>
+      ) : (
+        consequencePills
       )}
     </div>
   );

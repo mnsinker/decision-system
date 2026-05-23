@@ -1,486 +1,464 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  Cpu,
-  GitBranch,
-  Layers,
-  ArrowRight,
-  CornerDownRight,
-} from "lucide-react";
+import React, { useMemo, useState } from "react";
+import { ChevronRight, CheckCircle2, Layers3, Activity } from "lucide-react";
 
-type TabKey = "context" | "topology" | "policy";
+/**
+ * LAYERS
+ */
 
-const tabs = [
-  { id: "context", label: "Context Isolation" },
-  { id: "topology", label: "Procedural Topology" },
-  { id: "policy", label: "Policy Sandboxing" },
-] as const;
+const runtimeLayers = [
+  {
+    id: "semantic",
+    num: "01",
+    title: "Semantic Layer",
+    desc: "Unify operational meaning across runtime systems.",
+  },
+  {
+    id: "planning",
+    num: "02",
+    title: "Planning Layer",
+    desc: "Resolve runtime dependencies and execution paths.",
+  },
+  {
+    id: "policy",
+    num: "03",
+    title: "Policy Layer",
+    desc: "Evaluate business rules before execution continues.",
+  },
+  {
+    id: "execution",
+    num: "04",
+    title: "Execution Layer",
+    desc: "Orchestrate tools, services, and runtime actions.",
+  },
+];
 
-export default function ArchitecturePremiumFeel() {
-  const [activeTab, setActiveTab] = useState<TabKey>("topology");
+/**
+ * SYSTEMS
+ * Each bullet declares which layer(s) it belongs to.
+ */
+
+const stabilitySystems = [
+  {
+    id: "contract",
+    title: "Contract System",
+    badge: "LINKED",
+
+    points: [
+      {
+        label: "Structured DTO Contracts",
+        layers: ["semantic", "policy"],
+      },
+      {
+        label: "Tool Interface Schemas",
+        layers: ["semantic", "planning"],
+      },
+      {
+        label: "Runtime Boundary Definitions",
+        layers: ["semantic"],
+      },
+      {
+        label: "Structured LLM Outputs",
+        layers: ["policy"],
+      },
+    ],
+  },
+
+  {
+    id: "validation",
+    title: "Validation System",
+    badge: "ACTIVE",
+
+    points: [
+      {
+        label: "Syntax Validation",
+        layers: ["policy"],
+      },
+      {
+        label: "Dependency Validation",
+        layers: ["planning"],
+      },
+      {
+        label: "Runtime Parameter Checks",
+        layers: ["execution"],
+      },
+      {
+        label: "Structure Validation",
+        layers: ["semantic", "policy"],
+      },
+    ],
+  },
+
+  {
+    id: "registry",
+    title: "Tool Registry",
+    badge: "ACTIVE",
+
+    points: [
+      {
+        label: "Structured Tool Discovery",
+        layers: ["semantic"],
+      },
+      {
+        label: "Execution Capability Mapping",
+        layers: ["planning"],
+      },
+      {
+        label: "Runtime Tool Routing",
+        layers: ["execution"],
+      },
+      {
+        label: "Requires / Provides Resolution",
+        layers: ["planning"],
+      },
+    ],
+  },
+
+  {
+    id: "observability",
+    title: "Observability",
+    badge: "TRACE",
+
+    points: [
+      {
+        label: "Execution Trace Timeline",
+        layers: ["execution"],
+      },
+      {
+        label: "Runtime Decision Path",
+        layers: ["policy"],
+      },
+      {
+        label: "Tool Execution Logs",
+        layers: ["execution"],
+      },
+      {
+        label: "Runtime State Visibility",
+        layers: ["planning", "execution"],
+      },
+    ],
+  },
+];
+
+export default function Page() {
+  /**
+   * VIEW
+   */
+
+  const [viewMode, setViewMode] = useState<"core" | "expanded">("core");
+
+  /**
+   * ACTIVE LAYER
+   */
+
+  const [activeLayer, setActiveLayer] = useState<string | null>(null);
+
+  /**
+   * CLICK LAYER
+   */
+
+  function handleLayerClick(layerId: string) {
+    setActiveLayer(layerId);
+    setViewMode("expanded");
+  }
+
+  /**
+   * CORE VIEW
+   */
+
+  function handleCoreView() {
+    setViewMode("core");
+    setActiveLayer(null);
+  }
+
+  /**
+   * EXPANDED VIEW
+   */
+
+  function handleExpandedView() {
+    setViewMode("expanded");
+  }
+
+  /**
+   * ACTIVE LAYER DATA
+   */
+
+  const activeLayerData = useMemo(() => {
+    return runtimeLayers.find((layer) => layer.id === activeLayer);
+  }, [activeLayer]);
 
   return (
-    <div className="min-h-screen bg-[#F7F8FA] text-slate-950 antialiased">
-      {/* ================================================= */}
-      {/* NAVBAR */}
-      {/* ================================================= */}
+    <div className="min-h-screen bg-[#020617] text-white">
+      {/* GRID */}
+      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:48px_48px] opacity-[0.045]" />
 
-      <nav className="border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-[64px] max-w-7xl items-center justify-between px-8">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#0B1020] text-white">
-                <Cpu size={12} />
+      {/* AMBIENT */}
+      <div className="pointer-events-none fixed top-[-120px] left-1/2 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-indigo-500/10 blur-[140px]" />
+
+      <section className="relative overflow-hidden px-8 py-16">
+        <div className="mx-auto max-w-[1450px]">
+          {/* HEADER */}
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <div className="mb-4 text-[11px] font-bold tracking-[0.22em] text-indigo-400 uppercase">
+                Section 03 // Infrastructure
               </div>
 
-              <span className="text-[15px] font-semibold tracking-tight text-slate-900">
-                Axiom
-                <span className="ml-1 font-normal text-slate-400">Runtime</span>
-              </span>
+              <h1 className="text-5xl font-semibold tracking-[-0.05em] text-white">
+                Architecture Layers
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-400">
+                AI execution becomes unreliable when runtime structure is
+                missing.
+              </p>
             </div>
 
-            <div className="hidden items-center gap-6 md:flex">
-              <span className="text-[14px] font-semibold text-slate-900">
-                Architecture
-              </span>
-
-              <span className="text-[14px] text-slate-500 transition-colors hover:text-slate-900">
-                Infrastructure
-              </span>
-
-              <span className="text-[14px] text-slate-500 transition-colors hover:text-slate-900">
-                Runtime Spec
-              </span>
-            </div>
-          </div>
-
-          <div className="hidden text-[13px] text-slate-400 md:flex">
-            Enterprise Runtime Edition
-          </div>
-        </div>
-      </nav>
-
-      {/* ================================================= */}
-      {/* HERO */}
-      {/* ================================================= */}
-
-      <header className="px-8 pt-10 pb-7">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-4xl">
-            <div className="mb-3 font-mono text-[11px] font-bold tracking-[0.22em] text-indigo-500 uppercase">
-              Runtime Isolation Protocol
-            </div>
-
-            {/* ↓ adjusted smaller + calmer */}
-            <h1 className="max-w-4xl text-[30px] leading-[1.03] font-[640] tracking-[-0.04em] text-[#0B1020]">
-              Different pressures activate
-              <br />
-              different runtime layers.
-            </h1>
-          </div>
-        </div>
-      </header>
-
-      {/* ================================================= */}
-      {/* MAIN */}
-      {/* ================================================= */}
-
-      <main className="px-8 pb-20">
-        <div className="mx-auto max-w-7xl">
-          {/* ============================================= */}
-          {/* TOP CONTROL BAR */}
-          {/* ============================================= */}
-
-          <div className="flex flex-col gap-4 border-b border-slate-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="mb-2 font-mono text-[11px] font-bold tracking-[0.2em] text-indigo-500 uppercase">
-                Runtime Architecture Framework
-              </div>
-
-              {/* ↓ smaller */}
-              <h2 className="text-[25px] leading-[1.06] font-[640] tracking-[-0.035em] text-[#0B1020]">
-                Deterministic execution
-                <br />
-                under parallel load.
-              </h2>
-            </div>
-
-            {/* ================================================= */}
-            {/* KEEP YOUR PREMIUM TABS */}
-            {/* ================================================= */}
-
-            <div className="inline-flex rounded-[28px] border border-slate-200 bg-[#EEF1F5] p-[6px] shadow-[0_2px_10px_rgba(15,23,42,0.04)]">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`rounded-[22px] px-7 py-3 text-[14px] font-semibold transition-all duration-200 ${
-                    activeTab === tab.id
-                      ? "bg-[#0B1020] text-white shadow-[0_4px_14px_rgba(15,23,42,0.12)]"
-                      : "text-slate-500 hover:text-slate-900"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* ============================================= */}
-          {/* MAIN PANEL */}
-          {/* ============================================= */}
-
-          <div className="mt-8 overflow-hidden rounded-[38px] border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,0.10)]">
-            {/* ================================================= */}
-            {/* HEADER */}
-            {/* ================================================= */}
-
-            <div className="border-b border-slate-100 bg-[#FBFCFD] px-10 py-7">
-              <div className="mb-3 font-mono text-[11px] font-bold tracking-[0.2em] text-indigo-500 uppercase">
-                Runtime Impression Profile
-              </div>
-
-              {/* ↓ more premium / less aggressive */}
-              <h3 className="max-w-5xl text-[28px] leading-[1.06] font-[620] tracking-[-0.035em] text-[#0B1020] italic">
-                Hidden execution graphs generate untestable code paths and
-                untraceable runtime behavior.
-              </h3>
-            </div>
-
-            {/* ================================================= */}
-            {/* SPLIT */}
-            {/* ================================================= */}
-
-            <div className="grid lg:grid-cols-2">
-              {/* ========================================= */}
-              {/* LEFT */}
-              {/* ========================================= */}
-
-              <div className="border-r border-slate-100 bg-[#FCFCFD] px-7 py-7">
-                <div className="mb-5 flex items-center justify-between">
-                  <div className="font-mono text-[11px] font-bold tracking-[0.2em] text-rose-500 uppercase">
-                    Procedural Leakage
-                  </div>
-
-                  {/* softer badge */}
-                  <div className="rounded-full border border-rose-100 bg-rose-50/70 px-3 py-1 text-[10px] font-medium text-rose-500">
-                    Hidden Dependency Chain
-                  </div>
-                </div>
-
-                {/* ================================================= */}
-                {/* BOX */}
-                {/* ================================================= */}
-
-                <div className="rounded-[30px] border border-rose-100 bg-white px-6 py-6 shadow-[0_20px_40px_-30px_rgba(244,63,94,0.18)]">
-                  <div className="flex items-start gap-3">
-                    <div className="mt-[9px] h-1.5 w-1.5 rounded-full bg-rose-400" />
-
-                    <p className="max-w-xl text-[15px] leading-7 font-medium text-rose-700">
-                      Dependency graphs silently emerge through runtime
-                      parameter propagation.
-                    </p>
-                  </div>
-
-                  {/* ========================================= */}
-                  {/* CODE PANEL */}
-                  {/* ========================================= */}
-
-                  <div className="mt-6 overflow-hidden rounded-[26px] border border-slate-200 bg-[#FAFBFC]">
-                    <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
-                      <div className="rounded-full bg-rose-50 px-3 py-1 text-[10px] font-bold tracking-wide text-rose-500 uppercase">
-                        Procedural Flow
-                      </div>
-
-                      <div className="inline-flex rounded-full border border-slate-200 bg-white p-1">
-                        <button className="rounded-full bg-[#0B1020] px-3 py-1 text-[11px] font-semibold text-white">
-                          Code
-                        </button>
-
-                        <button className="px-3 py-1 text-[11px] font-semibold text-slate-400">
-                          Graph
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* CODE */}
-                    <div className="space-y-3 px-6 py-5 font-mono text-[14px] leading-7">
-                      <div>
-                        <span className="font-semibold text-blue-600">def</span>{" "}
-                        <span className="font-semibold text-slate-800">
-                          refund_flow
-                        </span>
-                        <span className="text-slate-400">(order):</span>
-                      </div>
-
-                      <div className="pl-6 text-slate-500">
-                        <span className="font-semibold text-blue-600">
-                          shipping
-                        </span>{" "}
-                        = get_shipping(order.id)
-                      </div>
-
-                      <div className="pl-6">
-                        <span className="font-semibold text-blue-600">tax</span>{" "}
-                        = get_tax_profile(
-                        <span className="rounded bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-700">
-                          shipping.zone
-                        </span>
-                        )
-                      </div>
-
-                      <div className="pl-6 text-slate-500">
-                        <span className="font-semibold text-blue-600">
-                          eligibility
-                        </span>{" "}
-                        = check_refund(...)
-                      </div>
-
-                      <div className="border-t border-slate-100 pt-3 text-slate-500">
-                        <span className="font-semibold text-blue-600">
-                          return
-                        </span>{" "}
-                        create_refund(eligibility)
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ========================================= */}
-                  {/* FOOTNOTE */}
-                  {/* ========================================= */}
-
-                  <div className="mt-5 rounded-[24px] border border-slate-200 bg-[#FAFBFC] px-5 py-4">
-                    <div className="flex items-start gap-3">
-                      <div className="mt-[6px] h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.45)]" />
-
-                      <div>
-                        <div className="mb-1 font-mono text-[10px] font-bold tracking-[0.18em] text-amber-600 uppercase">
-                          Implicit Coupling
-                        </div>
-
-                        <p className="text-[14px] leading-6 text-slate-500">
-                          Eligibility evaluation silently depends on shipping
-                          runtime context through parameter propagation.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* ========================================= */}
-              {/* RIGHT */}
-              {/* ========================================= */}
-
-              <div className="relative overflow-hidden bg-[#071011] px-7 py-7 text-white">
-                {/* ambient */}
-                <div className="pointer-events-none absolute -top-24 -right-24 h-[360px] w-[360px] rounded-full bg-emerald-500/[0.06] blur-[130px]" />
-
-                <div className="pointer-events-none absolute bottom-0 left-0 h-[220px] w-[220px] rounded-full bg-indigo-500/[0.03] blur-[100px]" />
-
-                <div className="relative z-10">
-                  <div className="mb-5 font-mono text-[11px] font-bold tracking-[0.2em] text-emerald-400 uppercase">
-                    Declarative Planned Runtime
-                  </div>
-
-                  {/* ========================================= */}
-                  {/* TITLE */}
-                  {/* ========================================= */}
-
-                  <div className="rounded-[30px] border border-emerald-500/10 bg-white/[0.02] px-7 py-6 backdrop-blur-xl">
-                    <div className="flex items-center gap-3">
-                      <Layers size={18} className="text-emerald-400" />
-
-                      {/* GEMINI FEEL */}
-                      <h3 className="text-[21px] leading-none font-[630] tracking-[-0.03em] text-white">
-                        DAG Orchestration
-                      </h3>
-                    </div>
-
-                    <p className="mt-3 text-[14px] leading-6 text-emerald-300/70">
-                      Dynamic dependency resolution through centralized topology
-                      planning.
-                    </p>
-                  </div>
-
-                  {/* ========================================= */}
-                  {/* VISUAL */}
-                  {/* ========================================= */}
-
-                  <div className="mt-6 rounded-[30px] border border-white/5 bg-white/[0.02] px-6 py-8">
-                    <div className="grid grid-cols-[140px_1fr_120px] items-center gap-6">
-                      {/* LEFT */}
-                      <div className="space-y-3">
-                        {["Order", "Shipping", "History", "TaxProfile"].map(
-                          (item, idx) => (
-                            <div
-                              key={item}
-                              className={`rounded-[22px] border px-4 py-3 text-[14px] font-medium ${
-                                idx === 1
-                                  ? "border-emerald-500/25 bg-emerald-500/[0.08] text-emerald-300"
-                                  : "border-white/5 bg-white/[0.02] text-slate-400"
-                              }`}
-                            >
-                              {item}
-                            </div>
-                          ),
-                        )}
-                      </div>
-
-                      {/* CENTER */}
-                      <div className="flex items-center justify-center">
-                        <div className="relative flex h-[162px] w-[162px] flex-col items-center justify-center rounded-[34px] border border-emerald-400/35 bg-gradient-to-b from-[#0B1F1C] to-[#071011] shadow-[0_0_50px_rgba(16,185,129,0.12)]">
-                          <GitBranch
-                            size={18}
-                            className="mb-3 text-emerald-400"
-                          />
-
-                          <div className="text-center">
-                            <div className="mb-2 font-mono text-[10px] font-bold tracking-[0.2em] text-emerald-400/70 uppercase">
-                              Dependency Planner
-                            </div>
-
-                            <div className="font-mono text-[16px] font-semibold text-white">
-                              resolve_deps()
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* RIGHT */}
-                      <div className="flex items-center justify-center">
-                        <div className="rounded-[24px] border border-emerald-500/20 bg-emerald-500/[0.05] px-5 py-5 text-center">
-                          <div className="text-[15px] leading-tight font-[620] text-white">
-                            Refund
-                            <br />
-                            Eligibility
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ========================================= */}
-                  {/* FOOTNOTE */}
-                  {/* ========================================= */}
-
-                  <div className="mt-6 rounded-[24px] border border-white/6 bg-white/[0.03] px-5 py-4">
-                    <div className="flex items-start gap-3">
-                      <GitBranch
-                        size={14}
-                        className="mt-0.5 text-emerald-400"
-                      />
-
-                      <div>
-                        <div className="mb-1 font-mono text-[10px] font-bold tracking-[0.18em] text-emerald-400 uppercase">
-                          Explicit DAG Resolution
-                        </div>
-
-                        <p className="text-[14px] leading-6 text-slate-300">
-                          Procedural references are compiled into deterministic
-                          execution graphs before runtime begins.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ============================================= */}
-          {/* LOWER GRID */}
-          {/* ============================================= */}
-
-          <section className="mt-14">
-            <div className="mb-7">
-              <div className="mb-2 font-mono text-[11px] font-bold tracking-[0.2em] text-indigo-500 uppercase">
-                Verification Maps
-              </div>
-
-              <h3 className="text-[22px] leading-tight font-[640] tracking-[-0.03em] text-[#0B1020]">
-                Formalized operational structures.
-              </h3>
-            </div>
-
-            <div className="grid gap-6 lg:grid-cols-3">
-              {[
-                {
-                  title: "Trace Route Graphs",
-                  desc: "Compiles nested procedural execution tracks into explicit graph structures.",
-                },
-
-                {
-                  title: "Isolated Runtime States",
-                  desc: "Encapsulates multi-tenant execution flows inside deterministic boundaries.",
-                },
-
-                {
-                  title: "Sandboxed Policy Specs",
-                  desc: "Routes volatile business rules through isolated interface layers.",
-                },
-              ].map((card) => (
-                <div
-                  key={card.title}
-                  className="rounded-[30px] border border-slate-200 bg-white p-6 shadow-[0_20px_40px_-30px_rgba(15,23,42,0.12)]"
-                >
-                  <div className="mb-5 flex items-center justify-between">
-                    <div className="font-mono text-[10px] font-bold tracking-[0.18em] text-slate-400 uppercase">
-                      Framework Spec
-                    </div>
-
-                    <div className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-medium text-emerald-600">
-                      Active
-                    </div>
-                  </div>
-
-                  <h4 className="text-[17px] leading-tight font-[630] tracking-[-0.03em] text-[#0B1020]">
-                    {card.title}
-                  </h4>
-
-                  <p className="mt-3 text-[14px] leading-7 text-slate-500">
-                    {card.desc}
-                  </p>
-
-                  <div className="mt-6 space-y-2 border-t border-slate-100 pt-5">
-                    {[
-                      "Validate structural dependencies",
-                      "Resolve runtime lineage",
-                      "Guarantee deterministic output",
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-center gap-2 text-[13px] text-slate-600"
-                      >
-                        <CornerDownRight size={12} className="text-slate-300" />
-
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className="mt-11 flex flex-col items-center">
-              <button className="group inline-flex items-center gap-2 rounded-[20px] bg-[#0B1020] px-5 py-3 text-[12px] font-bold tracking-[0.14em] text-white uppercase transition-all hover:bg-indigo-600">
-                Initialize Runtime Simulator
-                <ArrowRight
-                  size={13}
-                  className="transition-transform group-hover:translate-x-0.5"
-                />
+            {/* TOGGLE */}
+            <div className="flex rounded-2xl border border-white/10 bg-white/[0.03] p-1">
+              <button
+                onClick={handleCoreView}
+                className={`rounded-xl px-5 py-2 text-sm transition-all duration-300 ${
+                  viewMode === "core"
+                    ? "border border-indigo-400/20 bg-indigo-500/10 font-medium text-indigo-200"
+                    : "text-slate-500"
+                } `}
+              >
+                Core Runtime
               </button>
 
-              <div className="mt-4 text-[12px] text-slate-400">
-                Runtime architecture validated under orchestration stress
-                profiles.
+              <button
+                onClick={handleExpandedView}
+                className={`rounded-xl px-5 py-2 text-sm transition-all duration-300 ${
+                  viewMode === "expanded"
+                    ? "border border-indigo-400/20 bg-indigo-500/10 font-medium text-indigo-200"
+                    : "text-slate-500"
+                } `}
+              >
+                Expanded Runtime View
+              </button>
+            </div>
+          </div>
+
+          {/* DIVIDER */}
+          <div className="mt-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+          {/* MAIN AREA */}
+          <div
+            className={`mt-16 grid items-start gap-14 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              viewMode === "core" ? "grid-cols-1" : "lg:grid-cols-[540px_1fr]"
+            } `}
+          >
+            {/* LEFT */}
+            <div
+              className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                viewMode === "core" ? "mx-auto max-w-[620px]" : "translate-x-0"
+              } `}
+            >
+              <div
+                className={`mb-6 flex items-center gap-2 text-[11px] font-bold tracking-[0.22em] text-indigo-400 uppercase ${
+                  viewMode === "core" ? "justify-center" : ""
+                } `}
+              >
+                <div className="h-2 w-2 rounded-full bg-indigo-400" />
+                Core Runtime Spine
+              </div>
+
+              <div className="space-y-5">
+                {runtimeLayers.map((layer, idx) => {
+                  const active = activeLayer === layer.id;
+
+                  return (
+                    <div key={layer.id}>
+                      <button
+                        onClick={() => handleLayerClick(layer.id)}
+                        className={`group relative w-full rounded-3xl border transition-all duration-500 ${
+                          active
+                            ? "border-indigo-400/40 bg-indigo-500/[0.08]"
+                            : "border-white/10 bg-white/[0.025] hover:bg-white/[0.04]"
+                        } `}
+                      >
+                        <div className="flex items-start justify-between px-6 py-5">
+                          <div
+                            className={
+                              viewMode === "core"
+                                ? "mx-auto text-center"
+                                : "text-left"
+                            }
+                          >
+                            <div
+                              className={`flex items-center gap-3 ${
+                                viewMode === "core" ? "justify-center" : ""
+                              } `}
+                            >
+                              <span className="font-mono text-xs text-slate-500">
+                                {layer.num}
+                              </span>
+
+                              <span className="text-2xl font-medium tracking-[-0.03em] text-white">
+                                {layer.title}
+                              </span>
+                            </div>
+
+                            {(viewMode === "core" || active) && (
+                              <p className="mt-4 max-w-md text-base leading-relaxed text-slate-400">
+                                {layer.desc}
+                              </p>
+                            )}
+                          </div>
+
+                          {viewMode === "expanded" && (
+                            <ChevronRight
+                              className={`mt-1 h-5 w-5 transition ${
+                                active ? "text-indigo-300" : "text-slate-600"
+                              } `}
+                            />
+                          )}
+                        </div>
+                      </button>
+
+                      {/* CONNECTOR */}
+                      {idx < runtimeLayers.length - 1 && (
+                        <div className="flex justify-center py-2">
+                          <div className="h-6 w-px bg-gradient-to-b from-white/20 to-transparent" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          </section>
+
+            {/* RIGHT */}
+            <div
+              className={`transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                viewMode === "core"
+                  ? "pointer-events-none translate-x-16 opacity-0"
+                  : "translate-x-0 opacity-100"
+              } `}
+            >
+              <div className="mb-6 flex items-center gap-2 text-[11px] font-bold tracking-[0.22em] text-indigo-400 uppercase">
+                <Layers3 className="h-4 w-4" />
+                Runtime Stability Systems
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2">
+                {stabilitySystems.map((system) => {
+                  return (
+                    <div
+                      key={system.id}
+                      className="rounded-3xl border border-white/10 bg-white/[0.025] p-6 transition-all duration-500"
+                    >
+                      {/* HEADER */}
+                      <div className="flex items-start justify-between">
+                        <h3 className="text-2xl font-medium tracking-[-0.03em] text-white">
+                          {system.title}
+                        </h3>
+
+                        <div className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-bold tracking-[0.18em] text-emerald-300 uppercase">
+                          {system.badge}
+                        </div>
+                      </div>
+
+                      {/* BULLETS */}
+                      <div className="mt-6 space-y-3">
+                        {system.points.map((point) => {
+                          /**
+                           * CORE VIEW
+                           */
+
+                          const isCoreView =
+                            viewMode === "expanded" && !activeLayer;
+
+                          /**
+                           * ACTIVE
+                           */
+
+                          const active =
+                            activeLayer && point.layers.includes(activeLayer);
+
+                          /**
+                           * INACTIVE
+                           */
+
+                          const inactive =
+                            activeLayer && !point.layers.includes(activeLayer);
+
+                          return (
+                            <div
+                              key={point.label}
+                              className={`flex items-center gap-3 text-sm transition-all duration-300 ${
+                                isCoreView ? "text-slate-400" : ""
+                              } ${active ? "text-white" : ""} ${
+                                inactive ? "text-slate-700" : ""
+                              } `}
+                            >
+                              <div
+                                className={`h-1.5 w-1.5 rounded-full transition-all ${
+                                  isCoreView ? "bg-slate-500" : ""
+                                } ${
+                                  active
+                                    ? "bg-emerald-400 shadow-[0_0_10px_#34d399]"
+                                    : ""
+                                } ${inactive ? "bg-slate-700" : ""} `}
+                              />
+
+                              <span>{point.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* SNAPSHOT */}
+              {activeLayerData && (
+                <div className="mt-8 rounded-[28px] border border-indigo-400/15 bg-indigo-500/[0.04] p-7 transition-all duration-500">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Activity className="h-5 w-5 text-indigo-300" />
+
+                      <div className="text-[11px] font-bold tracking-[0.22em] text-indigo-300 uppercase">
+                        Runtime Snapshot
+                      </div>
+                    </div>
+
+                    <div className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-slate-400">
+                      {activeLayerData.title}
+                    </div>
+                  </div>
+
+                  <div className="mt-6 grid gap-4 md:grid-cols-2">
+                    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                      <div className="text-[11px] font-bold tracking-[0.2em] text-slate-500 uppercase">
+                        Responsibility
+                      </div>
+
+                      <div className="mt-3 text-base leading-relaxed text-white">
+                        {activeLayerData.desc}
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                      <div className="text-[11px] font-bold tracking-[0.2em] text-slate-500 uppercase">
+                        Runtime State
+                      </div>
+
+                      <div className="mt-3 flex items-center gap-3 text-base text-emerald-300">
+                        <CheckCircle2 className="h-5 w-5" />
+                        Deterministic orchestration active
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
     </div>
   );
 }

@@ -14,14 +14,14 @@ export default function PressureLeftVisual3({
 }) {
   return (
     // 套用统一的 Shared 组件高度池，设定同等最小高度 min-h-[520px]
-    <div className="flex h-full min-h-[520px] flex-1 flex-col justify-between">
+    <div className="flex h-full min-h-[420px] flex-1 flex-col justify-between">
       {/* 视觉内容区：垂直居中，吸收多余的空白空间 */}
       <div className="flex w-full flex-1 flex-col items-center justify-center">
         <PolicyLeakingVisual />
       </div>
 
       {/* 说明卡片区：利用 mt-auto 强行将其压到底部对齐基准线上 */}
-      <div className="mt-auto w-full pt-8">
+      <div className="mt-auto w-full pt-5">
         <PressureExplanationCard
           viewMode="code"
           label={content?.rootCauseTitle || "Runtime Contamination"}

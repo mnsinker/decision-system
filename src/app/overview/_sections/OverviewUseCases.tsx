@@ -8,6 +8,7 @@ import SectionHeader from "@/components/SectionHeader";
 import TransitionLine from "@/components/TransitionLine";
 import { systemControlChrome } from "@/design-system/controlChrome";
 import { overviewUseCasesContent } from "@/content/overview/overviewUsecases";
+import { semanticHierarchy } from "@/design-system/semanticVisual";
 import {
   ArrowRight,
   SearchCode,
@@ -41,10 +42,10 @@ export default function OverviewUseCases() {
       <div className={cn("mx-auto", theme.spacing.container)}>
         <TransitionLine text={content.transition} />
 
-        <div className="mt-4">
+        <div className={semanticHierarchy.sectionHero.spacing.afterBridge}>
           <SectionHeader
             eyebrow={content.sectionLabel}
-            title={`${content.title.line1}\n${content.title.line2}`}
+            title={`${content.title.line1} ${content.title.line2}`}
             highlight={content.title.line2}
             highlightClassName="
               bg-gradient-to-r
@@ -55,7 +56,7 @@ export default function OverviewUseCases() {
               text-transparent
             "
             subtitle={content.subtitle}
-            role="section"
+            narrativeRole="section"
           />
         </div>
 

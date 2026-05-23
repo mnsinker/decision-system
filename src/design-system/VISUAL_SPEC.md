@@ -235,6 +235,28 @@ Two control families share **capsule geometry** (pill radius, `tabItemPadding`, 
 - Full-page atmospheric washes that change readable contrast of body copy
 - Decorative blur with no narrative job
 
+### Avoid muddy atmospheric contamination
+
+Do **not** introduce:
+
+- Gray fog overlays on operational cards
+- Low-contrast milky surfaces (`bg-slate-50/50`, washed opacity stacks)
+- Smoky opacity layers that flatten ink hierarchy
+- Desaturated haze on system/runtime panels
+
+Operational and system surfaces must prioritize:
+
+- Readability
+- Semantic clarity
+- Contrast hierarchy
+- Clean runtime feeling
+
+Atmosphere must stay **local**, **restrained**, and **secondary** to information clarity.
+
+If a visual treatment reduces information readability, remove it.
+
+**Reference:** Linear / Palantir operational surfaces—not cinematic concept art.
+
 ### Default surface
 
 Use `surfacePage` / `surfacePageSubtle` / `surfacePrimary` for section grounds. Tint is earned by **semantic role** (business column, outcome band, dark lifecycle)—not by section index.

@@ -10,7 +10,7 @@ export const overviewLifecycleContent = {
     },
 
     subtitle:
-      "Instead of hardcoding every operational path, the system dynamically resolves dependencies, evaluates business logic, and orchestrates execution flow.",
+      "The system resolves dependencies, evaluates policies, and orchestrates execution flow.",
 
     steps: [
       {

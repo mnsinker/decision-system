@@ -67,10 +67,10 @@ export const architecturePressureContent: Record<string, LanguageContent> = {
     modules: {
       tab1: {
         bizCase:
-          "Define 'VIP Status' consistently across 5 different operational tools.",
+          "\"Define 'VIP Status' consistently across 5 different operational tools.\"",
         leftCard: {
           pressure: "VIP means different things in different systems.",
-          label: "Semantic Pressure",
+          label: "Runtime Pressure",
           badges: ["Data Fragment", "Distributed Definitions"],
           rootCauseTitle: "Root Cause (Semantic Fragmentation)",
           rootCauseMsg:
@@ -95,7 +95,7 @@ export const architecturePressureContent: Record<string, LanguageContent> = {
 
       tab2: {
         bizCase:
-          "Add a regional shipping-zone tax rule into an existing refund flow.",
+          '"Add a regional shipping-zone tax rule into an existing refund flow."',
         leftCard: {
           pressure:
             "Small parameter changes gradually entangle the execution flow.",
@@ -146,11 +146,11 @@ export const architecturePressureContent: Record<string, LanguageContent> = {
 
       tab3: {
         bizCase:
-          "Apply custom coupon rules for VIPs without touching core execution code.",
+          '"Apply custom coupon rules for VIPs without touching core execution code."',
         leftCard: {
           pressure:
             "Logic pollution. Business rules are leaking into execution services, creating a brittle black box.",
-          label: "Policy Pollution",
+          label: "Runtime Pressure",
           badges: ["Business Rule Leakage", "Execution Coupling"],
           rootCauseTitle: "Root Cause (Policy Leakage)",
           rootCauseMsg:

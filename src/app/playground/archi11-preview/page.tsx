@@ -1,165 +1,166 @@
 "use client";
 
-import React from "react";
-import {
-  Database,
-  GitBranch,
-  ShieldCheck,
-  Cpu,
-  Workflow,
-  Zap,
-  Box,
-  Circle,
-  Triangle,
-} from "lucide-react";
+import React, { useState } from "react";
 
-export default function ArchitectureHero() {
+// 模拟图标
+function ShieldCheckIcon() {
   return (
-    <section className="relative overflow-hidden border-b border-slate-200 bg-[#F2F4F7] px-8 pt-32 pb-24">
-      {/* --- 背景层：几何图案与点阵 --- */}
-      <div className="absolute inset-0 [background-image:radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:32px_32px] opacity-[0.4]" />
+    <svg
+      className="h-5 w-5 shrink-0 text-emerald-400"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+      />
+    </svg>
+  );
+}
 
-      {/* 装饰性几何图形 - 散落在背景中 */}
-      <div className="absolute top-20 left-[10%] rotate-12 text-slate-900 opacity-[0.05]">
-        <Triangle size={120} />
-      </div>
-      <div className="absolute bottom-10 left-[40%] text-slate-900 opacity-[0.03]">
-        <Circle size={200} strokeWidth={1} />
-      </div>
-      <div className="absolute top-40 right-[15%] -rotate-12 text-slate-900 opacity-[0.05]">
-        <Box size={160} />
-      </div>
+export default function StickyTabsDemo() {
+  const [activeTab, setActiveTab] = useState("semantic");
 
-      <div className="relative mx-auto max-w-7xl">
-        <div className="grid items-center gap-16 lg:grid-cols-[1fr_450px]">
-          {/* --- Left Content: 秩序感叙事 --- */}
-          <div className="flex flex-col justify-center">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="h-px w-10 bg-indigo-500" />
-              <span className="font-mono text-xs font-bold tracking-[0.4em] text-indigo-500 uppercase">
-                Architecture Blueprint
-              </span>
+  const tabs = [
+    { id: "semantic", label: "Semantic Consistency" },
+    { id: "planning", label: "Runtime Planning" },
+    { id: "policy", label: "Policy Isolation" },
+  ];
+
+  return (
+    <div className="mx-auto my-8 w-full max-w-4xl overflow-hidden rounded-xl border border-slate-800 bg-[#030712] text-slate-100 shadow-2xl">
+      {/* 模拟浏览器/容器滚动视口 */}
+      <div className="custom-scrollbar relative h-[500px] overflow-y-auto pb-12">
+        {/* 1. 正常随动区域：标题区（向下滚动时会正常移出视口） */}
+        <div className="p-8 pb-6">
+          <div className="mb-2 font-mono text-xs tracking-widest text-indigo-400 uppercase">
+            AI DECISION SYSTEM • ONTOLOGY
+          </div>
+          <h1 className="bg-gradient-to-r from-white to-slate-400 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
+            Architecture Layers
+          </h1>
+          <p className="mt-1 text-sm text-slate-400">
+            AI execution becomes unreliable when runtime structure is missing.
+          </p>
+        </div>
+
+        {/* ======================================================== */}
+        {/* 2. 核心：只有 Tab 轨道吸顶 (Only Tab Sticky Rail) */}
+        {/* ======================================================== */}
+        <div className="sticky top-0 z-50 w-full">
+          {/* 磨砂玻璃 Rail 挡板 */}
+          <div className="flex w-full items-center justify-between border-b border-slate-800/80 bg-[#030712]/70 px-8 py-4 backdrop-blur-md">
+            {/* Tabs 控制器 */}
+            <div className="flex rounded-full border border-slate-800 bg-slate-900/60 p-1 shadow-inner">
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`rounded-full px-5 py-2 text-xs font-medium transition-all duration-300 ${
+                      isActive
+                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/10"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
             </div>
 
-            <h1 className="text-7xl leading-[0.9] font-black tracking-tighter text-slate-900">
-              From pressure to <br />
-              <span className="text-slate-400">reusable architecture.</span>
-            </h1>
-
-            <p className="mt-10 max-w-2xl text-2xl leading-relaxed font-light text-slate-500/90">
-              A system that separates{" "}
-              <span className="font-semibold text-slate-900 underline decoration-indigo-200 underline-offset-8">
-                Semantic Meaning
-              </span>
-              ,
-              <span className="font-semibold text-slate-900 underline decoration-emerald-200 underline-offset-8">
-                {" "}
-                Planning
-              </span>
-              , and
-              <span className="font-semibold text-slate-900 underline decoration-amber-200 underline-offset-8">
-                {" "}
-                Policy
-              </span>
-              .
-            </p>
-
-            <div className="mt-12 flex flex-wrap gap-4">
-              <div className="group flex cursor-default items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2 shadow-sm transition-colors hover:border-indigo-300">
-                <Cpu
-                  size={16}
-                  className="text-indigo-500 group-hover:animate-pulse"
-                />
-                <span className="font-mono text-[10px] font-bold tracking-widest text-slate-600 uppercase">
-                  Runtime Orchestration
-                </span>
-              </div>
-              <div className="group flex cursor-default items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2 shadow-sm transition-colors hover:border-emerald-300">
-                <ShieldCheck
-                  size={16}
-                  className="text-emerald-500 group-hover:animate-pulse"
-                />
-                <span className="font-mono text-[10px] font-bold tracking-widest text-slate-600 uppercase">
-                  Policy Isolation
-                </span>
-              </div>
+            <div className="hidden font-mono text-xs text-slate-500 sm:block">
+              ctx_status: <span className="text-emerald-400">synced</span>
             </div>
           </div>
 
-          {/* --- Right Illustration: 活力与不稳定的闪烁感 --- */}
-          <div className="relative hidden lg:block">
-            <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-[3.5rem] border border-slate-200 bg-white/60 shadow-[0_50px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-md">
-              {/* 背景装饰环 - 缓慢旋转 */}
-              <div className="absolute inset-0 flex animate-[spin_20s_linear_infinite] items-center justify-center opacity-10">
-                <div className="h-[350px] w-[350px] rounded-full border-[0.5px] border-slate-900" />
-                <div className="absolute h-[250px] w-[250px] rounded-full border-[0.5px] border-dashed border-slate-900" />
-              </div>
+          {/* 边缘渐变消隐层：防止滚上去的文字在 Rail 边缘生硬切断 */}
+          <div className="pointer-events-none h-6 w-full bg-gradient-to-b from-[#030712] to-transparent opacity-90" />
+        </div>
+        {/* ======================================================== */}
 
-              {/* 核心层级预览 - 错位排列 */}
-              <div className="relative z-10 space-y-5">
-                {/* 每一层带有微弱的不对称闪烁 */}
-                <div className="flex translate-x-6 animate-[flicker_3s_infinite_0s] items-center gap-4 rounded-2xl bg-slate-900 px-7 py-5 text-white shadow-xl">
-                  <Database size={22} className="text-indigo-400" />
-                  <span className="font-mono text-xs font-bold tracking-widest uppercase">
+        {/* 3. 滚动主体内容区 */}
+        <div className="space-y-6 px-8">
+          {/* 大字标语：测试从 Tab 背后穿过的视觉效果 */}
+          <p className="my-4 px-2 font-serif text-2xl text-slate-300 italic">
+            "Define VIP Status consistently across 5 different operational
+            tools."
+          </p>
+
+          {/* 模拟卡片组件组 */}
+          <div className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-2">
+            {/* 左侧压力卡片 */}
+            <div className="space-y-4 rounded-xl border border-red-500/10 bg-red-950/5 p-6">
+              <div className="font-mono text-xs tracking-wider text-red-400 uppercase">
+                Runtime Pressure
+              </div>
+              <h3 className="text-lg font-semibold text-red-200">
+                VIP means different things in different systems.
+              </h3>
+              <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-4 font-mono text-xs text-slate-400">
+                <div className="mb-1 text-[10px] text-slate-500">
+                  CRM (2022 · v1)
+                </div>
+                VIP = spends &gt; $1,000
+              </div>
+              <div className="rounded-lg border border-slate-800 bg-slate-900/80 p-4 font-mono text-xs text-slate-400">
+                <div className="mb-1 text-[10px] text-slate-500">
+                  Support Desk (2024 · v3)
+                </div>
+                VIP = response_time &lt; 5m
+              </div>
+            </div>
+
+            {/* 右侧架构卡片 */}
+            <div className="space-y-4 rounded-xl border border-emerald-500/10 bg-emerald-950/5 p-6">
+              <div className="font-mono text-xs tracking-wider text-emerald-400 uppercase">
+                Architecture Response
+              </div>
+              <div className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900 p-4">
+                <ShieldCheckIcon />
+                <div>
+                  <h4 className="text-sm font-semibold text-white">
                     Semantic Layer
-                  </span>
-                </div>
-                <div className="flex -translate-x-6 animate-[flicker_4s_infinite_1s] items-center gap-4 rounded-2xl bg-slate-900 px-7 py-5 text-white shadow-xl">
-                  <GitBranch size={22} className="text-emerald-400" />
-                  <span className="font-mono text-xs font-bold tracking-widest uppercase">
-                    Planning Layer
-                  </span>
-                </div>
-                <div className="flex translate-x-6 animate-[flicker_5s_infinite_0.5s] items-center gap-4 rounded-2xl bg-slate-900 px-7 py-5 text-white shadow-xl">
-                  <ShieldCheck size={22} className="text-amber-400" />
-                  <span className="font-mono text-xs font-bold tracking-widest uppercase">
-                    Decision Layer
-                  </span>
-                </div>
-                <div className="flex -translate-x-6 items-center gap-4 rounded-2xl border-2 border-slate-900 bg-white px-7 py-5 text-slate-900 shadow-xl">
-                  <Zap size={22} className="animate-pulse text-rose-500" />
-                  <span className="font-mono text-xs font-bold tracking-widest uppercase">
-                    Execution Layer
-                  </span>
+                  </h4>
+                  <p className="text-xs text-slate-400">
+                    Shared runtime meaning across systems.
+                  </p>
                 </div>
               </div>
-
-              {/* 悬浮状态图标 - 仅闪烁不位移 */}
-              <div className="absolute top-12 right-12 animate-[flicker_2s_infinite] text-indigo-500">
-                <Cpu size={32} strokeWidth={1.5} />
+              <div className="rounded-lg border border-slate-800 bg-slate-950 p-4 font-mono text-xs">
+                <span className="text-indigo-400">unified_vip_entity</span>
+                <span className="text-slate-500">
+                  {" "}
+                  = [spends, response_tier]
+                </span>
               </div>
-              <div className="absolute bottom-12 left-12 animate-[flicker_6s_infinite_2s] text-slate-400 opacity-20">
-                <Workflow size={54} strokeWidth={1} />
-              </div>
-
-              {/* 装饰性光晕 */}
-              <div className="absolute -right-10 -bottom-10 h-32 w-32 animate-pulse rounded-full bg-indigo-500/10 blur-[50px]" />
             </div>
           </div>
+
+          {/* 长内容文本填充：确保足够长可以滚动 */}
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="space-y-3 rounded-xl border border-slate-800/60 bg-slate-900/30 p-6"
+            >
+              <div className="font-mono text-xs text-slate-500">
+                SYSTEM_LOG_NODE_0{i}
+              </div>
+              <p className="text-sm leading-relaxed text-slate-400">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Core
+                telemetry protocols are resolving dependencies dynamically.
+                Notice how this text gracefully slides behind the sticky tabs
+                rail instead of overlapping harshly with the button borders.
+              </p>
+              <div className="h-2 w-24 rounded-full bg-slate-800" />
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* --- CSS Animations --- */}
-      <style jsx>{`
-        @keyframes flicker {
-          0%,
-          100% {
-            opacity: 1;
-          }
-          45% {
-            opacity: 0.85;
-          }
-          50% {
-            opacity: 0.4;
-          }
-          55% {
-            opacity: 0.9;
-          }
-          80% {
-            opacity: 1;
-          }
-        }
-      `}</style>
-    </section>
+    </div>
   );
 }

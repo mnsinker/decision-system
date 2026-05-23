@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
-import { sectionTitle } from "@/lib/typography";
 import { cn } from "@/lib/cn";
 
 import SectionHeader from "@/components/SectionHeader";
-import SegmentedTabs from "@/components/SegmentedTabs";
+import SegmentedTabs, {
+  segmentedTabsBehavior,
+} from "@/components/SegmentedTabs";
 import PressureLeftCard from "../pressure/PressureLeftCard";
 import PressureRightCard from "../pressure/PressureRightCard";
 import PressureLeftVisual1 from "../pressure/PressureLeftVisual1";
@@ -41,27 +42,36 @@ export default function ArchitecturePressure() {
   const business = semanticVisual.businessVoice;
 
   return (
-    <section className={cn(theme.spacing.sectionXComfort, "py-12")}>
+    <section
+      id="architecture-pressure"
+      className={cn(theme.spacing.sectionXComfort, "scroll-mt-20 py-8")}
+    >
       <div className={cn("mx-auto", theme.spacing.container)}>
         <SectionHeader
           eyebrow={content.eyebrow}
           title={content.sectionTitle}
           label={content.label}
-          role="section"
+          narrativeRole="section"
         />
 
-        <div className="mt-5">
+        <div
+          className={cn(
+            segmentedTabsBehavior.sticky.sectionTrack,
+            "mt-3 flex justify-start"
+          )}
+        >
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
             onChange={(id) => setActiveTab(id as "tab1" | "tab2" | "tab3")}
+            sticky={true}
           />
         </div>
 
         <div
           className={cn(
             "overflow-hidden border",
-            theme.spacing.panelTop,
+            "mt-4",
             theme.radius.shell,
             theme.colors.borderPrimary,
             theme.colors.surfacePrimary,
@@ -72,7 +82,7 @@ export default function ArchitecturePressure() {
 
           <div
             className={cn(
-              "border-b px-8 py-6",
+              "border-b px-7 py-4",
               theme.colors.borderMuted,
               theme.colors.surfaceMuted,
             )}
@@ -81,19 +91,19 @@ export default function ArchitecturePressure() {
               {content.label}
             </div>
 
-            <div className={cn("max-w-4xl", business.editorialQuote.zone)}>
+            <blockquote
+              className={cn(
+                business.editorialQuote.zone,
+                business.editorialQuote.composition,
+              )}
+            >
               <span className={business.editorialQuote.mark} aria-hidden>
                 &ldquo;
               </span>
-              <p
-                className={cn(
-                  business.editorialQuote.body,
-                  sectionTitle(locale),
-                )}
-              >
+              <span className={business.editorialQuote.body}>
                 {current.bizCase}
-              </p>
-            </div>
+              </span>
+            </blockquote>
           </div>
 
           {/* split */}

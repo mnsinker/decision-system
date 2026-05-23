@@ -5,9 +5,11 @@ import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 import SectionHeader from "@/components/SectionHeader";
+import SegmentedTabs from "@/components/SegmentedTabs";
 import { semanticVisual } from "@/design-system/semanticVisual";
 import {
   architectureLayersContent,
+  type LayerSemanticFlow,
   type RuntimeHighlightMapping,
   type RuntimeLayerContent,
   type RuntimeLayerId,
@@ -18,16 +20,68 @@ import {
 const layersScene = {
   choreography: "transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
   mapMinHeight: "min-h-[520px]",
-  spineCoreWidth: "max-w-xl",
-  spineConnector: "my-0.5 flex h-4 items-center justify-center",
+  spineConnector: "flex items-center justify-center py-2",
   boundaryRail: "relative h-3/4 w-px bg-gradient-to-b from-white/10 via-white/20 to-transparent",
-  specAccent: "h-[2px] w-full bg-gradient-to-r from-indigo-500/40 via-emerald-500/20 to-transparent",
   /** Capability bullet — active node uses existing glow token */
   bulletActive:
     "h-1.5 w-1.5 shrink-0 scale-125 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.45)]",
   bulletNeutral: "h-1.5 w-1.5 shrink-0 rounded-full bg-slate-500",
   bulletInactive: "h-1 w-1 shrink-0 rounded-full bg-slate-600",
+  semanticStrip: "mt-3 border-t border-white/10 pt-3",
 } as const;
+
+const semanticStripColumns = ["input", "process", "output"] as const;
+
+type SemanticStripColumn = (typeof semanticStripColumns)[number];
+
+function LayerSemanticStrip({
+  labels,
+  flow,
+  theme,
+}: {
+  labels: Record<SemanticStripColumn, string>;
+  flow: LayerSemanticFlow;
+  theme: ReturnType<typeof useTheme>["theme"];
+}) {
+  return (
+    <div
+      className={cn(
+        "grid grid-cols-3 gap-0",
+        layersScene.semanticStrip,
+        layersScene.choreography,
+      )}
+    >
+      {semanticStripColumns.map((column, columnIndex) => (
+        <div
+          key={column}
+          className={cn(
+            "min-w-0 px-2 first:pl-0 last:pr-0",
+            columnIndex > 0 && "border-l border-white/10",
+          )}
+        >
+          <div
+            className={cn(
+              theme.typography.monoLabel,
+              "text-[9px] text-slate-500",
+            )}
+          >
+            {labels[column]}
+          </div>
+          <ul className="mt-1.5 space-y-1">
+            {flow[column].map((item) => (
+              <li
+                key={item}
+                className="font-mono text-[10px] leading-snug text-slate-300"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function ChevronIcon({ className }: { className?: string }) {
   return (
@@ -47,46 +101,46 @@ function ChevronIcon({ className }: { className?: string }) {
   );
 }
 
-type ViewMode = "core" | "expanded";
+type ViewMode = "layer" | "full";
 
 export default function ArchitectureLayers() {
   const { theme } = useTheme();
   const { locale } = useLanguage();
   const content = architectureLayersContent[locale];
 
-  const [viewMode, setViewMode] = useState<ViewMode>("core");
+  const [viewMode, setViewMode] = useState<ViewMode>("layer");
   const [activeLayerId, setActiveLayerId] = useState<RuntimeLayerId | null>(null);
 
-  const isExpanded = viewMode === "expanded";
+  const isFullView = viewMode === "full";
   const activeHighlights: RuntimeHighlightMapping | null = activeLayerId
     ? content.highlightsMap[activeLayerId]
     : null;
   const highlightedItems = activeHighlights?.highlightedItems ?? null;
 
-  const activeLayerData: RuntimeLayerContent =
-    content.coreLayers.find((l) => l.id === activeLayerId) ??
-    content.coreLayers[0];
-
   const runtimeLabel = semanticVisual.runtimeVoice;
 
-  const handleCoreView = () => {
-    setViewMode("core");
+  const handleLayerView = () => {
+    setViewMode("layer");
     setActiveLayerId(null);
   };
 
-  const handleExpandedView = () => {
-    setViewMode("expanded");
+  const handleFullView = () => {
+    setViewMode("full");
   };
 
   const handleLayerClick = (layerId: RuntimeLayerId) => {
-    setActiveLayerId(layerId);
-    setViewMode("expanded");
+    if (viewMode === "layer") {
+      setViewMode("full");
+      setActiveLayerId(layerId);
+      return;
+    }
+    setActiveLayerId((current) => (current === layerId ? null : layerId));
   };
 
   return (
     <section
       className={cn(
-        "relative w-full overflow-hidden",
+        "relative w-full",
         theme.colors.surfaceDark,
         theme.colors.textOnDark,
         theme.spacing.sectionXComfort,
@@ -121,96 +175,63 @@ export default function ArchitectureLayers() {
           />
 
           <div className="flex shrink-0 items-center self-start lg:self-auto">
-            <div
-              className={cn(
-                "flex gap-0.5 border p-1",
-                theme.radius.chip,
-                theme.colors.borderOnDark,
-                theme.colors.surfaceDarkPanel,
-                theme.shadows.control,
-                theme.shadows.tabTrackInset,
-              )}
-            >
-              <button
-                type="button"
-                onClick={handleCoreView}
-                className={cn(
-                  theme.radius.chipSm,
-                  "px-4 py-2 font-mono text-xs tracking-wide",
-                  layersScene.choreography,
-                  viewMode === "core"
-                    ? cn(
-                        theme.colors.surfaceDarkElevated,
-                        theme.colors.textOnDark,
-                        "font-semibold",
-                        theme.shadows.sm,
-                      )
-                    : cn(theme.colors.textOnDarkMuted, "hover:text-slate-300"),
-                )}
-              >
-                {content.viewModes.core}
-              </button>
-              <button
-                type="button"
-                onClick={handleExpandedView}
-                className={cn(
-                  theme.radius.chipSm,
-                  "px-4 py-2 font-mono text-xs tracking-wide",
-                  layersScene.choreography,
-                  viewMode === "expanded"
-                    ? cn(
-                        "border border-indigo-500/30 bg-indigo-950/40 font-semibold",
-                        theme.colors.textAccentSoft,
-                        theme.shadows.sm,
-                      )
-                    : cn(theme.colors.textOnDarkMuted, "hover:text-slate-300"),
-                )}
-              >
-                {content.viewModes.expanded}
-              </button>
-            </div>
+            <SegmentedTabs
+              variant="runtime"
+              tabs={[
+                { id: "layer", label: content.viewModes.core },
+                { id: "full", label: content.viewModes.expanded },
+              ]}
+              activeTab={viewMode}
+              onChange={(id) =>
+                id === "layer" ? handleLayerView() : handleFullView()
+              }
+              sticky={false}
+            />
           </div>
         </div>
 
         <div
           className={cn(
-            "relative grid items-start gap-12",
+            "relative gap-12 overflow-hidden",
             layersScene.mapMinHeight,
             layersScene.choreography,
-            isExpanded ? "lg:grid-cols-12" : "grid-cols-1",
+            isFullView
+              ? "grid grid-cols-1 items-start lg:grid-cols-12"
+              : "flex w-full justify-center items-center",
           )}
         >
           <div
             className={cn(
-              "relative z-10 space-y-4",
+              "relative z-10 flex flex-col",
               layersScene.choreography,
-              isExpanded
+              isFullView
                 ? "lg:col-span-5"
-                : cn("mx-auto w-full", layersScene.spineCoreWidth),
+                : "mx-auto w-full max-w-[33.333rem]",
             )}
           >
             <div
               className={cn(
                 "mb-4 flex items-center",
                 runtimeLabel.moduleLabel,
-                !isExpanded && "justify-center",
+                !isFullView && "justify-center",
               )}
             >
               <span className="mr-2 h-1.5 w-1.5 rounded-full bg-indigo-400" />
               {content.spineLabel}
             </div>
 
-            {content.coreLayers.map((layer, index) => {
+            {content.coreLayers.map((layer: RuntimeLayerContent, index) => {
               const isActive = activeLayerId === layer.id;
-              const showResponsibility = !isExpanded || isActive;
+              const showResponsibility = !isFullView || !isActive;
+              const showSemanticStrip = isFullView && isActive;
 
               return (
-                <div key={layer.id} className="relative">
+                <React.Fragment key={layer.id}>
                   <button
                     type="button"
                     onClick={() => handleLayerClick(layer.id)}
                     className={cn(
-                      "group relative w-full cursor-pointer border p-5 text-left",
+                      "group relative isolate w-full cursor-pointer border p-5 text-left",
                       layersScene.choreography,
                       theme.radius.cardSm,
                       isActive
@@ -227,17 +248,8 @@ export default function ArchitectureLayers() {
                     )}
                   >
                     <div className="flex items-start justify-between">
-                      <div
-                        className={cn(
-                          !isExpanded && "mx-auto text-center",
-                        )}
-                      >
-                        <div
-                          className={cn(
-                            "flex items-center gap-2",
-                            !isExpanded && "justify-center",
-                          )}
-                        >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
                           <span
                             className={cn(
                               theme.typography.monoLabel,
@@ -253,7 +265,7 @@ export default function ArchitectureLayers() {
                               theme.typography.cardTitle,
                               "tracking-[-0.03em]",
                               layersScene.choreography,
-                              !isExpanded || isActive
+                              !isFullView || isActive
                                 ? theme.colors.textOnDark
                                 : cn(
                                     "text-slate-200",
@@ -270,29 +282,29 @@ export default function ArchitectureLayers() {
                               "mt-2 line-clamp-2 text-xs leading-relaxed",
                               layersScene.choreography,
                               theme.colors.textOnDarkMuted,
-                              !isExpanded && "mx-auto max-w-md",
                             )}
                           >
                             {layer.responsibility}
                           </p>
                         )}
                       </div>
-                      {isExpanded && (
-                        <div
-                          className={cn(
-                            "mt-1 shrink-0",
-                            layersScene.choreography,
-                            isActive
+                      <div
+                        className={cn(
+                          "mt-1 shrink-0",
+                          isFullView && layersScene.choreography,
+                          isFullView
+                            ? isActive
                               ? cn(
                                   "rotate-90",
                                   theme.colors.textAccentSoft,
                                 )
-                              : "text-slate-500 group-hover:text-slate-300",
-                          )}
-                        >
-                          <ChevronIcon className="h-5 w-5" />
-                        </div>
-                      )}
+                              : "text-slate-500 group-hover:text-slate-300"
+                            : "text-slate-500",
+                        )}
+                        aria-hidden
+                      >
+                        <ChevronIcon className="h-5 w-5" />
+                      </div>
                     </div>
 
                     <div
@@ -304,55 +316,53 @@ export default function ArchitectureLayers() {
                           : "scale-0 bg-transparent",
                       )}
                     />
+
+                    <div
+                      className={cn(
+                        "grid overflow-hidden",
+                        layersScene.choreography,
+                        showSemanticStrip
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0",
+                      )}
+                    >
+                      <div className="min-h-0">
+                        <LayerSemanticStrip
+                          labels={content.semanticStrip}
+                          flow={layer.semanticFlow}
+                          theme={theme}
+                        />
+                      </div>
+                    </div>
                   </button>
 
                   {index < content.coreLayers.length - 1 && (
-                    <div className={layersScene.spineConnector}>
-                      <div className="h-full w-px bg-white/10" />
-                      <svg
-                        className="absolute h-2 w-2 text-slate-600"
-                        fill="currentColor"
-                        viewBox="0 0 8 8"
-                        aria-hidden
-                      >
-                        <path d="M4 7L0 3h8L4 7z" />
-                      </svg>
+                    <div className={layersScene.spineConnector} aria-hidden>
+                      <div className="min-h-4 w-px self-stretch bg-white/10" />
                     </div>
                   )}
-                </div>
+                </React.Fragment>
               );
             })}
           </div>
 
           <div
             className={cn(
-              "hidden h-full min-h-[380px] items-center justify-center lg:col-span-1 lg:flex",
+              "hidden h-full min-h-[380px] items-center justify-center lg:col-span-1",
               layersScene.choreography,
-              !isExpanded && "lg:hidden",
+              isFullView ? "lg:flex" : "hidden",
             )}
           >
-            <div className={layersScene.boundaryRail}>
-              <div
-                className={cn(
-                  "absolute top-1/4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded border px-2 py-0.5 font-mono text-[9px] tracking-wider uppercase",
-                  theme.colors.borderOnDark,
-                  theme.colors.surfaceDarkPanel,
-                  theme.colors.textAccentSoft,
-                  theme.shadows.sm,
-                )}
-              >
-                {content.boundariesLabel}
-              </div>
-            </div>
+            <div className={layersScene.boundaryRail} aria-hidden />
           </div>
 
           <div
             className={cn(
-              "relative space-y-4 lg:col-span-6",
+              "relative space-y-4",
               layersScene.choreography,
-              isExpanded
-                ? "translate-x-0 opacity-100"
-                : "pointer-events-none h-0 overflow-hidden p-0 opacity-0 translate-x-16",
+              isFullView
+                ? "lg:col-span-6 translate-x-0 opacity-100 block"
+                : "hidden pointer-events-none h-0 overflow-hidden p-0 opacity-0 translate-x-16",
             )}
           >
             <div
@@ -366,72 +376,27 @@ export default function ArchitectureLayers() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {content.stabilitySystems.map((system: StabilitySystemContent) => {
-                const isStrong =
-                  activeHighlights !== null &&
-                  activeHighlights.strongSystems.includes(system.id);
-                const isWeak =
-                  activeHighlights !== null &&
-                  activeHighlights.weakSystems.includes(system.id);
-                const isSystemLinked = isStrong || isWeak;
-                const hasActiveCapability = system.items.some((item) =>
-                  highlightedItems?.includes(item),
-                );
-
-                return (
+              {content.stabilitySystems.map((system: StabilitySystemContent) => (
                   <div
                     key={system.id}
                     className={cn(
                       "relative border p-5",
                       layersScene.choreography,
                       theme.radius.cardSm,
+                      theme.colors.borderOnDark,
                       theme.colors.surfaceDarkElevated,
-                      isSystemLinked && hasActiveCapability
-                        ? isStrong
-                          ? cn(
-                              theme.colors.borderSuccess,
-                              theme.colors.surfaceSuccess,
-                            )
-                          : theme.colors.borderOnDark
-                        : theme.colors.borderOnDark,
                     )}
                   >
                     <div className="mb-3 flex flex-col">
-                      <div className="flex items-start justify-between gap-2">
-                        <h4
-                          className={cn(
-                            theme.typography.cardTitle,
-                            "text-[18px] tracking-[-0.03em]",
-                            isStrong
-                              ? theme.colors.textSuccessBright
-                              : isWeak
-                                ? "text-slate-200"
-                                : theme.colors.textOnDark,
-                          )}
-                        >
-                          {system.title}
-                        </h4>
-                        {isSystemLinked && (
-                          <span
-                            className={cn(
-                              theme.typography.monoLabel,
-                              "shrink-0 rounded px-1.5 py-0.5 text-[8px]",
-                              isStrong
-                                ? cn(
-                                    theme.colors.borderSuccess,
-                                    "bg-emerald-950/50",
-                                    theme.colors.textSuccessBright,
-                                  )
-                                : cn(
-                                    theme.colors.surfaceDarkPanel,
-                                    theme.colors.textOnDarkMuted,
-                                  ),
-                            )}
-                          >
-                            {isStrong ? "Active" : "Linked"}
-                          </span>
+                      <h4
+                        className={cn(
+                          theme.typography.cardTitle,
+                          "text-[18px] tracking-[-0.03em]",
+                          theme.colors.textOnDark,
                         )}
-                      </div>
+                      >
+                        {system.title}
+                      </h4>
                       <p
                         className={cn(
                           "mt-1.5 line-clamp-2 text-[10px] leading-relaxed",
@@ -455,7 +420,7 @@ export default function ArchitectureLayers() {
                         const isBulletDimmed =
                           activeLayerId !== null && !isBulletHighlighted;
                         const isNeutralBullets =
-                          isExpanded && activeLayerId === null;
+                          isFullView && activeLayerId === null;
 
                         return (
                           <li
@@ -498,174 +463,9 @@ export default function ArchitectureLayers() {
                       })}
                     </ul>
                   </div>
-                );
-              })}
+              ))}
             </div>
           </div>
-        </div>
-
-        <div
-          className={cn(
-            "relative mt-14 overflow-hidden border",
-            theme.radius.card,
-            theme.colors.borderOnDark,
-            theme.colors.surfaceDarkElevated,
-            theme.shadows.panel,
-          )}
-        >
-          <div className={layersScene.specAccent} aria-hidden />
-
-          <div
-            className={cn(
-              "flex flex-col items-start justify-between gap-4 border-b px-6 py-4 md:flex-row md:items-center",
-              theme.colors.borderOnDark,
-              theme.colors.surfaceDarkPanel,
-            )}
-          >
-            <span className={cn("flex items-center", runtimeLabel.moduleLabel)}>
-              <span className="mr-2 h-1.5 w-1.5 rounded-full bg-indigo-400" />
-              {content.specLabel}
-            </span>
-
-            <div
-              className={cn(
-                "flex w-full overflow-x-auto rounded-lg border p-0.5 whitespace-nowrap md:w-auto",
-                theme.colors.borderOnDark,
-                theme.colors.surfaceDarkPanel,
-              )}
-            >
-              {content.coreLayers.map((layer) => {
-                const isActive = activeLayerId === layer.id;
-                return (
-                  <button
-                    key={layer.id}
-                    type="button"
-                    onClick={() => handleLayerClick(layer.id)}
-                    className={cn(
-                      theme.radius.chipSm,
-                      "px-3 py-1.5 font-mono text-xs",
-                      layersScene.choreography,
-                      isActive
-                        ? cn(
-                            "border border-indigo-500/25 bg-indigo-950/60 font-semibold",
-                            theme.colors.textAccentSoft,
-                          )
-                        : cn(
-                            theme.colors.textOnDarkMuted,
-                            "hover:text-slate-300",
-                          ),
-                    )}
-                  >
-                    {layer.title}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="p-6 md:p-8">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-              <div className="space-y-2">
-                <div
-                  className={cn(
-                    "border-b pb-1.5",
-                    theme.typography.monoLabel,
-                    theme.colors.borderOnDark,
-                    theme.colors.textOnDarkMuted,
-                  )}
-                >
-                  {content.specFields.responsibility}
-                </div>
-                <p className="text-xs leading-relaxed text-slate-300">
-                  {activeLayerData.details.responsibility}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div
-                  className={cn(
-                    "border-b pb-1.5",
-                    theme.typography.monoLabel,
-                    theme.colors.borderOnDark,
-                    "text-amber-500/70",
-                  )}
-                >
-                  {content.specFields.pressure}
-                </div>
-                <p
-                  className={cn(
-                    "text-xs leading-relaxed",
-                    theme.colors.textOnDarkMuted,
-                  )}
-                >
-                  {activeLayerData.details.pressure}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div
-                  className={cn(
-                    "border-b pb-1.5",
-                    theme.typography.monoLabel,
-                    theme.colors.borderOnDark,
-                    theme.colors.textAccentSoft,
-                  )}
-                >
-                  {content.specFields.current}
-                </div>
-                <div
-                  className={cn(
-                    "flex min-h-[56px] items-center border p-3 font-mono text-[11px] leading-normal",
-                    theme.radius.chipSm,
-                    theme.colors.borderOnDark,
-                    theme.colors.surfaceDarkPanel,
-                    theme.colors.textOnDarkMuted,
-                  )}
-                >
-                  {activeLayerData.details.current}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div
-                  className={cn(
-                    "border-b pb-1.5",
-                    theme.typography.monoLabel,
-                    theme.colors.borderOnDark,
-                    theme.colors.textSuccess,
-                  )}
-                >
-                  {content.specFields.future}
-                </div>
-                <div
-                  className={cn(
-                    "flex min-h-[56px] items-center border p-3 font-mono text-[11px] leading-normal",
-                    theme.radius.chipSm,
-                    theme.colors.borderOnDark,
-                    theme.colors.surfaceDarkPanel,
-                    theme.colors.textOnDarkMuted,
-                  )}
-                >
-                  {activeLayerData.details.future}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 gap-6 px-2 font-mono text-xs md:grid-cols-3">
-          {content.insights.map((insight) => (
-            <div
-              key={insight}
-              className={cn(
-                "flex items-start gap-2",
-                theme.colors.textOnDarkMuted,
-              )}
-            >
-              <span className={theme.colors.textAccentSoft}>[✓]</span>
-              <span>{insight}</span>
-            </div>
-          ))}
         </div>
       </div>
     </section>

@@ -19,7 +19,7 @@ export default function OverviewLifecycle() {
         theme.colors.surfaceDark,
         theme.colors.textOnDark,
         theme.spacing.sectionXComfort,
-        "py-20 md:py-24",
+        "py-24 md:py-28",
       )}
     >
       {/* subtle grid */}
@@ -36,31 +36,28 @@ export default function OverviewLifecycle() {
 
       <div className={cn("relative mx-auto", theme.spacing.container)}>
         {/* trace line */}
-        <TransitionLine text={content.transition} dark />
+        <div className="pb-3">
+          <TransitionLine text={content.transition} dark />
+        </div>
 
         {/* narrative */}
-        <div className="mt-4">
+        <div className="mt-8 [&>div>div:first-child]:mb-4 [&>div>h2+p]:mt-6 [&>div>p]:leading-[1.7]">
           <SectionHeader
             eyebrow={content.sectionLabel}
             title={`${content.title.line1}\n${content.title.line2}`}
             subtitle={content.subtitle}
             align="center"
             dark
-            role="runtime"
+            narrativeRole="runtime"
           />
         </div>
 
         {/* lifecycle rail */}
-        <div className="relative mt-10">
+        <div className="relative mt-14 md:mt-16">
           {/* center line */}
-          <div className="absolute top-7 left-0 h-px w-full bg-gradient-to-r from-transparent via-indigo-300/30 to-transparent" />
+          <div className="absolute top-8 left-0 h-px w-full bg-gradient-to-r from-transparent via-indigo-300/30 to-transparent" />
 
-          <div
-            className={cn(
-              "relative grid md:grid-cols-4",
-              theme.spacing.containerGapWide,
-            )}
-          >
+          <div className="relative grid gap-10 md:grid-cols-4">
             {content.steps.map((step) => (
               <div key={step.num} className="group relative">
                 {/* node */}
@@ -79,16 +76,15 @@ export default function OverviewLifecycle() {
                 {/* card */}
                 <div
                   className={cn(
-                    "mt-8 border bg-white/[0.03] backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-indigo-300/20 group-hover:bg-white/[0.05]",
+                    "mt-10 min-h-[9rem] border bg-white/[0.03] px-5 py-7 backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-indigo-300/20 group-hover:bg-white/[0.05] md:px-6 md:py-8",
                     theme.radius.buttonLg,
                     theme.colors.borderOnDark,
-                    theme.spacing.cardPaddingSpacious,
                   )}
                 >
                   <div
                     className={cn(
                       theme.typography.cardTitle,
-                      "text-white",
+                      "mb-3 text-white",
                     )}
                   >
                     {step.title}
@@ -96,8 +92,8 @@ export default function OverviewLifecycle() {
 
                   <p
                     className={cn(
-                      "mt-4",
                       theme.typography.explainer,
+                      "leading-[1.7]",
                       theme.colors.textOnDarkMuted,
                     )}
                   >

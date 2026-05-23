@@ -12,16 +12,17 @@ export type RuntimeHighlightMapping = {
   highlightedItems: string[];
 };
 
+export type LayerSemanticFlow = {
+  input: string[];
+  process: string[];
+  output: string[];
+};
+
 export type RuntimeLayerContent = {
   id: RuntimeLayerId;
   title: string;
   responsibility: string;
-  details: {
-    responsibility: string;
-    pressure: string;
-    current: string;
-    future: string;
-  };
+  semanticFlow: LayerSemanticFlow;
 };
 
 export type StabilitySystemContent = {
@@ -38,73 +39,55 @@ export const architectureLayersContent = {
     subtitle:
       "AI execution becomes unreliable when runtime structure is missing.",
     viewModes: {
-      core: "[ Core Runtime ]",
-      expanded: "[ Expanded Runtime View ]",
+      core: "Layer View",
+      expanded: "Full View",
     },
     spineLabel: "Core Runtime Spine",
     systemsLabel: "Runtime Stability Systems",
-    systemsHint: "(Toggle Expanded View to show connections)",
-    boundariesLabel: "Boundaries Active",
-    specLabel: "Synchronized Controller Spec",
-    specFields: {
-      responsibility: "1. Runtime Responsibility",
-      pressure: "2. Runtime Pressure",
-      current: "3. Current Implementation",
-      future: "4. Future Extensions",
+    semanticStrip: {
+      input: "INPUT",
+      process: "PROCESS",
+      output: "OUTPUT",
     },
-    insights: [
-      "Unconstrained conversational prompt interfaces fail standard corporate compliance. Structure-driven runtimes enforce logical integrity.",
-      "Isolated state layers guarantee 100% downstream auditability, transforming probabilistic models into repeatable, stable components.",
-      "By treating stability mechanisms as continuous validation boundaries rather than static post-processing stages, runtime latency is minimized.",
-    ],
     coreLayers: [
       {
         id: "semantic",
         title: "Semantic Layer",
         responsibility: "Unify operational meaning across runtime systems.",
-        details: {
-          responsibility: "Unify operational meaning across runtime systems.",
-          pressure:
-            "Business semantics fragment as systems evolve independently.",
-          current:
-            "Ontology nodes, entity mapping, and semantic runtime contracts.",
-          future: "Retrieval-aware semantic resolution.",
+        semanticFlow: {
+          input: ["Natural Language", "Tool Metadata"],
+          process: ["Ontology Mapping", "Semantic Resolution"],
+          output: ["Structured Entities", "Execution Context"],
         },
       },
       {
         id: "planning",
         title: "Planning Layer",
         responsibility: "Resolve runtime dependencies and execution paths.",
-        details: {
-          responsibility: "Resolve execution dependencies dynamically.",
-          pressure:
-            "Operational workflows become difficult to hardcode as dependency graphs grow.",
-          current:
-            "DFS-based dependency planning using requires/provides relations.",
-          future: "Conditional routing and adaptive execution graphs.",
+        semanticFlow: {
+          input: ["Structured Entities", "Dependency Graph"],
+          process: ["Path Resolution", "Requires / Provides"],
+          output: ["Execution Plan", "Capability Route"],
         },
       },
       {
         id: "policy",
         title: "Policy Layer",
         responsibility: "Evaluate business rules before execution continues.",
-        details: {
-          responsibility: "Evaluate business rules before execution continues.",
-          pressure: "Business rules evolve faster than execution infrastructure.",
-          current: "Policy isolation through structured PolicyResult DTOs.",
-          future: "Context-aware runtime policy evaluation.",
+        semanticFlow: {
+          input: ["Execution Plan", "Business Context"],
+          process: ["Rule Evaluation", "Policy Isolation"],
+          output: ["PolicyResult DTO", "Approval Gate"],
         },
       },
       {
         id: "execution",
         title: "Execution Layer",
         responsibility: "Orchestrate tools, services, and runtime actions.",
-        details: {
-          responsibility: "Orchestrate tools, services, and runtime actions.",
-          pressure:
-            "Execution becomes difficult to trace across distributed runtime systems.",
-          current: "Structured tool execution with audit trace emission.",
-          future: "Adaptive operational execution orchestration.",
+        semanticFlow: {
+          input: ["PolicyResult DTO", "Tool Contracts"],
+          process: ["Tool Orchestration", "State Emission"],
+          output: ["Audit Trace", "Runtime Actions"],
         },
       },
     ] satisfies RuntimeLayerContent[],
@@ -208,68 +191,55 @@ export const architectureLayersContent = {
     sectionTitle: "架构层",
     subtitle: "当运行时结构缺失时，AI 执行将变得不可靠。",
     viewModes: {
-      core: "[ 核心运行时 ]",
-      expanded: "[ 扩展运行时视图 ]",
+      core: "层级视图",
+      expanded: "完整视图",
     },
     spineLabel: "核心运行时主干",
     systemsLabel: "运行时稳定性系统",
-    systemsHint: "（切换至扩展视图以显示连接）",
-    boundariesLabel: "边界已激活",
-    specLabel: "同步控制器规格",
-    specFields: {
-      responsibility: "1. 运行时职责",
-      pressure: "2. 运行时压力",
-      current: "3. 当前实现",
-      future: "4. 未来扩展",
+    semanticStrip: {
+      input: "输入",
+      process: "处理",
+      output: "输出",
     },
-    insights: [
-      "无约束的对话式提示界面难以满足企业合规要求，结构驱动的运行时才能保障逻辑完整性。",
-      "隔离的状态层保证下游 100% 可审计，将概率模型转化为可重复、稳定的组件。",
-      "将稳定性机制视为持续验证边界而非静态后处理阶段，可最小化运行时延迟。",
-    ],
     coreLayers: [
       {
         id: "semantic",
         title: "语义层",
         responsibility: "在运行时系统中统一运营语义。",
-        details: {
-          responsibility: "在运行时系统中统一运营语义。",
-          pressure: "随着系统独立演进，业务语义逐渐碎片化。",
-          current: "本体节点、实体映射与语义运行时契约。",
-          future: "检索感知的语义解析。",
+        semanticFlow: {
+          input: ["自然语言", "工具元数据"],
+          process: ["本体映射", "语义解析"],
+          output: ["结构化实体", "执行上下文"],
         },
       },
       {
         id: "planning",
         title: "规划层",
         responsibility: "解析运行时依赖与执行路径。",
-        details: {
-          responsibility: "动态解析执行依赖。",
-          pressure: "依赖图增长后，运营工作流难以硬编码。",
-          current: "基于 requires/provides 关系的 DFS 依赖规划。",
-          future: "条件路由与自适应执行图。",
+        semanticFlow: {
+          input: ["结构化实体", "依赖图"],
+          process: ["路径解析", "Requires / Provides"],
+          output: ["执行计划", "能力路由"],
         },
       },
       {
         id: "policy",
         title: "策略层",
         responsibility: "在执行继续前评估业务规则。",
-        details: {
-          responsibility: "在执行继续前评估业务规则。",
-          pressure: "业务规则演进速度快于执行基础设施。",
-          current: "通过结构化 PolicyResult DTO 实现策略隔离。",
-          future: "上下文感知的运行时策略评估。",
+        semanticFlow: {
+          input: ["执行计划", "业务上下文"],
+          process: ["规则评估", "策略隔离"],
+          output: ["PolicyResult DTO", "审批闸门"],
         },
       },
       {
         id: "execution",
         title: "执行层",
         responsibility: "编排工具、服务与运行时动作。",
-        details: {
-          responsibility: "编排工具、服务与运行时动作。",
-          pressure: "分布式运行时系统中，执行轨迹难以追踪。",
-          current: "结构化工具执行与审计轨迹输出。",
-          future: "自适应运营执行编排。",
+        semanticFlow: {
+          input: ["PolicyResult DTO", "工具契约"],
+          process: ["工具编排", "状态发射"],
+          output: ["审计轨迹", "运行时动作"],
         },
       },
     ] satisfies RuntimeLayerContent[],

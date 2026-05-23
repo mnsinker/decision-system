@@ -3,7 +3,7 @@ import React from "react";
 
 export default function PressureRightVisual3() {
   return (
-    <div className="relative flex h-[460px] w-full items-center justify-center overflow-visible font-sans select-none">
+    <div className="relative flex h-[420px] w-full items-center justify-center overflow-visible font-sans select-none">
       {/* 💡 顶部高空冷色环境微光 */}
       <div className="pointer-events-none absolute top-0 left-1/2 z-0 h-[220px] w-[300px] -translate-x-1/2 rounded-full bg-gradient-to-b from-emerald-400/[0.1] via-emerald-500/[0.01] to-transparent blur-2xl" />
 
@@ -17,7 +17,7 @@ export default function PressureRightVisual3() {
           <div
             className="absolute top-[10px] left-[40px]"
             style={{
-              animation: "naturalRainfall 5s linear infinite",
+              animation: "vipRainfall 5s linear infinite backwards",
               animationDelay: "0s",
             }}
           >
@@ -31,7 +31,7 @@ export default function PressureRightVisual3() {
           <div
             className="absolute top-[5px] right-[40px]"
             style={{
-              animation: "naturalRainfall 5s linear infinite",
+              animation: "naturalRainfall 5s linear infinite backwards",
               animationDelay: "1.6s",
             }}
           >
@@ -44,7 +44,7 @@ export default function PressureRightVisual3() {
           <div
             className="absolute top-0 left-[140px]"
             style={{
-              animation: "naturalRainfall 5s linear infinite",
+              animation: "naturalRainfall 5s linear infinite backwards",
               animationDelay: "2.8s",
             }}
           >
@@ -58,7 +58,7 @@ export default function PressureRightVisual3() {
           <div
             className="absolute top-[25px] left-[200px]"
             style={{
-              animation: "naturalRainfall 5s linear infinite",
+              animation: "naturalRainfall 5s linear infinite backwards",
               animationDelay: "3.3s",
             }}
           >
@@ -73,7 +73,7 @@ export default function PressureRightVisual3() {
            LAYER 1: TOP POLICY LAYER (高仿真实玻璃·去 Pop 墨化动态消溶池)
         ========================================================================= */}
         <div
-          className="relative z-30 h-[115px] w-[300px] [transform:rotateX(42deg)_rotateZ(-12deg)] rounded-2xl border border-white/[0.08] bg-gradient-to-br from-emerald-500/[0.06] via-emerald-600/[0.02] to-transparent p-3 backdrop-blur-xs will-change-transform [transform-style:preserve-3d]"
+          className="relative z-30 h-[100px] w-[300px] [transform:rotateX(42deg)_rotateZ(-12deg)] rounded-2xl border border-white/[0.08] bg-gradient-to-br from-emerald-500/[0.06] via-emerald-600/[0.02] to-transparent p-2.5 backdrop-blur-xs will-change-transform [transform-style:preserve-3d]"
           style={{
             // 通过极细的双层亮、暗 3D 边缘高光线勾勒，让磨砂玻璃在透视上立体且绝对真实
             boxShadow:
@@ -109,7 +109,7 @@ export default function PressureRightVisual3() {
             {/* 对应雨滴 C 的化开效果：位置位于中部 */}
             <Right3DPolicyPill
               title="Region Policy"
-              position="absolute top-[65px] left-[50px]"
+              position="absolute top-[54px] left-[72px]"
               delay="4.7s"
             />
 
@@ -123,7 +123,7 @@ export default function PressureRightVisual3() {
         </div>
 
         {/* 🌊 上层垂直高速向下集线管 (L1 ➔ L2：像素级垂直流淌，方向正确) */}
-        <div className="relative z-20 -mt-3.5 -mb-2 h-[55px] w-[100px] [transform:translateZ(10px)] overflow-visible">
+        <div className="relative z-20 -mt-3 -mb-1.5 h-[48px] w-[100px] [transform:translateZ(10px)] overflow-visible">
           <svg
             className="h-full w-full overflow-visible"
             viewBox="0 0 100 55"
@@ -178,7 +178,7 @@ export default function PressureRightVisual3() {
            LAYER 2: MIDDLE DTO BARRIER (真高透悬浮水晶玻璃镜片)
         ========================================================================= */}
         <div
-          className="relative z-20 flex h-[85px] w-[315px] [transform:rotateX(42deg)_rotateZ(-12deg)] items-center justify-center rounded-xl border border-white/20 bg-gradient-to-br from-white/[0.08] to-transparent backdrop-blur-xs transition-all"
+          className="relative z-20 flex h-[74px] w-[315px] [transform:rotateX(42deg)_rotateZ(-12deg)] items-center justify-center rounded-xl border border-white/20 bg-gradient-to-br from-white/[0.08] to-transparent backdrop-blur-xs transition-all"
           style={{
             boxShadow:
               "0 0 1px rgba(255,255,255,0.4), 1px 1px 0px rgba(255,255,255,0.25), 2px 2px 0px rgba(255,255,255,0.15), 3px 3px 1px rgba(16,185,129,0.1), 4px 4px 16px rgba(0,0,0,0.6)",
@@ -201,7 +201,7 @@ export default function PressureRightVisual3() {
         </div>
 
         {/* 🌊 下层数据流实体传输管道 (L2 ➔ L3：实体管道线 + 向下奔流) */}
-        <div className="relative z-10 -mt-3 -mb-1.5 h-[45px] w-[40px] overflow-visible">
+        <div className="relative z-10 -mt-2.5 -mb-1 h-[40px] w-[40px] overflow-visible">
           <svg
             className="h-full w-full overflow-visible"
             viewBox="0 0 40 45"
@@ -235,7 +235,7 @@ export default function PressureRightVisual3() {
            LAYER 3: BOTTOM EXECUTION CORE (黑金刚石服务器卡槽基座 - 绝对高对比度)
         ========================================================================= */}
         <div
-          className="relative z-10 h-[95px] w-[335px] [transform:rotateX(42deg)_rotateZ(-12deg)] overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#091f1a] to-[#010605] p-3"
+          className="relative z-10 h-[82px] w-[335px] [transform:rotateX(42deg)_rotateZ(-12deg)] overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#091f1a] to-[#010605] p-2.5"
           style={{
             boxShadow:
               "0 0 1.5px rgba(52,211,153,0.6), 1px 1px 0px #041915, 2px 2px 0px #041915, 3px 3px 0px #03120f, 4px 4px 0px #03120f, 5px 5px 0px #010605, 6px 6px 0px #010605, 7px 7px 0px #000, 8px 8px 0px #000, 10px 10px 30px rgba(0,0,0,0.95)",
@@ -273,21 +273,42 @@ export default function PressureRightVisual3() {
           to { stroke-dashoffset: 0; }
         }
         
+        @keyframes vipRainfall {
+          0% {
+            transform: translate3d(0, -60px, 140px) scale(0.6);
+            opacity: 0;
+            filter: blur(0px);
+          }
+          10% {
+            opacity: 0.8;
+          }
+          38% {
+            transform: translate3d(0, 82px, 55px) scale(0.88);
+            opacity: 0.75;
+            filter: blur(2px);
+          }
+          44%, 100% {
+            transform: translate3d(0, 92px, 45px) scale(0.9);
+            opacity: 0;
+            filter: blur(8px);
+          }
+        }
+
         @keyframes naturalRainfall {
           0% {
             transform: translate3d(0, -60px, 140px) scale(0.6);
             opacity: 0;
           }
           10% {
-            opacity: 0.7;
+            opacity: 0.8;
           }
-          /* 🎯 极其精准的无缝吸收入水点：在 28% 时间节点刚好物理触及第一层顶面，并缓缓淡入 */
-          26% {
+          50% {
+            transform: translate3d(0, 108px, 38px) scale(0.94);
             opacity: 0.9;
           }
-          29%, 100% {
-            transform: translate3d(0, 52px, 15px) scale(0.98);
-            opacity: 0; /* 接触玻璃板表面瞬间丝滑隐没，绝不穿透到中层 */
+          55%, 100% {
+            transform: translate3d(0, 118px, 20px) scale(0.96);
+            opacity: 0;
           }
         }
 

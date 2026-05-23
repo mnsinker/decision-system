@@ -11,7 +11,7 @@ import ChallengeVariant3 from "./ChallengeVariant3";
 
 export default function ChallengePanel({
   challenge,
-  interpretationLabel = "System interpretation",
+  interpretationLabel = "System impact",
 }: {
   challenge: any;
   interpretationLabel?: string;
@@ -19,8 +19,7 @@ export default function ChallengePanel({
   const { theme } = useTheme();
   const business = semanticVisual.businessVoice;
   const outcome = semanticVisual.outcomeVoice;
-  const interpretationLines: string[] =
-    challenge.interpretationPoints ?? [];
+  const interpretationLines: string[] = challenge.interpretationPoints ?? [];
 
   return (
     <div className="relative">
@@ -34,22 +33,32 @@ export default function ChallengePanel({
         )}
       >
         <div className="grid lg:grid-cols-[1fr_1.2fr]">
-          <div className={cn(business.zone, "p-6 md:p-7 lg:pr-8")}>
+          <div
+            className={cn(
+              business.zone,
+              "py-7 pr-7 pl-10 md:py-8 md:pr-8 md:pl-11 lg:pr-9 lg:pl-12",
+            )}
+          >
             <div className={business.cornerBloom} aria-hidden />
-            <div className="relative max-w-[15.5rem] space-y-3.5">
+            <div className="relative max-w-[18rem] space-y-3.5">
               <div className={business.moduleLabel}>
                 <MessageSquare size={14} className={business.moduleIcon} />
                 {challenge.businessLabel}
               </div>
 
-              <div className={business.editorialQuote.zone}>
+              <blockquote
+                className={cn(
+                  business.editorialQuote.zone,
+                  business.editorialQuote.composition,
+                )}
+              >
                 <span className={business.editorialQuote.mark} aria-hidden>
                   &ldquo;
                 </span>
-                <blockquote className={business.editorialQuote.body}>
+                <span className={business.editorialQuote.body}>
                   {challenge.businessQuote}
-                </blockquote>
-              </div>
+                </span>
+              </blockquote>
 
               <div className="space-y-2">
                 <div className={business.scanLabel}>{interpretationLabel}</div>
@@ -79,25 +88,12 @@ export default function ChallengePanel({
           )}
         </div>
 
-        <div className={cn(outcome.zone, "p-5 md:p-6")}>
-          <div className={outcome.atmosphere} aria-hidden />
-          <div className={outcome.atmosphereEdge} aria-hidden />
-
-          <div
-            className="
-              absolute left-1/2 top-0
-              hidden
-              -translate-x-1/2
-              -translate-y-1/2
-              lg:block
-            "
-          >
+        <div className="relative">
+          <div className="pointer-events-none absolute top-2 left-1/2 z-30 hidden -translate-x-1/2 -translate-y-[40%] lg:block">
             <div className="flex flex-col items-center">
-              <div className={outcome.connectorLine} />
-
               <div className={outcome.connectorNode}>
                 <ArrowDown
-                  size={14}
+                  size={13}
                   className="text-rose-300"
                   fill="currentColor"
                 />
@@ -105,42 +101,38 @@ export default function ChallengePanel({
             </div>
           </div>
 
-          <div className="relative z-10 mx-auto max-w-4xl">
-            <div
-              className="
-                grid items-start gap-5
-                md:grid-cols-[180px_1fr]
-              "
-            >
-              <div>
-                <div className={outcome.moduleLabel}>
-                  <Activity size={12} className={outcome.moduleIcon} />
+          <div className={cn(outcome.zone, "overflow-visible p-6 md:py-7")}>
+            <div className={outcome.atmosphere} aria-hidden />
+            <div className={outcome.atmosphereEdge} aria-hidden />
 
-                  {challenge.consequenceLabel}
+            <div className="relative z-10 mx-auto max-w-4xl lg:pt-2">
+              <div className="grid items-start gap-5 md:grid-cols-[180px_1fr]">
+                <div>
+                  <div className={outcome.moduleLabel}>
+                    <Activity size={12} className={outcome.moduleIcon} />
+
+                    {challenge.consequenceLabel}
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-2.5">
-                <h4
-                  className={cn(
-                    theme.typography.cardTitle,
-                    theme.colors.textPrimary,
-                  )}
-                >
-                  {challenge.consequenceTitleBeg}{" "}
-                  <span className="relative inline-block">
-                    <span className={outcome.outcomeHighlight}>
-                      {challenge.consequenceHighlight}
-                    </span>
+                <div className="min-h-[3.25rem] space-y-3 lg:mt-2">
+                  <h4
+                    className={cn(
+                      theme.typography.cardTitle,
+                      theme.colors.textPrimary,
+                    )}
+                  >
+                    {challenge.consequenceTitleBeg}{" "}
+                    <span className="relative inline-block">
+                      <span className={outcome.outcomeHighlight}>
+                        {challenge.consequenceHighlight}
+                      </span>
 
-                    <span className={outcome.outcomeHighlightRule} />
-                  </span>{" "}
-                  {challenge.consequenceTitleEnd}
-                </h4>
-
-                <p className={theme.typography.bodySmall}>
-                  {challenge.consequenceDescription}
-                </p>
+                      <span className={outcome.outcomeHighlightRule} />
+                    </span>{" "}
+                    {challenge.consequenceTitleEnd}
+                  </h4>
+                </div>
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ export const overviewUseCasesContent = {
     },
 
     subtitle:
-      "The same interpret → plan → decide → execute flow supports different operational workflows through reusable decision and execution layers.",
+      "Reusable across operational workflows.",
 
     ctaLead:
       "See how isolation, topology, and policy boundaries are defined in the architecture specification.",

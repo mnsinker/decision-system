@@ -86,7 +86,7 @@ function CodeView({
   const isZh = locale === "zh";
 
   return (
-    <div className="relative mt-12 rounded-2xl border-2 border-rose-200 bg-white p-5 shadow-[0_25px_50px_rgba(244,63,94,0.06)] transition-all duration-300">
+    <div className="relative mt-8 rounded-2xl border-2 border-rose-200 bg-white p-4 shadow-[0_25px_50px_rgba(244,63,94,0.06)] transition-all duration-300">
       {/* Top Controller Row */}
       <div className="mb-4 flex items-center justify-between gap-4 border-b border-slate-100 pb-3">
         <div>
@@ -253,7 +253,7 @@ function GraphView({
       </div>
 
       {/* Graph Visual Panel */}
-      <div className="relative flex min-h-[290px] flex-col rounded-xl border border-slate-100 bg-slate-50/50 p-4">
+      <div className="relative flex min-h-[240px] flex-col rounded-xl border border-slate-100 bg-slate-50/50 p-4">
         {/* Clean Structured Nodes */}
         <div className="-mt-2 font-mono text-[13px] leading-4.5 whitespace-pre text-slate-700">
           {`
@@ -332,7 +332,7 @@ export default function PressureLeftVisual2({
 
   return (
     // 用同一个 min-h 列流规范它，代码区和图表区在上方做垂直居中，底栏沉底
-    <div className="flex h-full min-h-[520px] flex-1 flex-col justify-between">
+    <div className="flex h-full min-h-[420px] flex-1 flex-col justify-between">
       <div className="flex flex-1 flex-col justify-center">
         {viewMode === "code" ? (
           <CodeView
@@ -350,11 +350,9 @@ export default function PressureLeftVisual2({
         )}
       </div>
 
-      <div className="mt-auto pt-8">
+      <div className="mt-auto pt-5">
         <ExplanationCard
-          viewMode={viewMode}
-          label={content?.rootCauseTitle}
-          description={content?.rootCauseMsg}
+          viewMode="graph"
           engineeringTitle={content?.engineeringConsequencesTitle}
           consequences={content?.consequences}
         />

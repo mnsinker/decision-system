@@ -2,13 +2,13 @@ export const overviewChallengesContent = {
   en: {
     transition: "WHERE DO PROBLEMS COME FROM?",
 
-    interpretationLabel: "System interpretation",
+    interpretationLabel: "System impact",
 
     sectionLabel: "Operational Complexity",
 
     title: {
       line1: "Business logic becomes harder",
-      line2: "as systems evolve together.",
+      line2: "as operational systems fragment.",
     },
 
     tabs: [
@@ -20,7 +20,7 @@ export const overviewChallengesContent = {
     challenge1: {
       variant: "variant1",
       businessLabel: "Business Request",
-      businessQuote: "We only need one extra refund condition.",
+      businessQuote: '"We only need one extra refund condition."',
 
       interpretationPoints: [
         "Appears as one localized rule change.",
@@ -40,9 +40,6 @@ export const overviewChallengesContent = {
       consequenceTitleBeg: "What started as a single rule evolved into a ",
       consequenceHighlight: "dependency collision",
       consequenceTitleEnd: "across multiple execution paths.",
-
-      consequenceDescription:
-        "A small operational change now affects multiple systems, runtime dependencies and execution paths.",
     },
 
     challenge2: {
@@ -50,7 +47,7 @@ export const overviewChallengesContent = {
 
       businessLabel: "Business Request",
 
-      businessQuote: "VIP users should receive priority customer support.",
+      businessQuote: '"VIP users should receive priority customer support."',
 
       interpretationPoints: [
         "Starts as a single support-policy intent.",
@@ -91,16 +88,14 @@ export const overviewChallengesContent = {
       consequenceHighlight: "fragmented decision logic",
 
       consequenceTitleEnd: "across multiple operational systems.",
-
-      consequenceDescription:
-        "Business rules become duplicated, inconsistent and increasingly difficult to audit reliably.",
     },
 
     challenge3: {
       variant: "variant3",
       businessLabel: "Business Request",
 
-      businessQuote: "We need a special campaign flow for inactive VIP users.",
+      businessQuote:
+        '"We need a special campaign flow for inactive VIP users."',
 
       interpretationPoints: [
         "Begins as a campaign workflow request.",
@@ -124,22 +119,19 @@ export const overviewChallengesContent = {
       consequenceHighlight: "unstable campaign rules",
 
       consequenceTitleEnd: "across changing operational environments.",
-
-      consequenceDescription:
-        "Execution workflows become increasingly difficult to maintain as operational changes propagate across systems.",
     },
   },
 
   zh: {
     transition: "问题从哪里开始出现？",
 
-    interpretationLabel: "系统解读",
+    interpretationLabel: "系统影响",
 
     sectionLabel: "运营复杂度",
 
     title: {
-      line1: "随着系统不断演化，",
-      line2: "业务逻辑也会变得越来越复杂。",
+      line1: "业务逻辑会变得更难，",
+      line2: "因为运营系统正在不断碎片化。",
     },
 
     tabs: [
@@ -177,9 +169,6 @@ export const overviewChallengesContent = {
       consequenceHighlight: "依赖冲突",
 
       consequenceTitleEnd: "并扩散到多个运营系统之中。",
-
-      consequenceDescription:
-        "一个看似独立的变更，最终会影响策略、执行流程以及系统中的运行时协调关系。",
     },
 
     challenge2: {
@@ -227,9 +216,6 @@ export const overviewChallengesContent = {
       consequenceHighlight: "碎片化的运营逻辑",
 
       consequenceTitleEnd: "并散落在多个割裂的系统中。",
-
-      consequenceDescription:
-        "业务规则开始重复、冲突，并越来越难以被安全地审计与演化。",
     },
 
     challenge3: {
@@ -261,9 +247,6 @@ export const overviewChallengesContent = {
       consequenceHighlight: "不稳定的运行时行为",
 
       consequenceTitleEnd: "并扩散到不断变化的运营环境中。",
-
-      consequenceDescription:
-        "随着复杂度在系统与运行时状态之间不断传播，执行工作流会变得越来越脆弱。",
     },
   },
 };

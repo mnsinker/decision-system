@@ -1,4 +1,5 @@
 import React from "react";
+import { cn } from "@/lib/cn";
 import PressureExplanationCard from "./PressureExplanationCard";
 
 type LeftCardContent = {
@@ -6,63 +7,76 @@ type LeftCardContent = {
   rootCauseMsg: string;
 };
 
+type SystemCardProps = {
+  system: string;
+  definition: string;
+  version: string;
+  offsetClass: string;
+  rotateClass: string;
+};
+
+function SystemDefinitionCard({
+  system,
+  definition,
+  version,
+  offsetClass,
+  rotateClass,
+}: SystemCardProps) {
+  return (
+    <div className={cn("w-full", offsetClass, rotateClass)}>
+      <div className="relative rounded-lg border-2 border-rose-200 bg-white px-3.5 py-2.5 shadow-[0_1px_2px_0_rgba(15,23,42,0.06)]">
+        <span className="pointer-events-none absolute top-2.5 right-3 font-mono text-[9px] font-medium text-slate-400">
+          {version}
+        </span>
+
+        <p className="mb-1.5 pr-12 font-mono text-[10px] font-bold tracking-wide text-slate-500 uppercase">
+          {system}
+        </p>
+
+        <p className="text-[13px] font-semibold leading-snug text-slate-900">
+          VIP = {definition}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function PressureLeftVisual1({
   content,
 }: {
   content: LeftCardContent;
 }) {
   return (
-    // 转换为与右侧同等规模的 min-h 列布局，中间的空白区作为自然的弹性缓冲
-    <div className="flex h-full min-h-[520px] flex-1 flex-col justify-between">
-      <div className="mt-10 space-y-5">
-        {/* CRM */}
-        <div className="rounded-2xl border border-white bg-white/90 p-5 shadow-sm">
-          <div className="mb-3 flex items-center justify-between">
-            <div className="font-mono text-[10px] font-bold tracking-[0.25em] text-slate-400 uppercase">
-              CRM
-            </div>
-            <div className="rounded-full bg-indigo-50 px-3 py-1 text-[10px] font-bold text-indigo-500 uppercase">
-              VIP
-            </div>
-          </div>
-          <div className="text-lg font-semibold text-slate-900">
-            VIP = spends &gt; $1,000
-          </div>
-        </div>
+    <div className="flex h-full min-h-[420px] flex-1 flex-col">
+      <div className="flex flex-1 flex-col items-center justify-center px-3 py-6">
+        <div className="flex w-full max-w-[94%] flex-col gap-4">
+          <SystemDefinitionCard
+            system="CRM"
+            definition="spends &gt; $1,000"
+            version="2022 · v1"
+            offsetClass="-translate-x-1.5"
+            rotateClass="-rotate-[0.7deg]"
+          />
 
-        {/* support */}
-        <div className="translate-x-4 rounded-2xl border border-white bg-white/80 p-5 opacity-90 shadow-sm">
-          <div className="mb-3 flex items-center justify-between">
-            <div className="font-mono text-[10px] font-bold tracking-[0.25em] text-slate-400 uppercase">
-              Customer Support
-            </div>
-            <div className="rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold text-emerald-500 uppercase">
-              VIP
-            </div>
-          </div>
-          <div className="text-lg font-semibold text-slate-900">
-            VIP = priority tier
-          </div>
-        </div>
+          <SystemDefinitionCard
+            system="Customer Support"
+            definition="priority tier"
+            version="2023 · v2"
+            offsetClass="translate-x-2.5"
+            rotateClass="rotate-[0.55deg]"
+          />
 
-        {/* refund */}
-        <div className="-translate-x-3 rounded-2xl border border-rose-200 bg-white p-5 shadow-[0_10px_30px_rgba(244,63,94,0.08)]">
-          <div className="mb-3 flex items-center justify-between">
-            <div className="font-mono text-[10px] font-bold tracking-[0.25em] text-slate-400 uppercase">
-              Refund Service
-            </div>
-            <div className="rounded-full bg-rose-50 px-3 py-1 text-[10px] font-bold text-rose-500 uppercase">
-              VIP
-            </div>
-          </div>
-          <div className="text-lg font-semibold text-slate-900">
-            VIP = manual whitelist
-          </div>
+          <SystemDefinitionCard
+            system="Refund Service"
+            definition="manual whitelist"
+            version="Legacy"
+            offsetClass="-translate-x-2"
+            rotateClass="-rotate-[0.35deg]"
+          />
         </div>
       </div>
 
-      {/* 强行利用 mt-auto 焊死在底部基准线上 */}
-      <div className="mt-auto pt-8">
+      <div className="shrink-0 pt-4">
         <PressureExplanationCard
           viewMode="code"
           label={content.rootCauseTitle}

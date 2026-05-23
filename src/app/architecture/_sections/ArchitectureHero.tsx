@@ -20,7 +20,7 @@ export default function ArchitectureHero() {
    */
 
   const visualPositionClass =
-    "translate-x-[0px] translate-y-[-8px] scale-[0.76]";
+    "translate-x-[0px] translate-y-[-32px] scale-[0.76]";
 
   const layerGap = 96;
   const layerTopOffset = 52;
@@ -141,7 +141,7 @@ export default function ArchitectureHero() {
         {/* right visual */}
 
         <div
-          className={`relative flex min-h-[340px] items-center justify-center lg:min-h-[360px] ${visualPositionClass}`}
+          className={`relative flex min-h-[300px] items-center justify-center lg:min-h-[320px] ${visualPositionClass}`}
         >
           <div className="relative h-[380px] w-full max-w-[360px] [perspective:1500px]">
             <div

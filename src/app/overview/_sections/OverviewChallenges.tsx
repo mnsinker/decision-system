@@ -5,7 +5,9 @@ import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 import SectionHeader from "@/components/SectionHeader";
-import SegmentedTabs from "@/components/SegmentedTabs";
+import SegmentedTabs, {
+  segmentedTabsBehavior,
+} from "@/components/SegmentedTabs";
 
 import ChallengePanel from "../challenges/ChallengePanel";
 import { overviewChallengesContent } from "@/content/overview/overviewChallenges";
@@ -35,11 +37,17 @@ export default function OverviewChallenges() {
           />
         </div>
 
-        <div className="sticky top-16 z-20 mt-3 bg-white py-1">
+        <div
+          className={cn(
+            segmentedTabsBehavior.sticky.sectionTrack,
+            "mt-3 flex justify-start"
+          )}
+        >
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
             onChange={setActiveTab}
+            sticky={true}
           />
         </div>
 

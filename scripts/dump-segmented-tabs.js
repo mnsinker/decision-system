@@ -1,0 +1,103 @@
+const fs = require("fs");
+const path = require("path");
+
+const outputFile = "debug/segmented-tabs-runtime-dump.md";
+
+let md = `# Segmented Tabs Runtime Dump\n\n`;
+
+function appendFile(filePath, title, lang = "tsx") {
+  if (!fs.existsSync(filePath)) {
+    md += `## ${title}\n\nMISSING: \`${filePath}\`\n\n`;
+    return;
+  }
+
+  const content = fs.readFileSync(filePath, "utf8");
+
+  md += `## ${title}\n\n`;
+  md += `Path: \`${filePath}\`\n\n`;
+  md += `\`\`\`${lang}\n${content}\n\`\`\`\n\n`;
+}
+
+md += `# Callsites Audit\n\n`;
+
+const knownCallsites = [
+  "src/app/overview/_sections/OverviewChallenges.tsx",
+  "src/app/architecture/_sections/ArchitecturePressure.tsx",
+  "src/app/architecture/_sections/ArchitectureLayers.tsx"
+];
+
+knownCallsites.forEach((f) => {
+  if (fs.existsSync(f)) {
+    md += `- \`${f}\`\n`;
+  }
+});
+
+md += `\n---\n\n`;
+
+try {
+  const stickyAudit = require("child_process")
+    .execSync('rg "sticky top-" src || true')
+    .toString();
+
+  md += `## sticky top-* usage\n\n`;
+  md += `\`\`\`txt\n${stickyAudit}\n\`\`\`\n\n`;
+} catch {}
+
+try {
+  const zAudit = require("child_process")
+    .execSync('rg "z-[0-9]" src/app src/components || true')
+    .toString();
+
+  md += `## z-index usage\n\n`;
+  md += `\`\`\`txt\n${zAudit}\n\`\`\`\n\n`;
+} catch {}
+
+const componentFiles = [
+  {
+    p: "src/components/SegmentedTabs/SegmentedTabs.tsx",
+    t: "SegmentedTabs.tsx",
+    l: "tsx",
+  },
+  {
+    p: "src/components/SegmentedTabs/segmentedTabs.behavior.ts",
+    t: "segmentedTabs.behavior.ts",
+    l: "ts",
+  },
+  {
+    p: "src/components/SegmentedTabs/segmentedTabs.motion.ts",
+    t: "segmentedTabs.motion.ts",
+    l: "ts",
+  },
+  {
+    p: "src/components/SegmentedTabs/segmentedTabs.tokens.ts",
+    t: "segmentedTabs.tokens.ts",
+    l: "ts",
+  },
+  {
+    p: "src/components/SegmentedTabs/segmentedTabs.variants.ts",
+    t: "segmentedTabs.variants.ts",
+    l: "ts",
+  },
+  {
+    p: "src/components/SegmentedTabs/index.ts",
+    t: "index.ts",
+    l: "ts",
+  },
+];
+
+md += `# SegmentedTabs Component Files\n\n`;
+
+componentFiles.forEach((file) => {
+  appendFile(file.p, file.t, file.l);
+});
+
+md += `# Page Callsites\n\n`;
+
+knownCallsites.forEach((p) => {
+  appendFile(p, path.basename(p), "tsx");
+});
+
+fs.writeFileSync(outputFile, md, "utf8");
+
+console.log("\n✅ Dump generated:");
+console.log(outputFile);

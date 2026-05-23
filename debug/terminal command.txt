@@ -1,3 +1,8 @@
+npm run dev -- --port 4000
+npx next dev -p 4000
+kill -9 $(lsof -t -i:3000)
+==========================================
+
 mkdir -p debug
 
 cat \
@@ -77,3 +82,5 @@ echo ""
 cat src/content/architecture/architecturePressure.ts
 
 ) > debug/archi-pressure.txt
+
+============================================================================================
