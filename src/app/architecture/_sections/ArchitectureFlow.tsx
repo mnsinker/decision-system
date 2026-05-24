@@ -375,7 +375,7 @@ export default function ArchitectureFlow() {
   return (
     <section
       className={cn(
-        "relative w-full overflow-hidden bg-[#05070B] text-white",
+        "relative w-full overflow-visible bg-[#05070B] text-white",
         theme.spacing.sectionXComfort,
         theme.spacing.sectionY,
       )}
@@ -402,7 +402,7 @@ export default function ArchitectureFlow() {
         </div>
 
         {/* Sticky selector - Sticky enabled with higher z-index & blur background */}
-        <div className="sticky top-4 z-50 mb-7 rounded-xl border border-[#1A2230]/80 bg-[#05070B]/90 p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.34)] backdrop-blur-xl">
+        <div className="sticky top-16 z-50 mb-7 rounded-xl border border-[#1A2230]/80 bg-[#05070B]/90 p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.34)] backdrop-blur-xl">
           <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
             {(Object.entries(cases) as [UseCase, UseCaseData][]).map(
               ([key, item]) => {
