@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { cn } from "@/lib/cn";
 
 type DetailLevel = 1 | 2 | 3;
 type UseCase = "refund" | "marketing" | "workflow";
@@ -44,6 +46,7 @@ type UseCaseData = {
 };
 
 export default function ArchitectureFlow() {
+  const { theme } = useTheme();
   const [detailLevel, setDetailLevel] = useState<DetailLevel>(2);
   const [useCase, setUseCase] = useState<UseCase>("refund");
 
@@ -370,8 +373,14 @@ export default function ArchitectureFlow() {
   ];
 
   return (
-    <section className="overflow-hidden bg-[#05070B] px-6 py-10 text-white md:px-8">
-      <div className="mx-auto max-w-[1580px]">
+    <section
+      className={cn(
+        "relative w-full overflow-hidden bg-[#05070B] text-white",
+        theme.spacing.sectionXComfort,
+        theme.spacing.sectionY,
+      )}
+    >
+      <div className={cn("relative mx-auto", theme.spacing.container)}>
         {/* Header */}
         <div className="mb-7 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
