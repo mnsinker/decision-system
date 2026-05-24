@@ -53,7 +53,7 @@ type LanguageContent = {
 
 export const architecturePressureContent: Record<string, LanguageContent> = {
   en: {
-    eyebrow: "01 / Runtime Pressure",
+    eyebrow: "SECTION 01 // Runtime Pressure",
     sectionTitle: "Different pressures activate different layers.",
 
     tabs: [

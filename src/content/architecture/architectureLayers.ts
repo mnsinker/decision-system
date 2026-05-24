@@ -34,7 +34,7 @@ export type StabilitySystemContent = {
 
 export const architectureLayersContent = {
   en: {
-    eyebrow: "SECTION 03 // INFRASTRUCTURE",
+    eyebrow: "SECTION 02 // INFRASTRUCTURE",
     sectionTitle: "Architecture Layers",
     subtitle:
       "AI execution becomes unreliable when runtime structure is missing.",
@@ -259,12 +259,7 @@ export const architectureLayersContent = {
         id: "validation",
         title: "验证系统",
         narrative: "该系统在执行继续前约束不稳定的运行时行为。",
-        items: [
-          "语法验证",
-          "结构验证",
-          "依赖验证",
-          "运行时参数检查",
-        ],
+        items: ["语法验证", "结构验证", "依赖验证", "运行时参数检查"],
       },
       {
         id: "registry",
@@ -293,11 +288,7 @@ export const architectureLayersContent = {
       semantic: {
         strongSystems: ["contract"],
         weakSystems: ["validation"],
-        highlightedItems: [
-          "结构化 DTO 契约",
-          "运行时边界定义",
-          "结构验证",
-        ],
+        highlightedItems: ["结构化 DTO 契约", "运行时边界定义", "结构验证"],
       },
       planning: {
         strongSystems: ["registry", "validation"],

@@ -1,5 +1,30 @@
 # Segmented Tabs Runtime Dump
 
+Generated At: `2026-05-23 21:28:26`
+
+# File Directory
+
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/SegmentedTabs.tsx`
+  - Last Modified: `2026-05-23 21:25:21`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.behavior.ts`
+  - Last Modified: `2026-05-23 20:32:26`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.motion.ts`
+  - Last Modified: `2026-05-22 16:06:29`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.tokens.ts`
+  - Last Modified: `2026-05-22 16:06:31`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.variants.ts`
+  - Last Modified: `2026-05-23 21:25:01`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/index.ts`
+  - Last Modified: `2026-05-23 21:25:28`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/app/overview/_sections/OverviewChallenges.tsx`
+  - Last Modified: `2026-05-23 21:25:42`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/app/architecture/_sections/ArchitecturePressure.tsx`
+  - Last Modified: `2026-05-23 21:25:48`
+- `/Users/mnsink/projects/ai-decision-system/frontend/src/app/architecture/_sections/ArchitectureLayers.tsx`
+  - Last Modified: `2026-05-23 21:27:31`
+
+---
+
 # Callsites Audit
 
 - `src/app/overview/_sections/OverviewChallenges.tsx`
@@ -11,12 +36,76 @@
 ## sticky top-* usage
 
 ```txt
+src/components/layout/Navbar.tsx:    <nav className={cn("sticky top-0 z-50", theme.colors.surfaceNav)}>
+src/components/SegmentedTabs/segmentedTabs.behavior.ts:    sectionTrack: "sticky top-16 z-20",
+src/app/architecture/_sections/ArchitectureLayers.tsx:          <div className="sticky top-16 z-20 flex shrink-0 items-center self-start lg:self-auto">
+src/app/overview/_sections/OverviewChallenges.tsx:        <div className="sticky top-16 z-20 mt-3 flex w-full justify-start">
+src/app/architecture/_sections/ArchitecturePressure.tsx:        <div className="sticky top-16 z-20 mt-3 flex w-full justify-start">
+src/app/playground/archi24-preview/page.tsx:      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
+src/app/playground/archi11-preview/page.tsx:        <div className="sticky top-0 z-50 w-full">
 
 ```
 
 ## z-index usage
 
 ```txt
+src/components/SegmentedTabs/SegmentedTabs.tsx:          "pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 border-b transition-all duration-300 ease-in-out",
+src/components/SegmentedTabs/SegmentedTabs.tsx:      <div className="relative z-10 flex w-full items-center justify-start py-4">
+src/components/SegmentedTabs/SegmentedTabs.tsx:          "pointer-events-none absolute top-full left-1/2 z-0 h-6 w-screen -translate-x-1/2 bg-gradient-to-b transition-opacity duration-300",
+src/components/layout/Navbar.tsx:    <nav className={cn("sticky top-0 z-50", theme.colors.surfaceNav)}>
+src/components/TransitionLine.tsx:      <div className="relative z-10 flex flex-col items-center">
+src/components/SegmentedTabs/segmentedTabs.behavior.ts:    sectionTrack: "sticky top-16 z-20",
+src/app/architecture/pressure/PressureRightVisual2.tsx:        <div className="relative z-10 flex flex-col gap-4">
+src/app/architecture/pressure/PressureRightVisual2.tsx:        <div className="relative z-10 self-center">
+src/app/architecture/pressure/PressureRightVisual2.tsx:        <div className="relative z-20 flex h-[64px] w-[86px] self-center items-center justify-center rounded-2xl border border-emerald-500/25 bg-[#061614] px-3 shadow-[0_0_18px_rgba(52,211,153,0.08)]">
+src/app/overview/challenges/ChallengePanel.tsx:          <div className="pointer-events-none absolute top-2 left-1/2 z-30 hidden -translate-x-1/2 -translate-y-[40%] lg:block">
+src/app/overview/challenges/ChallengePanel.tsx:            <div className="relative z-10 mx-auto max-w-4xl lg:pt-2">
+src/app/architecture/pressure/PressureRightCard.tsx:      {/* 去掉多余的中间包裹 div，让 z-10 成为直属的纵向 Flex 列控制轴 */}
+src/app/architecture/pressure/PressureRightCard.tsx:      {/* 1. 移除那个全包住内容的死 div，将 z-10 直接转换成与左侧拉伸比例对称的满高 Flex 弹性主轴 */}
+src/app/architecture/pressure/PressureRightCard.tsx:      <div className="relative z-10 flex h-full min-h-[480px] flex-col justify-between">
+src/app/architecture/pressure/PressureRightCard.tsx:            <div className="relative z-10 flex items-center gap-3">
+src/app/architecture/pressure/PressureRightCard.tsx:            <p className="relative z-10 mt-1.5 pl-6 font-mono text-[11px] leading-5 tracking-wide text-emerald-400/70">
+src/app/architecture/pressure/PressureRightCard.tsx:            <div className="relative z-10 w-full">{visual}</div>
+src/app/architecture/pressure/PressureRightVisual3.tsx:      <div className="pointer-events-none absolute top-0 left-1/2 z-0 h-[220px] w-[300px] -translate-x-1/2 rounded-full bg-gradient-to-b from-emerald-400/[0.1] via-emerald-500/[0.01] to-transparent blur-2xl" />
+src/app/architecture/pressure/PressureRightVisual3.tsx:        <div className="pointer-events-none absolute inset-x-0 top-[-50px] z-40 h-[150px] [transform-style:preserve-3d]">
+src/app/architecture/pressure/PressureRightVisual3.tsx:          className="relative z-30 h-[100px] w-[300px] [transform:rotateX(42deg)_rotateZ(-12deg)] rounded-2xl border border-white/[0.08] bg-gradient-to-br from-emerald-500/[0.06] via-emerald-600/[0.02] to-transparent p-2.5 backdrop-blur-xs will-change-transform [transform-style:preserve-3d]"
+src/app/architecture/pressure/PressureRightVisual3.tsx:          <div className="absolute bottom-3 left-4 z-30">
+src/app/architecture/pressure/PressureRightVisual3.tsx:        <div className="relative z-20 -mt-3 -mb-1.5 h-[48px] w-[100px] [transform:translateZ(10px)] overflow-visible">
+src/app/architecture/pressure/PressureRightVisual3.tsx:          className="relative z-20 flex h-[74px] w-[315px] [transform:rotateX(42deg)_rotateZ(-12deg)] items-center justify-center rounded-xl border border-white/20 bg-gradient-to-br from-white/[0.08] to-transparent backdrop-blur-xs transition-all"
+src/app/architecture/pressure/PressureRightVisual3.tsx:          <div className="absolute bottom-3 left-4 z-20">
+src/app/architecture/pressure/PressureRightVisual3.tsx:        <div className="relative z-10 -mt-2.5 -mb-1 h-[40px] w-[40px] overflow-visible">
+src/app/architecture/pressure/PressureRightVisual3.tsx:          className="relative z-10 h-[82px] w-[335px] [transform:rotateX(42deg)_rotateZ(-12deg)] overflow-hidden rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#091f1a] to-[#010605] p-2.5"
+src/app/architecture/pressure/PressureRightVisual3.tsx:          <div className="relative z-10 flex h-full w-full flex-col justify-between">
+src/app/overview/challenges/ChallengeVariant3.tsx:      <div className="relative z-10">
+src/components/SegmentedTabs/segmentedTabs.tokens.ts:  selectedPillStacking: "pointer-events-none absolute left-0 top-0 z-0",
+src/app/overview/challenges/ChallengeVariant2.tsx:      <div className="relative z-10">
+src/app/overview/challenges/ChallengeVariant2.tsx:          <div className="absolute top-4 left-1 z-20 w-[220px] rotate-[-4deg] rounded-[1.8rem] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm">
+src/app/overview/challenges/ChallengeVariant2.tsx:          <div className="absolute top-0 right-8 z-30 w-[228px] rotate-[3deg] rounded-[1.8rem] border border-indigo-500/30 bg-indigo-500/[0.06] p-4 shadow-[0_0_40px_rgba(99,102,241,0.12)]">
+src/app/overview/challenges/ChallengeVariant2.tsx:          <div className="absolute top-32 left-[140px] z-40 w-[236px] rotate-[2deg] rounded-[1.8rem] border border-rose-500/20 bg-rose-500/[0.05] p-4">
+src/components/ui/hover-card.tsx:          "z-50 w-72 origin-(--radix-hover-card-content-transform-origin) rounded-lg bg-popover p-2.5 text-xs/relaxed text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+src/app/architecture/pressure/PressureLeftVisual3.tsx:        <div className="relative z-10 flex h-[220px] w-[220px] rotate-[-1.8deg] flex-col items-center justify-center rounded-[2rem] border border-rose-300 bg-white shadow-[0_15px_40px_rgba(244,63,94,0.08)]">
+src/app/architecture/pressure/PressureLeftVisual3.tsx:          <div className="relative z-10 flex translate-y-[-4px] flex-col items-center text-center select-none">
+src/app/architecture/pressure/PressureLeftVisual3.tsx:          ? "z-20 border-rose-400 bg-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.3)]"
+src/app/overview/challenges/ChallengeVariant1.tsx:      <div className="relative z-10">
+src/app/overview/_sections/OverviewLifecycle.tsx:                    "relative z-10 mx-auto flex h-14 w-14 items-center justify-center text-sm font-bold shadow-[0_0_0_1px_rgba(255,255,255,0.02)]",
+src/app/overview/_sections/OverviewChallenges.tsx:        <div className="sticky top-16 z-20 mt-3 flex w-full justify-start">
+src/app/playground/archi21-preview/page.tsx:      <div className="relative z-10 mx-auto max-w-7xl">
+src/app/playground/archi21-preview/page.tsx:                    <div className="relative z-10 flex-1 space-y-3">
+src/app/architecture/_sections/ArchitectureLayers.tsx:          <div className="sticky top-16 z-20 flex shrink-0 items-center self-start lg:self-auto">
+src/app/architecture/_sections/ArchitectureLayers.tsx:              "relative z-10 flex flex-col",
+src/app/architecture/_sections/ArchitecturePressure.tsx:        <div className="sticky top-16 z-20 mt-3 flex w-full justify-start">
+src/app/playground/archi22-preview/page.tsx:          <div className="relative z-10 space-y-4 lg:col-span-5">
+src/app/playground/archi22-preview/page.tsx:                    <div className="pointer-events-none absolute top-1/2 left-full z-0 hidden h-[2px] w-[calc(140%+3rem)] lg:block">
+src/app/playground/archi11-preview/page.tsx:        <div className="sticky top-0 z-50 w-full">
+src/app/overview/_sections/OverviewHero.tsx:      className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+src/app/architecture/_sections/ArchitectureHero.tsx:        <div className="relative z-10 lg:py-0.5">
+src/app/playground/lifecycle-preview/page.tsx:                  <div className="relative z-10 mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-[#0B183D] text-sm font-bold text-indigo-300 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
+src/app/playground/usecase-preview/page.tsx:      <div className="pointer-events-none fixed inset-0 -z-10 opacity-[0.025]">
+src/app/playground/archi25-preview/page.tsx:                <div className="relative z-10">
+src/app/playground/page.tsx:      <div className="pointer-events-none fixed inset-0 -z-10 opacity-[0.18]">
+src/app/playground/archi24-preview/page.tsx:      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md">
+src/app/playground/archi13-preview/page.tsx:      <div className="absolute inset-0 -z-10">
+src/app/playground/archi13-preview/page.tsx:        <div className="relative z-10">
 
 ```
 
@@ -24,156 +113,63 @@
 
 ## SegmentedTabs.tsx
 
-Path: `src/components/SegmentedTabs/SegmentedTabs.tsx`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/SegmentedTabs.tsx`
+Last Modified: `2026-05-23 21:25:21`
 
 ```tsx
 "use client";
 
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import {
-  segmentedTabsBehavior,
-  useSegmentedTabsAutoPlay,
-  useSelectedPill,
-} from "./segmentedTabs.behavior";
-import { segmentedTabsMotion } from "./segmentedTabs.motion";
-import {
-  getSegmentedTabsSkin,
   segmentedTabsVariants,
   type SegmentedTabsVariant,
 } from "./segmentedTabs.variants";
+import { segmentedTabsTokens } from "./segmentedTabs.tokens";
 
 export type SegmentedTab = {
   id: string;
   label: string;
 };
 
-type Props = {
+interface SegmentedTabsProps {
   tabs: SegmentedTab[];
   activeTab: string;
   onChange: (id: string) => void;
   variant?: SegmentedTabsVariant;
   sticky?: boolean;
-  autoPlay?: boolean;
-  interval?: number;
-  className?: string;
-};
+}
 
 function StickyAnchor({
   children,
-  variant,
+  variant = "light",
 }: {
   children: ReactNode;
   variant: SegmentedTabsVariant;
 }) {
-  const isRuntime = variant === "runtime";
-  const railClass = isRuntime
-    ? segmentedTabsVariants.runtime.stickyRail
-    : segmentedTabsVariants.editorial.stickyRail;
-  const gradientClass = isRuntime
-    ? segmentedTabsVariants.runtime.stickyGradient
-    : segmentedTabsVariants.editorial.stickyGradient;
+  const config = segmentedTabsVariants[variant] || segmentedTabsVariants.light;
 
   return (
-    <div
-      className={cn(
-        "group-sticky",
-        segmentedTabsBehavior.sticky.sectionTrack,
-        "relative w-full",
-      )}
-    >
+    <div className="relative block w-full select-none">
       <div
         className={cn(
-          "pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 opacity-0 transition-opacity duration-300 group-[:has(.is-stuck)]:opacity-100",
-          railClass,
+          "pointer-events-none absolute inset-y-0 left-1/2 z-0 w-screen -translate-x-1/2 border-b transition-all duration-300 ease-in-out",
+          config.stickyRail,
         )}
         aria-hidden
       />
+
+      <div className="relative z-10 flex w-full items-center justify-start py-4">
+        {children}
+      </div>
+
       <div
         className={cn(
-          "pointer-events-none absolute top-full left-1/2 z-0 h-6 w-screen -translate-x-1/2 opacity-0 transition-opacity duration-300 group-[:has(.is-stuck)]:opacity-100",
-          gradientClass,
+          "pointer-events-none absolute top-full left-1/2 z-0 h-6 w-screen -translate-x-1/2 bg-gradient-to-b transition-opacity duration-300",
+          config.stickyGradient,
         )}
         aria-hidden
       />
-      <div className="relative z-10">{children}</div>
-    </div>
-  );
-}
-
-function RuntimeSegmentedTabs({
-  tabs,
-  activeTab,
-  onChange,
-  className,
-}: Pick<Props, "tabs" | "activeTab" | "onChange" | "className">) {
-  const skin = segmentedTabsVariants.runtime;
-  const { trackRef, registerTabRef, selectedPillStyle } = useSelectedPill(
-    activeTab,
-    tabs,
-  );
-
-  return (
-    <div ref={trackRef} className={cn(skin.track, className)} role="tablist">
-      <div
-        className={cn(skin.selectedPill, segmentedTabsMotion.selectedPill)}
-        style={selectedPillStyle}
-        aria-hidden
-      />
-      {tabs.map((tab) => {
-        const isActive = activeTab === tab.id;
-
-        return (
-          <button
-            key={tab.id}
-            ref={registerTabRef(tab.id)}
-            type="button"
-            role="tab"
-            aria-selected={isActive}
-            onClick={() => onChange(tab.id)}
-            className={cn(
-              skin.item,
-              segmentedTabsMotion.runtimeLabel,
-              isActive ? skin.labelActive : skin.labelInactive,
-            )}
-          >
-            {tab.label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-function EditorialSegmentedTabs({
-  tabs,
-  activeTab,
-  onChange,
-  className,
-}: Pick<Props, "tabs" | "activeTab" | "onChange" | "className">) {
-  const skin = getSegmentedTabsSkin("editorial");
-
-  return (
-    <div className={cn(skin.track, className)} role="tablist">
-      {tabs.map((tab) => {
-        const isActive = activeTab === tab.id;
-
-        return (
-          <button
-            key={tab.id}
-            type="button"
-            role="tab"
-            aria-selected={isActive}
-            onClick={() => onChange(tab.id)}
-            className={cn(
-              isActive ? skin.itemActive : skin.itemInactive,
-              segmentedTabsMotion.editorialItem,
-            )}
-          >
-            {tab.label}
-          </button>
-        );
-      })}
     </div>
   );
 }
@@ -182,43 +178,59 @@ export default function SegmentedTabs({
   tabs,
   activeTab,
   onChange,
-  variant = "editorial",
+  variant = "light",
   sticky = false,
-  autoPlay = false,
-  interval = segmentedTabsBehavior.autoPlay.defaultInterval,
-  className,
-}: Props) {
-  useSegmentedTabsAutoPlay({ tabs, activeTab, onChange, autoPlay, interval });
+}: SegmentedTabsProps) {
+  const config = segmentedTabsVariants[variant] || segmentedTabsVariants.light;
 
-  const track =
-    variant === "runtime" ? (
-      <RuntimeSegmentedTabs
-        tabs={tabs}
-        activeTab={activeTab}
-        onChange={onChange}
-        className={className}
-      />
-    ) : (
-      <EditorialSegmentedTabs
-        tabs={tabs}
-        activeTab={activeTab}
-        onChange={onChange}
-        className={className}
-      />
-    );
+  const track = (
+    <div
+      role="tablist"
+      className={cn(
+        segmentedTabsTokens.trackLayout,
+        segmentedTabsTokens.trackGap,
+        segmentedTabsTokens.trackRadius,
+        segmentedTabsTokens.trackPadding,
+        segmentedTabsTokens.trackPosition,
+        config.track,
+      )}
+    >
+      {tabs.map((tab) => {
+        const isActive = tab.id === activeTab;
+
+        return (
+          <button
+            key={tab.id}
+            type="button"
+            role="tab"
+            aria-selected={isActive}
+            onClick={() => onChange(tab.id)}
+            className={cn(
+              "text-sm font-medium transition-all duration-200",
+              segmentedTabsTokens.itemRadius,
+              segmentedTabsTokens.itemPadding,
+              segmentedTabsTokens.itemStacking,
+              isActive ? config.itemActive : config.itemHover,
+            )}
+          >
+            {tab.label}
+          </button>
+        );
+      })}
+    </div>
+  );
 
   if (!sticky) return track;
 
-  return (
-    <StickyAnchor variant={variant}>{track}</StickyAnchor>
-  );
+  return <StickyAnchor variant={variant}>{track}</StickyAnchor>;
 }
 
 ```
 
 ## segmentedTabs.behavior.ts
 
-Path: `src/components/SegmentedTabs/segmentedTabs.behavior.ts`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.behavior.ts`
+Last Modified: `2026-05-23 20:32:26`
 
 ```ts
 "use client";
@@ -358,7 +370,8 @@ export function useSegmentedTabsAutoPlay({
 
 ## segmentedTabs.motion.ts
 
-Path: `src/components/SegmentedTabs/segmentedTabs.motion.ts`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.motion.ts`
+Last Modified: `2026-05-22 16:06:29`
 
 ```ts
 /**
@@ -377,7 +390,8 @@ export const segmentedTabsMotion = {
 
 ## segmentedTabs.tokens.ts
 
-Path: `src/components/SegmentedTabs/segmentedTabs.tokens.ts`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.tokens.ts`
+Last Modified: `2026-05-22 16:06:31`
 
 ```ts
 import { radius } from "@/design-system/radius";
@@ -403,116 +417,39 @@ export const segmentedTabsTokens = {
 
 ## segmentedTabs.variants.ts
 
-Path: `src/components/SegmentedTabs/segmentedTabs.variants.ts`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/segmentedTabs.variants.ts`
+Last Modified: `2026-05-23 21:25:01`
 
 ```ts
 import { colors } from "@/design-system/colors";
-import { shadows } from "@/design-system/shadows";
-import { typography } from "@/design-system/typography";
-import { cn } from "@/lib/cn";
-import { segmentedTabsTokens } from "./segmentedTabs.tokens";
 
-/**
- * Optical surface skins only — color, border, shadow, type color.
- * No motion, measurement, or interaction semantics.
- */
+void colors;
 
-export type SegmentedTabsVariant = "editorial" | "runtime";
-
-export type EditorialSegmentedTabsSkin = {
-  track: string;
-  itemActive: string;
-  itemInactive: string;
-  stickyRail: string;
-  stickyGradient: string;
-};
-
-export type RuntimeSegmentedTabsSkin = {
-  track: string;
-  selectedPill: string;
-  item: string;
-  labelActive: string;
-  labelInactive: string;
-  stickyRail: string;
-  stickyGradient: string;
-};
-
-const trackGeometry = cn(
-  segmentedTabsTokens.trackLayout,
-  segmentedTabsTokens.trackGap,
-  "border",
-  segmentedTabsTokens.trackRadius,
-  segmentedTabsTokens.trackPadding,
-);
-
-const itemGeometry = cn(
-  segmentedTabsTokens.itemRadius,
-  segmentedTabsTokens.itemPadding,
-);
-
-const editorial: EditorialSegmentedTabsSkin = {
-  track: cn(trackGeometry, "bg-white", colors.borderPrimary, shadows.control),
-  itemActive: cn(
-    itemGeometry,
-    typography.tabLabel,
-    colors.surfaceTabActive,
-    shadows.controlActive,
-  ),
-  itemInactive: cn(
-    itemGeometry,
-    typography.tabLabel,
-    colors.textTabInactive,
-    colors.textTabInactiveHover,
-  ),
-  stickyRail: "bg-white/70 backdrop-blur-md",
-  stickyGradient: "bg-gradient-to-b from-white/70 to-transparent",
-};
-
-const runtime: RuntimeSegmentedTabsSkin = {
-  track: cn(
-    trackGeometry,
-    segmentedTabsTokens.trackPosition,
-    "border-white/[0.06] bg-slate-950/55",
-  ),
-  selectedPill: cn(
-    segmentedTabsTokens.itemRadius,
-    segmentedTabsTokens.selectedPillStacking,
-    "border border-indigo-400/40 bg-indigo-600/28",
-    "shadow-[0_1px_0_rgba(255,255,255,0.07)_inset,0_1px_2px_rgba(0,0,0,0.45)]",
-  ),
-  item: cn(
-    itemGeometry,
-    segmentedTabsTokens.itemStacking,
-    "border-0 bg-transparent font-mono text-[11px] tracking-wide",
-  ),
-  labelActive: "font-semibold text-indigo-50",
-  labelInactive: "text-slate-400 hover:text-slate-200",
-  stickyRail: "bg-[#030712]/45 backdrop-blur-md",
-  stickyGradient: "bg-gradient-to-b from-[#030712]/45 to-transparent",
-};
+export type SegmentedTabsVariant = "light" | "dark";
 
 export const segmentedTabsVariants = {
-  editorial,
-  runtime,
+  light: {
+    track: "bg-slate-100 text-slate-600",
+    itemActive: "bg-white text-slate-900 shadow-sm",
+    itemHover: "hover:text-slate-900",
+    stickyRail: "bg-white/70 backdrop-blur-md border-slate-200/60 shadow-sm",
+    stickyGradient: "from-white to-transparent",
+  },
+  dark: {
+    track: "bg-slate-900 text-slate-400 border border-slate-800",
+    itemActive: "bg-slate-800 text-white shadow-md",
+    itemHover: "hover:text-white",
+    stickyRail: "bg-[#030712]/70 backdrop-blur-xl border-white/5 shadow-none",
+    stickyGradient: "from-[#030712] to-transparent",
+  },
 } as const;
-
-export function getSegmentedTabsSkin(
-  variant: "editorial",
-): EditorialSegmentedTabsSkin;
-export function getSegmentedTabsSkin(
-  variant: "runtime",
-): RuntimeSegmentedTabsSkin;
-export function getSegmentedTabsSkin(
-  variant: SegmentedTabsVariant = "editorial",
-): EditorialSegmentedTabsSkin | RuntimeSegmentedTabsSkin {
-  return segmentedTabsVariants[variant];
-}
 
 ```
 
 ## index.ts
 
-Path: `src/components/SegmentedTabs/index.ts`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/components/SegmentedTabs/index.ts`
+Last Modified: `2026-05-23 21:25:28`
 
 ```ts
 export { default } from "./SegmentedTabs";
@@ -527,10 +464,7 @@ export type { SelectedPillMetrics } from "./segmentedTabs.behavior";
 export { selectedPillInitialMetrics } from "./segmentedTabs.behavior";
 export { segmentedTabsMotion } from "./segmentedTabs.motion";
 export { segmentedTabsTokens } from "./segmentedTabs.tokens";
-export {
-  getSegmentedTabsSkin,
-  segmentedTabsVariants,
-} from "./segmentedTabs.variants";
+export { segmentedTabsVariants } from "./segmentedTabs.variants";
 
 ```
 
@@ -538,7 +472,8 @@ export {
 
 ## OverviewChallenges.tsx
 
-Path: `src/app/overview/_sections/OverviewChallenges.tsx`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/app/overview/_sections/OverviewChallenges.tsx`
+Last Modified: `2026-05-23 21:25:42`
 
 ```tsx
 "use client";
@@ -578,11 +513,12 @@ export default function OverviewChallenges() {
           />
         </div>
 
-        <div className="mt-3 flex justify-start">
+        <div className="sticky top-16 z-20 mt-3 flex w-full justify-start">
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
             onChange={setActiveTab}
+            variant="light"
             sticky={true}
           />
         </div>
@@ -618,7 +554,8 @@ export default function OverviewChallenges() {
 
 ## ArchitecturePressure.tsx
 
-Path: `src/app/architecture/_sections/ArchitecturePressure.tsx`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/app/architecture/_sections/ArchitecturePressure.tsx`
+Last Modified: `2026-05-23 21:25:48`
 
 ```tsx
 "use client";
@@ -675,11 +612,12 @@ export default function ArchitecturePressure() {
           narrativeRole="section"
         />
 
-        <div className="mt-3 flex justify-start">
+        <div className="sticky top-16 z-20 mt-3 flex w-full justify-start">
           <SegmentedTabs
             tabs={content.tabs}
             activeTab={activeTab}
             onChange={(id) => setActiveTab(id as "tab1" | "tab2" | "tab3")}
+            variant="light"
             sticky={true}
           />
         </div>
@@ -752,7 +690,8 @@ export default function ArchitecturePressure() {
 
 ## ArchitectureLayers.tsx
 
-Path: `src/app/architecture/_sections/ArchitectureLayers.tsx`
+Path: `/Users/mnsink/projects/ai-decision-system/frontend/src/app/architecture/_sections/ArchitectureLayers.tsx`
+Last Modified: `2026-05-23 21:27:31`
 
 ```tsx
 "use client";
@@ -931,9 +870,9 @@ export default function ArchitectureLayers() {
             narrativeRole="runtime"
           />
 
-          <div className="flex shrink-0 items-center self-start lg:self-auto">
+          <div className="sticky top-16 z-20 flex shrink-0 items-center self-start lg:self-auto">
             <SegmentedTabs
-              variant="runtime"
+              variant="dark"
               tabs={[
                 { id: "layer", label: content.viewModes.core },
                 { id: "full", label: content.viewModes.expanded },
@@ -954,7 +893,7 @@ export default function ArchitectureLayers() {
             layersScene.choreography,
             isFullView
               ? "grid grid-cols-1 items-start lg:grid-cols-12"
-              : "flex w-full justify-center items-center",
+              : "grid w-full grid-cols-1 justify-items-center",
           )}
         >
           <div
@@ -1105,9 +1044,9 @@ export default function ArchitectureLayers() {
 
           <div
             className={cn(
-              "hidden h-full min-h-[380px] items-center justify-center lg:col-span-1",
+              "hidden h-full min-h-[380px] items-center justify-center",
               layersScene.choreography,
-              isFullView ? "lg:flex" : "hidden",
+              isFullView ? "lg:col-span-1 lg:flex" : "hidden",
             )}
           >
             <div className={layersScene.boundaryRail} aria-hidden />
@@ -1119,7 +1058,7 @@ export default function ArchitectureLayers() {
               layersScene.choreography,
               isFullView
                 ? "lg:col-span-6 translate-x-0 opacity-100 block"
-                : "hidden pointer-events-none h-0 overflow-hidden p-0 opacity-0 translate-x-16",
+                : "hidden",
             )}
           >
             <div
@@ -1230,4 +1169,3 @@ export default function ArchitectureLayers() {
 }
 
 ```
-
