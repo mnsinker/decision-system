@@ -404,7 +404,12 @@ export default function ArchitectureFlow() {
         </div>
 
         {/* Sticky selector - Sticky enabled with higher z-index & blur background */}
-        <div className="sticky top-16 z-50 mb-7 rounded-xl border border-[#1A2230]/80 bg-[#05070B]/90 p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.34)] backdrop-blur-xl">
+        <div
+          className={cn(
+            "sticky top-16 z-50 mb-7 border border-[#1A2230]/80 bg-[#05070B]/90 p-1.5 shadow-[0_14px_32px_rgba(0,0,0,0.34)] backdrop-blur-xl",
+            theme.radius.cardSm,
+          )}
+        >
           <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
             {(Object.entries(cases) as [UseCase, UseCaseData][]).map(
               ([key, item]) => {
@@ -413,13 +418,15 @@ export default function ArchitectureFlow() {
                   <button
                     key={key}
                     onClick={() => setUseCase(key)}
-                    className={`rounded-lg border p-3 text-left transition-all duration-300 ${
+                    className={cn(
+                      "border p-3 text-left transition-all duration-300",
+                      theme.radius.cardSm,
                       selected
                         ? item.status === "CURRENT IMPLEMENTATION"
                           ? "border-emerald-400/30 bg-emerald-500/[0.1] shadow-[0_0_22px_rgba(16,185,129,0.1)]"
                           : "border-violet-400/30 border-t-violet-400/45 bg-[#171523] shadow-[0_10px_26px_rgba(76,29,149,0.18),0_0_18px_rgba(139,92,246,0.08)]"
-                        : "border-[#151C28] bg-[#0B0F15] hover:border-[#2A3445]"
-                    }`}
+                        : "border-[#151C28] bg-[#0B0F15] hover:border-[#2A3445]",
+                    )}
                   >
                     <div className="mb-1.5 flex items-center justify-between gap-3">
                       <div
@@ -693,15 +700,18 @@ function LayerCard({
   active?: boolean;
   centered?: boolean;
 }) {
+  const { theme } = useTheme();
+
   return (
     <div
-      className={`w-full rounded-xl border p-3.5 transition-all duration-300 ${
-        centered ? "px-8 py-5 text-center" : ""
-      } ${
+      className={cn(
+        "w-full border p-3.5 transition-all duration-300",
+        theme.radius.cardSm,
+        centered ? "px-8 py-5 text-center" : "",
         active
           ? "border-blue-500/30 bg-blue-500/[0.085] shadow-[0_0_16px_rgba(59,130,246,0.08)]"
-          : "border-[#1A2230]/90 bg-[#0D1117]"
-      }`}
+          : "border-[#1A2230]/90 bg-[#0D1117]",
+      )}
     >
       <div className="mb-1 text-[13px] font-semibold text-white">{title}</div>
       <div className="font-mono text-[10px] tracking-[0.16em] text-[#647089] uppercase">
@@ -722,6 +732,7 @@ function StageCard({
   accent: "blue" | "violet" | "emerald" | "amber";
   showConnector?: boolean;
 }) {
+  const { theme } = useTheme();
   const accentMap = {
     blue: "border-blue-500/20",
     violet: "border-violet-500/20",
@@ -731,7 +742,11 @@ function StageCard({
 
   return (
     <div
-      className={`relative rounded-xl border bg-[#0B0F15] p-4 ${accentMap[accent]}`}
+      className={cn(
+        "relative border bg-[#0B0F15] p-4",
+        theme.radius.cardSm,
+        accentMap[accent],
+      )}
     >
       {showConnector && (
         <div className="absolute top-14 right-[-48px] w-[48px] border-t border-dashed border-[#243147]" />
@@ -823,8 +838,15 @@ function FoundationCard({
   label: string;
   children: React.ReactNode;
 }) {
+  const { theme } = useTheme();
+
   return (
-    <div className="rounded-xl border border-blue-500/20 bg-[#0B0F15] p-4 shadow-[0_8px_22px_rgba(0,0,0,0.18)]">
+    <div
+      className={cn(
+        "border border-blue-500/20 bg-[#0B0F15] p-4 shadow-[0_8px_22px_rgba(0,0,0,0.18)]",
+        theme.radius.cardSm,
+      )}
+    >
       <div className="mb-3">
         <div className="mb-1 text-[15px] font-semibold text-white">
           {title}
