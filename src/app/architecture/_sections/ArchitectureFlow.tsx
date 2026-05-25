@@ -9,7 +9,7 @@ type UseCase = "refund" | "marketing" | "workflow";
 
 type UseCaseData = {
   label: string;
-  status: "CURRENT IMPLEMENTATION" | "EXTENSION PATTERN";
+  status: "CURRENT IMPLEMENTATION" | "FUTURE CAPABILITY";
   query: string;
   layerHighlights: string[];
   semanticSummary: {
@@ -101,7 +101,7 @@ export default function ArchitectureFlow() {
       },
       marketing: {
         label: "AI Marketing Decision",
-        status: "EXTENSION PATTERN",
+        status: "FUTURE CAPABILITY",
         query: `"Who should receive a retention coupon?"`,
         layerHighlights: ["Semantic Layer", "Planning Layer"],
         semanticSummary: {
@@ -150,7 +150,7 @@ export default function ArchitectureFlow() {
       },
       workflow: {
         label: "Workflow Automation",
-        status: "EXTENSION PATTERN",
+        status: "FUTURE CAPABILITY",
         query: `"High-risk refunds require manual approval."`,
         layerHighlights: ["Execution Layer", "Planning Layer"],
         semanticSummary: {
@@ -398,7 +398,9 @@ export default function ArchitectureFlow() {
             </p>
           </div>
 
-          <SliderControl value={detailLevel} onChange={setDetailLevel} />
+          <div className="lg:pt-10">
+            <SliderControl value={detailLevel} onChange={setDetailLevel} />
+          </div>
         </div>
 
         {/* Sticky selector - Sticky enabled with higher z-index & blur background */}
@@ -414,19 +416,26 @@ export default function ArchitectureFlow() {
                     className={`rounded-lg border p-3 text-left transition-all duration-300 ${
                       selected
                         ? item.status === "CURRENT IMPLEMENTATION"
-                          ? "border-blue-500/35 bg-blue-500/10 shadow-[0_0_22px_rgba(59,130,246,0.1)]"
-                          : "border-[#2A3445] bg-[#111722]"
+                          ? "border-emerald-400/30 bg-emerald-500/[0.1] shadow-[0_0_22px_rgba(16,185,129,0.1)]"
+                          : "border-violet-400/30 border-t-violet-400/45 bg-[#171523] shadow-[0_10px_26px_rgba(76,29,149,0.18),0_0_18px_rgba(139,92,246,0.08)]"
                         : "border-[#151C28] bg-[#0B0F15] hover:border-[#2A3445]"
                     }`}
                   >
                     <div className="mb-1.5 flex items-center justify-between gap-3">
                       <div
-                        className={`text-sm font-semibold ${selected ? "text-white" : "text-[#B9C2D0]"}`}
+                        className={`text-sm font-semibold ${
+                          selected
+                            ? item.status === "CURRENT IMPLEMENTATION"
+                              ? "text-white"
+                              : "text-violet-50"
+                            : "text-[#B9C2D0]"
+                        }`}
                       >
                         {item.label}
                       </div>
                       <StatusBadge
                         current={item.status === "CURRENT IMPLEMENTATION"}
+                        selected={selected}
                       >
                         {item.status}
                       </StatusBadge>
@@ -641,17 +650,23 @@ function SliderControl({
 
 function StatusBadge({
   current,
+  selected,
   children,
 }: {
   current: boolean;
+  selected: boolean;
   children: React.ReactNode;
 }) {
   return (
     <span
       className={`rounded px-2 py-0.5 font-mono text-[9px] font-bold tracking-wide uppercase ${
-        current
-          ? "bg-blue-500 text-[#06101F] shadow-sm shadow-blue-500/20"
-          : "border border-[#1A2230] bg-[#0D1218] text-[#647089]"
+        current && selected
+          ? "border border-emerald-400/30 bg-emerald-500/[0.14] text-emerald-200 shadow-sm shadow-emerald-500/15"
+          : current
+            ? "border border-[#283142] bg-[#10151E] text-[#98A4B8]"
+            : selected
+              ? "border border-violet-400/30 bg-violet-500/[0.12] text-violet-200"
+              : "border border-[#283142] bg-[#10151E] text-[#98A4B8]"
       }`}
     >
       {children}
