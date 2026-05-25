@@ -510,7 +510,7 @@ export default function ArchitectureFlow() {
                           {current.foundation.entities.map((entity) => (
                             <span
                               key={entity}
-                              className="rounded border border-blue-500/15 bg-blue-500/[0.03] px-2.5 py-1.5 font-mono text-[12px] text-blue-300/90"
+                              className="rounded border border-blue-500/25 bg-blue-500/[0.07] px-2.5 py-1.5 font-mono text-[12px] text-blue-200"
                             >
                               {entity}
                             </span>
@@ -522,7 +522,7 @@ export default function ArchitectureFlow() {
                         title="Dependency Graph"
                         label="pre-built relations"
                       >
-                        <div className="mb-4 space-y-2.5 font-mono text-[12px] text-blue-300/80">
+                        <div className="mb-4 space-y-2.5 font-mono text-[12px] text-blue-300 drop-shadow-[0_0_5px_rgba(96,165,250,0.16)]">
                           {current.foundation.graphRelations.map((relation) => (
                             <div key={relation}>{relation}</div>
                           ))}
@@ -532,7 +532,7 @@ export default function ArchitectureFlow() {
                           {current.foundation.graphNotes.map((note) => (
                             <div
                               key={note}
-                              className="text-[11px] leading-relaxed text-[#737F94]"
+                              className="text-[11px] leading-relaxed text-[#98A5B9]"
                             >
                               • {note}
                             </div>
@@ -824,12 +824,12 @@ function FoundationCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-[#141B26] bg-[#080B10] p-4 shadow-inner shadow-black/20">
+    <div className="rounded-xl border border-blue-500/20 bg-[#0B0F15] p-4 shadow-[0_8px_22px_rgba(0,0,0,0.18)]">
       <div className="mb-3">
-        <div className="mb-1 text-[13px] font-semibold text-[#E2E8F0]">
+        <div className="mb-1 text-[15px] font-semibold text-white">
           {title}
         </div>
-        <div className="font-mono text-[9px] tracking-[0.16em] text-[#4F5B73] uppercase">
+        <div className="font-mono text-[10px] tracking-[0.16em] text-[#647089] uppercase">
           {label}
         </div>
       </div>
@@ -841,9 +841,11 @@ function FoundationCard({
 function MappingRow({ entity, tool }: { entity: string; tool: string }) {
   return (
     <div className="flex items-center justify-between gap-4">
-      <div className="text-[#A2AFB6]">{entity}</div>
-      <div className="text-[#4F5B73]">→</div>
-      <div className="text-violet-300/90">{tool}</div>
+      <div className="text-[#CBD3E1]">{entity}</div>
+      <div className="text-[#647089]">→</div>
+      <div className="text-violet-300 drop-shadow-[0_0_5px_rgba(167,139,250,0.18)]">
+        {tool}
+      </div>
     </div>
   );
 }
