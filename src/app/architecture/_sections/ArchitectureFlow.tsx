@@ -375,7 +375,7 @@ export default function ArchitectureFlow() {
   return (
     <section
       className={cn(
-        "relative w-full overflow-visible bg-[#05070B] text-white",
+        "relative w-full overflow-visible bg-[#030712] text-white",
         theme.spacing.sectionXComfort,
         theme.spacing.sectionY,
       )}
@@ -460,7 +460,11 @@ export default function ArchitectureFlow() {
 
         {/* Layers view only */}
         {detailLevel === 1 && (
-          <div className="mx-auto max-w-[500px] space-y-3 py-6">
+          <div className="relative isolate mx-auto max-w-[500px] space-y-3 py-6">
+            <div
+              className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(circle,_rgba(59,130,246,0.16)_0%,_rgba(59,130,246,0.06)_35%,_transparent_75%)] opacity-100 blur-3xl"
+              aria-hidden
+            />
             {rows.map((row) => (
               <LayerCard
                 key={row.layer}
