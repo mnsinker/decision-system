@@ -35,8 +35,13 @@ export type ArchitectureFlowUseCaseData = {
     output: string;
     toolName: string;
     dtoName: string;
+    secondaryTool?: {
+      toolName: string;
+      dtoName: string;
+    };
   };
   responseSummary: {
+    blockTitle?: string;
     input: string;
     output: string;
     notes: string[];
@@ -110,7 +115,7 @@ export const architectureFlowContent = {
       response: {
         title: "Response Layer",
         subtitle: "Answer",
-        stageTitle: "Response Synthesis",
+        stageTitle: "Response Generation",
         blockTitle: "Final LLM Response",
       },
     },
@@ -266,15 +271,20 @@ export const architectureFlowContent = {
         toolSummary: {
           input: "resolved_params",
           output: "ApprovalDecisionDTO",
-          toolName: "evaluate_approval_policy",
+          toolName: "evaluate_approval_policy()",
           dtoName: "ApprovalEligibilityDTO",
+          secondaryTool: {
+            toolName: "decide_approval_route()",
+            dtoName: "ApprovalRouteDTO",
+          },
         },
         responseSummary: {
+          blockTitle: "Workflow Status Response",
           input: "tool_results",
-          output: "human-readable routing result",
-          notes: ["read approval result", "write answer for user"],
+          output: "human-readable workflow status",
+          notes: ["read routing result", "generate status response"],
           finalAnswer:
-            "“This refund request was classified as high risk,  and routed to the L2 approval workflow.”",
+            "“This refund request was classified as HIGH RISK,  and routed to the L2 approval workflow.”",
         },
         foundation: {
           entities: [

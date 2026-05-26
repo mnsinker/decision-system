@@ -142,6 +142,16 @@ export default function ArchitectureFlow() {
                     <div className="pl-8 text-[#9CA7B8]">
                       └─ {current.toolSummary.dtoName}
                     </div>
+                    {current.toolSummary.secondaryTool && (
+                      <>
+                        <div className="text-white">
+                          {current.toolSummary.secondaryTool.toolName}
+                        </div>
+                        <div className="pl-4 text-[#9CA7B8]">
+                          └─ {current.toolSummary.secondaryTool.dtoName}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -167,7 +177,10 @@ export default function ArchitectureFlow() {
       stage: (
         <StageCard title={content.layers.response.stageTitle} accent="amber">
           <FlatBlock
-            title={content.layers.response.blockTitle}
+            title={
+              current.responseSummary.blockTitle ??
+              content.layers.response.blockTitle
+            }
             notes={current.responseSummary.notes}
           >
             <CompactIO
