@@ -1,217 +1,38 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useTheme } from "@/design-system/runtime/useTheme";
+import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
+import {
+  architectureFlowContent,
+  type ArchitectureFlowLayerId,
+  type ArchitectureFlowUseCase as UseCase,
+  type ArchitectureFlowUseCaseData as UseCaseData,
+} from "@/content/architecture/architectureFlow";
 
 type DetailLevel = 1 | 2 | 3;
-type UseCase = "refund" | "marketing" | "workflow";
-
-type UseCaseData = {
-  label: string;
-  status: "CURRENT IMPLEMENTATION" | "FUTURE CAPABILITY";
-  query: string;
-  layerHighlights: string[];
-  semanticSummary: {
-    input: string;
-    output: string;
-    notes: string[];
-  };
-  planSummary: {
-    input: string;
-    output: string;
-    notes: string[];
-  };
-  parameterSummary: {
-    input: string;
-    output: string;
-  };
-  toolSummary: {
-    input: string;
-    output: string;
-    toolName: string;
-    dtoName: string;
-  };
-  responseSummary: {
-    input: string;
-    output: string;
-    notes: string[];
-  };
-  foundation: {
-    entities: string[];
-    graphRelations: string[];
-    graphNotes: string[];
-    entityMap: { entity: string; tool: string }[];
-  };
-};
+type FlowContent = (typeof architectureFlowContent)["en"];
 
 export default function ArchitectureFlow() {
   const { theme } = useTheme();
+  const { locale } = useLanguage();
+  const content = architectureFlowContent[locale];
   const [detailLevel, setDetailLevel] = useState<DetailLevel>(2);
   const [useCase, setUseCase] = useState<UseCase>("refund");
 
-  const cases: Record<UseCase, UseCaseData> = useMemo(
-    () => ({
-      refund: {
-        label: "Refund Evaluation",
-        status: "CURRENT IMPLEMENTATION",
-        query: `"Can order 123 be refunded?"`,
-        layerHighlights: ["Planning Layer", "Execution Layer"],
-        semanticSummary: {
-          input: "User Query",
-          output: "runtime_intent { intent, order_id }",
-          notes: ["parse intent", "extract order_id"],
-        },
-        planSummary: {
-          input: "runtime_intent",
-          output: "execution_steps [ get_order, check_refund ]",
-          notes: ["map entity to tool", "build execution order"],
-        },
-        parameterSummary: {
-          input: "tool_results + runtime_context",
-          output: "resolved_params { order }",
-        },
-        toolSummary: {
-          input: "resolved_params",
-          output: "RefundDecisionDTO",
-          toolName: "check_refund",
-          dtoName: "RefundDecisionDTO",
-        },
-        responseSummary: {
-          input: "tool_results",
-          output: "human-readable answer",
-          notes: ["read tool results", "write answer for user"],
-        },
-        foundation: {
-          entities: ["Order", "RefundEligibility", "ShippingState"],
-          graphRelations: [
-            "Order ──▶ RefundEligibility",
-            "Order ──▶ ShippingState",
-          ],
-          graphNotes: [
-            "pre-built from entity relations",
-            "only showing the use-case slice",
-            "used by planner to derive execution order",
-          ],
-          entityMap: [
-            { entity: "Order", tool: "get_order" },
-            { entity: "RefundEligibility", tool: "check_refund" },
-          ],
-        },
-      },
-      marketing: {
-        label: "AI Marketing Decision",
-        status: "FUTURE CAPABILITY",
-        query: `"Who should receive a retention coupon?"`,
-        layerHighlights: ["Semantic Layer", "Planning Layer"],
-        semanticSummary: {
-          input: "User Query",
-          output: "runtime_intent { intent, target_group }",
-          notes: ["parse campaign intent", "resolve user segment"],
-        },
-        planSummary: {
-          input: "runtime_intent",
-          output:
-            "execution_steps [ get_user_profile, check_coupon_policy, campaign_action ]",
-          notes: ["map user context", "build campaign path"],
-        },
-        parameterSummary: {
-          input: "tool_results + campaign_context",
-          output: "resolved_params { user_profile, campaign }",
-        },
-        toolSummary: {
-          input: "resolved_params",
-          output: "CouponDecisionDTO",
-          toolName: "check_coupon_policy",
-          dtoName: "CouponDecisionDTO",
-        },
-        responseSummary: {
-          input: "tool_results",
-          output: "human-readable recommendation",
-          notes: ["read campaign result", "write answer for user"],
-        },
-        foundation: {
-          entities: ["User", "CouponEligibility", "CampaignContext"],
-          graphRelations: [
-            "User ──▶ CouponEligibility",
-            "User ──▶ CampaignContext",
-          ],
-          graphNotes: [
-            "pre-built from entity relations",
-            "only showing the extension-pattern slice",
-            "maps campaign context to executable tools",
-          ],
-          entityMap: [
-            { entity: "User", tool: "get_user_profile" },
-            { entity: "CouponEligibility", tool: "check_coupon_policy" },
-            { entity: "CampaignContext", tool: "campaign_action" },
-          ],
-        },
-      },
-      workflow: {
-        label: "Workflow Automation",
-        status: "FUTURE CAPABILITY",
-        query: `"High-risk refunds require manual approval."`,
-        layerHighlights: ["Execution Layer", "Planning Layer"],
-        semanticSummary: {
-          input: "User Query",
-          output: "runtime_intent { intent, risk_level }",
-          notes: ["parse approval intent", "resolve risk signal"],
-        },
-        planSummary: {
-          input: "runtime_intent",
-          output:
-            "execution_steps [ evaluate_risk, approval_gate, notify_reviewer ]",
-          notes: ["map approval dependency", "build workflow path"],
-        },
-        parameterSummary: {
-          input: "tool_results + approval_context",
-          output: "resolved_params { risk_result, approval_context }",
-        },
-        toolSummary: {
-          input: "resolved_params",
-          output: "ApprovalDecisionDTO",
-          toolName: "approval_gate",
-          dtoName: "ApprovalDecisionDTO",
-        },
-        responseSummary: {
-          input: "tool_results",
-          output: "human-readable routing result",
-          notes: ["read approval result", "write answer for user"],
-        },
-        foundation: {
-          entities: ["Request", "RiskLevel", "ApprovalRequirement"],
-          graphRelations: [
-            "Request ──▶ RiskLevel",
-            "RiskLevel ──▶ ApprovalRequirement",
-          ],
-          graphNotes: [
-            "pre-built from entity relations",
-            "only showing the workflow-related slice",
-            "used to route approval execution",
-          ],
-          entityMap: [
-            { entity: "RiskLevel", tool: "evaluate_risk" },
-            { entity: "ApprovalRequirement", tool: "approval_gate" },
-            { entity: "ReviewerNotification", tool: "notify_reviewer" },
-          ],
-        },
-      },
-    }),
-    [],
-  );
-
-  const current = cases[useCase];
+  const current = content.cases[useCase];
+  const highlightedLayers: ArchitectureFlowLayerId[] = current.layerHighlights;
   const showRuntime = detailLevel >= 2;
   const showFoundation = detailLevel >= 3;
 
   const rows = [
     {
-      layer: "Input",
-      subtitle: "Request",
+      layer: content.layers.input.title,
+      subtitle: content.layers.input.subtitle,
       active: false,
       stage: (
-        <StageCard title="User Request" accent="blue">
+        <StageCard title={content.layers.input.stageTitle} accent="blue">
           <SimpleBox>
             <div className="font-mono text-sm text-white">{current.query}</div>
           </SimpleBox>
@@ -219,95 +40,94 @@ export default function ArchitectureFlow() {
       ),
     },
     {
-      layer: "Semantic Layer",
-      subtitle: "Meaning",
-      active: current.layerHighlights.includes("Semantic Layer"),
+      layer: content.layers.semantic.title,
+      subtitle: content.layers.semantic.subtitle,
+      active: highlightedLayers.includes("semantic"),
       stage: (
         <StageCard
-          title="Semantic Resolution"
+          title={content.layers.semantic.stageTitle}
           accent="blue"
           showConnector={showFoundation}
         >
           <FlatBlock
-            title="Intent Parsing"
+            title={content.layers.semantic.blockTitle}
             notes={current.semanticSummary.notes}
           >
             <CompactIO
               input={current.semanticSummary.input}
               output={current.semanticSummary.output}
+              labels={content.io}
             />
           </FlatBlock>
         </StageCard>
       ),
     },
     {
-      layer: "Planning Layer",
-      subtitle: "Plan",
-      active: current.layerHighlights.includes("Planning Layer"),
+      layer: content.layers.planning.title,
+      subtitle: content.layers.planning.subtitle,
+      active: highlightedLayers.includes("planning"),
       stage: (
         <StageCard
-          title="Plan Construction"
+          title={content.layers.planning.stageTitle}
           accent="violet"
           showConnector={showFoundation}
         >
-          <FlatBlock title="plan_tools()" notes={current.planSummary.notes}>
+          <FlatBlock
+            title={content.layers.planning.blockTitle}
+            notes={current.planSummary.notes}
+          >
             <CompactIO
               input={current.planSummary.input}
               output={current.planSummary.output}
+              labels={content.io}
             />
           </FlatBlock>
         </StageCard>
       ),
     },
     {
-      layer: "Execution Layer",
-      subtitle: "Run",
-      active: current.layerHighlights.includes("Execution Layer"),
+      layer: content.layers.execution.title,
+      subtitle: content.layers.execution.subtitle,
+      active: highlightedLayers.includes("execution"),
       stage: (
-        <StageCard title="Execution Orchestration" accent="emerald">
+        <StageCard title={content.layers.execution.stageTitle} accent="emerald">
           <div className="space-y-3">
             <div className="flex items-center justify-between border-b border-[#1A2230]/70 pb-2.5">
               <div className="inline-flex items-center gap-2">
                 <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
                 <span className="font-mono text-[10px] tracking-[0.18em] text-emerald-300 uppercase">
-                  for step in steps:
+                  {content.layers.execution.loopInstruction}
                 </span>
               </div>
 
               <div className="font-mono text-[10px] tracking-[0.18em] text-[#647089] uppercase">
-                execution loop
+                {content.layers.execution.loopLabel}
               </div>
             </div>
 
-            <FlatBlock title="Runtime Parameter Resolution">
+            <FlatBlock title={content.layers.execution.parameterBlockTitle}>
               <CompactIO
                 input={current.parameterSummary.input}
                 output={current.parameterSummary.output}
+                labels={content.io}
               />
             </FlatBlock>
 
-            <FlatBlock title="Tool Execution">
+            <FlatBlock title={content.layers.execution.toolBlockTitle}>
               <CompactIO
                 input={current.toolSummary.input}
                 output={current.toolSummary.output}
+                labels={content.io}
               />
 
               <div className="mt-3 rounded-lg border border-emerald-500/20 bg-emerald-500/[0.045] p-3.5">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    {/* Title change: text-emerald-300 -> text-white */}
-                    <div className="text-[13px] font-semibold text-white">
-                      policy.evaluate()
-                    </div>
-                  </div>
-                  <div className="text-right text-[11px] leading-relaxed text-[#8EA09B]">
-                    Currently policy is called inside tool execution.
-                  </div>
+                <div className="text-left text-[11px] leading-relaxed text-[#8EA09B]">
+                  {content.layers.execution.policyNarrative}
                 </div>
 
                 <div className="relative mt-3 rounded-lg border border-[#1A2230]/80 bg-[#07110D] p-3">
                   <div className="absolute top-3 right-3 rounded border border-emerald-500/20 bg-emerald-950/30 px-2 py-1 font-mono text-[9px] tracking-[0.14em] text-emerald-400 uppercase">
-                    isolated policy logic
+                    {content.layers.execution.policyBadge}
                   </div>
                   <div className="pr-36 font-mono text-[12px] leading-relaxed text-[#BFD7D0]">
                     <span className="text-white">
@@ -316,7 +136,7 @@ export default function ArchitectureFlow() {
                     <div className="pl-4 text-[#647089]">
                       └─{" "}
                       <span className="text-emerald-300">
-                        policy.evaluate()
+                        {content.layers.execution.policyMethod}
                       </span>
                     </div>
                     <div className="pl-8 text-[#9CA7B8]">
@@ -327,12 +147,12 @@ export default function ArchitectureFlow() {
               </div>
             </FlatBlock>
 
-            <FlatBlock title="Result Collection">
+            <FlatBlock title={content.layers.execution.resultBlockTitle}>
               {/* Highlight changed text */}
               <div className="text-[13px] text-[#B7C0D4]">
-                append tool outputs into{" "}
+                {content.layers.execution.resultPrefix}{" "}
                 <span className="font-mono font-medium text-blue-400">
-                  tool_results[]
+                  {content.layers.execution.resultTarget}
                 </span>
               </div>
             </FlatBlock>
@@ -341,29 +161,24 @@ export default function ArchitectureFlow() {
       ),
     },
     {
-      layer: "Response Layer",
-      subtitle: "Answer",
+      layer: content.layers.response.title,
+      subtitle: content.layers.response.subtitle,
       active: false,
       stage: (
-        <StageCard title="Response Synthesis" accent="amber">
+        <StageCard title={content.layers.response.stageTitle} accent="amber">
           <FlatBlock
-            title="Final LLM Response"
+            title={content.layers.response.blockTitle}
             notes={current.responseSummary.notes}
           >
             <CompactIO
               input={current.responseSummary.input}
               output={current.responseSummary.output}
+              labels={content.io}
             />
 
             <div className="mt-3 rounded-lg border border-l-2 border-amber-500/15 border-l-amber-500/45 bg-amber-500/[0.035] p-3.5">
               <div className="text-[13px] leading-relaxed text-amber-100">
-                “
-                {useCase === "refund"
-                  ? "根据查询结果，订单123因商品已发货，无法进行退款。"
-                  : useCase === "marketing"
-                    ? "Some users qualify for a retention coupon."
-                    : "该请求已进入人工审批流程。"}
-                ”
+                {current.responseSummary.finalAnswer}
               </div>
             </div>
           </FlatBlock>
@@ -385,21 +200,24 @@ export default function ArchitectureFlow() {
         <div className="mb-7 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <div className="mb-2 font-mono text-[10px] tracking-[0.2em] text-blue-400 uppercase">
-              SECTION 03 // RUNTIME FLOW
+              {content.header.eyebrow}
             </div>
 
             <h1 className="mb-3 text-3xl font-semibold tracking-tight md:text-4xl">
-              Runtime Flow
+              {content.header.title}
             </h1>
 
             <p className="max-w-2xl text-sm leading-relaxed text-[#8791A5]">
-              A query is transformed into structured intent, planned execution,
-              tool results, and finally a human-readable answer.
+              {content.header.description}
             </p>
           </div>
 
           <div className="lg:pt-10">
-            <SliderControl value={detailLevel} onChange={setDetailLevel} />
+            <SliderControl
+              value={detailLevel}
+              onChange={setDetailLevel}
+              content={content.slider}
+            />
           </div>
         </div>
 
@@ -411,9 +229,10 @@ export default function ArchitectureFlow() {
           )}
         >
           <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
-            {(Object.entries(cases) as [UseCase, UseCaseData][]).map(
+            {(Object.entries(content.cases) as [UseCase, UseCaseData][]).map(
               ([key, item]) => {
                 const selected = key === useCase;
+                const currentStatus = item.status.id === "current";
                 return (
                   <button
                     key={key}
@@ -422,7 +241,7 @@ export default function ArchitectureFlow() {
                       "border p-3 text-left transition-all duration-300",
                       theme.radius.cardSm,
                       selected
-                        ? item.status === "CURRENT IMPLEMENTATION"
+                        ? currentStatus
                           ? "border-emerald-400/30 bg-emerald-500/[0.1] shadow-[0_0_22px_rgba(16,185,129,0.1)]"
                           : "border-violet-400/30 border-t-violet-400/45 bg-[#171523] shadow-[0_10px_26px_rgba(76,29,149,0.18),0_0_18px_rgba(139,92,246,0.08)]"
                         : "border-[#151C28] bg-[#0B0F15] hover:border-[#2A3445]",
@@ -432,7 +251,7 @@ export default function ArchitectureFlow() {
                       <div
                         className={`text-sm font-semibold ${
                           selected
-                            ? item.status === "CURRENT IMPLEMENTATION"
+                            ? currentStatus
                               ? "text-white"
                               : "text-violet-50"
                             : "text-[#B9C2D0]"
@@ -440,11 +259,8 @@ export default function ArchitectureFlow() {
                       >
                         {item.label}
                       </div>
-                      <StatusBadge
-                        current={item.status === "CURRENT IMPLEMENTATION"}
-                        selected={selected}
-                      >
-                        {item.status}
+                      <StatusBadge current={currentStatus} selected={selected}>
+                        {item.status.label}
                       </StatusBadge>
                     </div>
 
@@ -491,11 +307,11 @@ export default function ArchitectureFlow() {
                 <SectionLabel>&nbsp;</SectionLabel>
               </div>
               <div>
-                <SectionLabel>Runtime Flow</SectionLabel>
+                <SectionLabel>{content.columns.runtime}</SectionLabel>
               </div>
               {detailLevel === 3 && (
                 <div>
-                  <SectionLabel>Semantic & Dependency Foundations</SectionLabel>
+                  <SectionLabel>{content.columns.foundation}</SectionLabel>
                 </div>
               )}
 
@@ -514,8 +330,8 @@ export default function ArchitectureFlow() {
                   {detailLevel === 3 && idx === 0 && (
                     <div className="row-span-5 space-y-4 pb-5">
                       <FoundationCard
-                        title="Semantic Entities"
-                        label="use-case slice"
+                        title={content.foundationCards.entities.title}
+                        label={content.foundationCards.entities.label}
                       >
                         <div className="flex flex-wrap gap-2">
                           {current.foundation.entities.map((entity) => (
@@ -530,8 +346,8 @@ export default function ArchitectureFlow() {
                       </FoundationCard>
 
                       <FoundationCard
-                        title="Dependency Graph"
-                        label="pre-built relations"
+                        title={content.foundationCards.graph.title}
+                        label={content.foundationCards.graph.label}
                       >
                         <div className="mb-4 space-y-2.5 font-mono text-[12px] text-blue-300 drop-shadow-[0_0_5px_rgba(96,165,250,0.16)]">
                           {current.foundation.graphRelations.map((relation) => (
@@ -552,8 +368,8 @@ export default function ArchitectureFlow() {
                       </FoundationCard>
 
                       <FoundationCard
-                        title="Entity_to_Tool Map"
-                        label="runtime bridge"
+                        title={content.foundationCards.mapping.title}
+                        label={content.foundationCards.mapping.label}
                       >
                         <div className="space-y-2.5 font-mono text-[12px]">
                           {current.foundation.entityMap.map((row) => (
@@ -583,15 +399,13 @@ export default function ArchitectureFlow() {
 function SliderControl({
   value,
   onChange,
+  content,
 }: {
   value: DetailLevel;
   onChange: (level: DetailLevel) => void;
+  content: FlowContent["slider"];
 }) {
-  const steps: { value: DetailLevel; label: string }[] = [
-    { value: 1, label: "Layers" },
-    { value: 2, label: "Runtime" },
-    { value: 3, label: "Foundation" },
-  ];
+  const steps = content.steps;
 
   return (
     <div className="w-[320px]">
@@ -652,7 +466,7 @@ function SliderControl({
             onChange(Number(event.target.value) as DetailLevel)
           }
           className="absolute inset-0 h-5 w-full cursor-pointer opacity-0"
-          aria-label="Runtime flow detail level"
+          aria-label={content.ariaLabel}
         />
       </div>
     </div>
@@ -788,16 +602,24 @@ function FlatBlock({
   );
 }
 
-function CompactIO({ input, output }: { input: string; output: string }) {
+function CompactIO({
+  input,
+  output,
+  labels,
+}: {
+  input: string;
+  output: string;
+  labels: FlowContent["io"];
+}) {
   return (
     <div className="grid grid-cols-[minmax(0,1fr)_32px_minmax(0,1.15fr)] items-stretch gap-3">
-      <SmallIO label="Input" value={input} />
+      <SmallIO label={labels.input} value={input} />
       <div className="flex items-center justify-center">
         <div className="relative h-px w-full bg-gradient-to-r from-transparent via-[#3D547A] to-transparent">
           <div className="absolute top-1/2 right-0 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.7)]" />
         </div>
       </div>
-      <SmallIO label="Output" value={output} blue />
+      <SmallIO label={labels.output} value={output} blue />
     </div>
   );
 }
@@ -852,9 +674,7 @@ function FoundationCard({
       )}
     >
       <div className="mb-3">
-        <div className="mb-1 text-[15px] font-semibold text-white">
-          {title}
-        </div>
+        <div className="mb-1 text-[15px] font-semibold text-white">{title}</div>
         <div className="font-mono text-[10px] tracking-[0.16em] text-[#647089] uppercase">
           {label}
         </div>

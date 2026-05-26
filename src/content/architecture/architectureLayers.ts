@@ -3,7 +3,7 @@ export type RuntimeLayerId = "semantic" | "planning" | "policy" | "execution";
 export type StabilitySystemId =
   | "contract"
   | "validation"
-  | "registry"
+  | "planning"
   | "observability";
 
 export type RuntimeHighlightMapping = {
@@ -34,10 +34,10 @@ export type StabilitySystemContent = {
 
 export const architectureLayersContent = {
   en: {
-    eyebrow: "SECTION 02 // INFRASTRUCTURE",
+    eyebrow: "SECTION 02 // RUNTIME ARCHITECTURE",
     sectionTitle: "Architecture Layers",
     subtitle:
-      "AI execution becomes unreliable when runtime structure is missing.",
+      "Structured runtime layers make AI execution controllable, traceable and reusable.",
     viewModes: {
       core: "Layer View",
       expanded: "Full View",
@@ -53,41 +53,47 @@ export const architectureLayersContent = {
       {
         id: "semantic",
         title: "Semantic Layer",
-        responsibility: "Unify operational meaning across runtime systems.",
+        responsibility: "Understand the user request.",
         semanticFlow: {
-          input: ["Natural Language", "Tool Metadata"],
-          process: ["Ontology Mapping", "Semantic Resolution"],
-          output: ["Structured Entities", "Execution Context"],
+          input: ["Natural Language"],
+          process: ["Intent Parsing"],
+          output: ["Structured Intent", "Resolved Entity"],
         },
       },
       {
         id: "planning",
         title: "Planning Layer",
-        responsibility: "Resolve runtime dependencies and execution paths.",
+        responsibility: "Plan the execution path.",
         semanticFlow: {
-          input: ["Structured Entities", "Dependency Graph"],
-          process: ["Path Resolution", "Requires / Provides"],
-          output: ["Execution Plan", "Capability Route"],
+          input: ["Structured Entities", "Requires / Provides"],
+          process: ["Graph Construction", "Dependency Resolution"],
+          output: ["Execution Steps"],
         },
       },
       {
         id: "policy",
         title: "Policy Layer",
-        responsibility: "Evaluate business rules before execution continues.",
+        responsibility: "Govern execution with business rules.",
         semanticFlow: {
-          input: ["Execution Plan", "Business Context"],
-          process: ["Rule Evaluation", "Policy Isolation"],
-          output: ["PolicyResult DTO", "Approval Gate"],
+          input: ["Resolved Params", "Business Rules"],
+          process: ["Rule Evaluation"],
+          output: ["PolicyDecision DTO"],
         },
       },
       {
         id: "execution",
         title: "Execution Layer",
-        responsibility: "Orchestrate tools, services, and runtime actions.",
+        responsibility: "Execute tools and collect results.",
         semanticFlow: {
-          input: ["PolicyResult DTO", "Tool Contracts"],
-          process: ["Tool Orchestration", "State Emission"],
-          output: ["Audit Trace", "Runtime Actions"],
+          input: ["Execution Steps", "Runtime Context"],
+          process: [
+            "Param Resolution",
+            "Tool Execution",
+            "Policy Evaluation",
+            "Tool Result Append",
+            "Audit Logging",
+          ],
+          output: ["Tool Results", "Audit Trace"],
         },
       },
     ] satisfies RuntimeLayerContent[],
@@ -95,92 +101,65 @@ export const architectureLayersContent = {
       {
         id: "contract",
         title: "Contract System",
-        narrative:
-          "This system defines structured runtime boundaries between layers.",
+        narrative: "Before execution, what defines stable boundaries?",
+        items: ["Tool IO Contracts", "Structured LLM Outputs"],
+      },
+      {
+        id: "planning",
+        title: "Planning System",
+        narrative: "Before execution, what will run?",
         items: [
-          "Structured DTO Contracts",
-          "Tool Interface Schemas",
-          "Runtime Boundary Definitions",
-          "Structured LLM Outputs",
+          "Graph Preparation",
+          "Dependency Resolution",
+          "Execution Planning",
         ],
       },
       {
         id: "validation",
         title: "Validation System",
-        narrative:
-          "This system constrains unstable runtime behavior before execution continues.",
+        narrative: "Before and during execution, what prevents invalid states?",
         items: [
-          "Syntax Validation",
-          "Structure Validation",
-          "Dependency Validation",
-          "Runtime Parameter Checks",
-        ],
-      },
-      {
-        id: "registry",
-        title: "Tool Registry",
-        narrative:
-          "This system supports runtime orchestration and dependency-aware execution planning.",
-        items: [
-          "Structured Tool Discovery",
-          "Execution Capability Mapping",
-          "Runtime Tool Routing",
-          "Requires / Provides Resolution",
+          "LLM Output Validation",
+          "Graph Validation",
+          "Runtime Parameter Validation",
         ],
       },
       {
         id: "observability",
         title: "Observability System",
-        narrative:
-          "This system makes runtime execution traceable and debuggable.",
-        items: [
-          "Execution Trace Timeline",
-          "Runtime Decision Path",
-          "Tool Execution Logs",
-          "Runtime State Visibility",
-        ],
+        narrative: "Before and after execution, what is visible?",
+        items: ["Dependency Graph", "Planned Steps", "Runtime Trace & Logs"],
       },
     ] satisfies StabilitySystemContent[],
     highlightsMap: {
       semantic: {
         strongSystems: ["contract"],
         weakSystems: ["validation"],
-        highlightedItems: [
-          "Structured DTO Contracts",
-          "Runtime Boundary Definitions",
-          "Structure Validation",
-        ],
+        highlightedItems: ["Structured LLM Outputs", "Tool IO Contracts"],
       },
       planning: {
-        strongSystems: ["registry", "validation"],
+        strongSystems: ["planning", "validation"],
         weakSystems: ["contract"],
         highlightedItems: [
-          "Execution Capability Mapping",
-          "Requires / Provides Resolution",
-          "Dependency Validation",
-          "Runtime Parameter Checks",
-          "Tool Interface Schemas",
+          "Tool IO Contracts",
+          "Dependency Resolution",
+          "Execution Planning",
+          "Graph Preparation",
+          "Dependency Graph",
+          "Graph Validation",
         ],
       },
       policy: {
         strongSystems: ["contract", "validation"],
         weakSystems: ["observability"],
-        highlightedItems: [
-          "Structured DTO Contracts",
-          "Structured LLM Outputs",
-          "Structure Validation",
-          "Runtime Parameter Checks",
-          "Runtime Decision Path",
-        ],
+        highlightedItems: ["Tool IO Contracts", "Runtime Parameter Validation"],
       },
       execution: {
         strongSystems: ["observability"],
-        weakSystems: ["registry"],
+        weakSystems: ["planning"],
         highlightedItems: [
-          "Execution Trace Timeline",
-          "Tool Execution Logs",
-          "Runtime State Visibility",
-          "Runtime Tool Routing",
+          "Runtime Parameter Validation",
+          "Runtime Trace & Logs",
         ],
       },
     } satisfies Record<RuntimeLayerId, RuntimeHighlightMapping>,
@@ -256,13 +235,7 @@ export const architectureLayersContent = {
         ],
       },
       {
-        id: "validation",
-        title: "验证系统",
-        narrative: "该系统在执行继续前约束不稳定的运行时行为。",
-        items: ["语法验证", "结构验证", "依赖验证", "运行时参数检查"],
-      },
-      {
-        id: "registry",
+        id: "planning",
         title: "工具注册表",
         narrative: "该系统支持运行时编排与依赖感知的执行规划。",
         items: [
@@ -271,6 +244,12 @@ export const architectureLayersContent = {
           "运行时工具路由",
           "Requires / Provides 解析",
         ],
+      },
+      {
+        id: "validation",
+        title: "验证系统",
+        narrative: "该系统在执行继续前约束不稳定的运行时行为。",
+        items: ["语法验证", "结构验证", "依赖验证", "运行时参数检查"],
       },
       {
         id: "observability",
@@ -291,7 +270,7 @@ export const architectureLayersContent = {
         highlightedItems: ["结构化 DTO 契约", "运行时边界定义", "结构验证"],
       },
       planning: {
-        strongSystems: ["registry", "validation"],
+        strongSystems: ["planning", "validation"],
         weakSystems: ["contract"],
         highlightedItems: [
           "执行能力映射",
@@ -314,7 +293,7 @@ export const architectureLayersContent = {
       },
       execution: {
         strongSystems: ["observability"],
-        weakSystems: ["registry"],
+        weakSystems: ["planning"],
         highlightedItems: [
           "执行轨迹时间线",
           "工具执行日志",

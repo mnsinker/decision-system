@@ -216,7 +216,7 @@ export const architecturePressureContent: Record<string, LanguageContent> = {
 
     modules: {
       tab1: {
-        bizCase: "5 个不同系统，都定义了 VIP 用户。",
+        bizCase: '"5 个不同系统，都定义了 VIP 用户。"',
         leftCard: {
           pressure: "VIP 在不同系统中意味着完全不同的东西。",
           label: "运行压力",
@@ -243,7 +243,7 @@ export const architecturePressureContent: Record<string, LanguageContent> = {
       },
 
       tab2: {
-        bizCase: "新增退款税务规则，影响 12 条已有依赖链路。",
+        bizCase: '"新增退款税务规则，影响 12 条已有依赖链路。"',
         leftCard: {
           pressure: "微小的参数变更正在逐步纠缠整个执行流。",
           label: "运行压力",
@@ -291,7 +291,7 @@ export const architecturePressureContent: Record<string, LanguageContent> = {
       },
 
       tab3: {
-        bizCase: "为 VIP 用户增加特殊优惠券逻辑，而不修改核心执行代码。",
+        bizCase: '"为 VIP 用户增加特殊优惠券逻辑，而不修改核心执行代码。"',
         leftCard: {
           pressure:
             "逻辑污染。业务规则正在泄漏进执行服务中，形成了一个易碎的黑盒。",
