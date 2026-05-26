@@ -38,6 +38,11 @@ export type ArchitectureFlowUseCaseData = {
     secondaryTool?: {
       toolName: string;
       dtoName: string;
+      badgeLabel?: string;
+    };
+    tertiaryTool?: {
+      toolName: string;
+      dtoName: string;
     };
   };
   responseSummary: {
@@ -149,8 +154,8 @@ export const architectureFlowContent = {
         },
         planSummary: {
           input: "runtime_intent",
-          output: "execution_steps [ get_order, check_refund ]",
-          notes: ["map entity to tool", "build execution order"],
+          output: "planned_steps [ get_order, check_refund ]",
+          notes: ["resolve dependencies", "plan execution steps"],
         },
         parameterSummary: {
           input: "tool_results",
@@ -192,30 +197,40 @@ export const architectureFlowContent = {
         layerHighlights: ["semantic", "planning"],
         semanticSummary: {
           input: "User Query",
-          output: "runtime_intent { intent, target_group }",
+          output: "runtime_intent { intent, campaign_id }",
           notes: ["parse campaign intent", "resolve user segment"],
         },
         planSummary: {
           input: "runtime_intent",
           output:
-            "execution_steps [ get_user_profile, check_coupon_policy, campaign_action ]",
-          notes: ["map user context", "build campaign path"],
+            "planned_steps [  \n\tget_user_profile, \n\tget_user_behavior, \n\tcompute_churn_risk, \n\tevaluate_campaign_policy, \n\tcompute_campaign_score, \n\tdecide_coupon \n]",
+          notes: ["resolve dependencies", "build campaign steps"],
         },
         parameterSummary: {
           input: "tool_results",
-          output: "resolved_params { user_profile, campaign }",
+          output: "resolved_params { CampaignScore }",
         },
         toolSummary: {
           input: "resolved_params",
           output: "CouponDecisionDTO",
-          toolName: "check_coupon_policy",
-          dtoName: "CouponDecisionDTO",
+          toolName: "evaluate_campaign_policy()",
+          dtoName: "CampaignEligibilityDTO",
+          secondaryTool: {
+            toolName: "compute_campaign_score()",
+            dtoName: "CampaignScore",
+            badgeLabel: "separate scoring logic",
+          },
+          tertiaryTool: {
+            toolName: "decide_coupon()",
+            dtoName: "CouponDecisionDTO",
+          },
         },
         responseSummary: {
           input: "tool_results",
-          output: "human-readable recommendation",
-          notes: ["read campaign result", "write answer for user"],
-          finalAnswer: "“Some users qualify for a retention coupon.”",
+          output: "human-readable campaign decision",
+          notes: [],
+          finalAnswer:
+            "“High-risk users were selected for the SAVE20 retention coupon campaign.”",
         },
         foundation: {
           entities: [
@@ -239,9 +254,12 @@ export const architectureFlowContent = {
             "maps campaign context to executable tools",
           ],
           entityMap: [
-            { entity: "User", tool: "get_user_profile" },
-            { entity: "CouponEligibility", tool: "check_coupon_policy" },
-            { entity: "CampaignContext", tool: "campaign_action" },
+            { entity: "UserProfile", tool: "get_user_profile" },
+            { entity: "UserBehavior", tool: "get_user_behavior" },
+            { entity: "ChurnRisk", tool: "comput_churn_risk" },
+            { entity: "CampaignEligibility", tool: "evaluate_campaign_policy" },
+            { entity: "CampaignScore", tool: "compute_campaign_score" },
+            { entity: "CouponDecision", tool: "decide_coupon" },
           ],
         },
       },
@@ -261,7 +279,7 @@ export const architectureFlowContent = {
         planSummary: {
           input: "runtime_intent",
           output:
-            "execution_steps [ get_refund_request, evaluate_risk, evaluate_approval_policy, decide_approval_route ]",
+            "planned_steps [ \n\tget_refund_request, \n\tevaluate_risk, \n\tevaluate_approval_policy, \n\tdecide_approval_route \n]",
           notes: ["resolve dependencies", "plan execution steps"],
         },
         parameterSummary: {
@@ -282,7 +300,7 @@ export const architectureFlowContent = {
           blockTitle: "Workflow Status Response",
           input: "tool_results",
           output: "human-readable workflow status",
-          notes: ["read routing result", "generate status response"],
+          notes: [],
           finalAnswer:
             "“This refund request was classified as HIGH RISK,  and routed to the L2 approval workflow.”",
         },
@@ -318,16 +336,16 @@ export const architectureFlowContent = {
     header: {
       eyebrow: "SECTION 03 // RUNTIME FLOW",
       title: "运行时流程",
-      description: "用户问题会先变成结构化的执行路径，最后形成一条可读的回答",
+      description: "用户请求会被转换为结构化执行路径，并最终生成可读结果。",
     },
 
     slider: {
       steps: [
-        { value: 1, label: "层级" },
+        { value: 1, label: "分层" },
         { value: 2, label: "运行流" },
         { value: 3, label: "基础层" },
       ],
-      ariaLabel: "运行时流程细节层级",
+      ariaLabel: "运行时流程层级",
     },
 
     columns: {
@@ -349,56 +367,64 @@ export const architectureFlowContent = {
 
       semantic: {
         title: "语义层",
-        subtitle: "语义解析",
+        subtitle: "语义",
         stageTitle: "语义解析",
         blockTitle: "Intent Parsing",
       },
 
       planning: {
         title: "规划层",
-        subtitle: "规划步骤",
-        stageTitle: "规划步骤",
+        subtitle: "规划",
+        stageTitle: "执行规划",
         blockTitle: "plan_tools()",
       },
 
       execution: {
         title: "执行层",
-        subtitle: "执行",
+        subtitle: "运行",
         stageTitle: "执行编排",
         loopInstruction: "for step in steps:",
         loopLabel: "执行循环",
-        parameterBlockTitle: "准备参数",
-        toolBlockTitle: "Tool Execution",
+
+        parameterBlockTitle: "运行时参数解析",
+
+        toolBlockTitle: "工具执行",
+
         policyMethod: "policy.evaluate()",
-        policyNarrative: "当前 policy 是在 Tool Execution 内部被调用的。",
-        policyBadge: "隔离的 policy 逻辑",
+
+        policyNarrative: "当前 policy 逻辑仍在 tool execution 内部执行。",
+
+        policyBadge: "独立 Policy Logic",
+
         resultBlockTitle: "结果收集",
-        resultPrefix: "append tool outputs into",
+
+        resultPrefix: "将 tool 输出追加到",
+
         resultTarget: "tool_results[]",
       },
 
       response: {
         title: "响应层",
-        subtitle: "回答",
-        stageTitle: "响应生成",
-        blockTitle: "最终 LLM 响应",
+        subtitle: "结果",
+        stageTitle: "结果生成",
+        blockTitle: "Final LLM Response",
       },
     },
 
     foundationCards: {
       entities: {
-        title: "语义 Entities",
-        label: "当前 use case 切片",
+        title: "Semantic Entities",
+        label: "当前用例的切片",
       },
 
       graph: {
-        title: "依赖图",
-        label: "预构建关系",
+        title: "Dependency Graph",
+        label: "预构建的关系图",
       },
 
       mapping: {
         title: "Entity_to_Tool Map",
-        label: "运行时桥接层",
+        label: "运行时桥接",
       },
     },
 
@@ -411,55 +437,73 @@ export const architectureFlowContent = {
           label: "当前实现",
         },
 
-        query: `"订单123可以退款吗？"`,
+        query: `"订单 123 可以退款吗？"`,
 
         layerHighlights: ["planning", "execution"],
 
         semanticSummary: {
-          input: "用户问题",
+          input: "用户请求",
+
           output: "runtime_intent { intent, order_id }",
+
           notes: ["解析 intent", "提取 order_id"],
         },
 
         planSummary: {
           input: "runtime_intent",
-          output: "execution_steps [ get_order, check_refund ]",
-          notes: ["entity 映射到 tool", "构建执行顺序"],
+
+          output: "planned_steps [ get_order, check_refund ]",
+
+          notes: ["解析依赖关系", "规划执行步骤"],
         },
 
         parameterSummary: {
           input: "tool_results",
+
           output: "resolved_params { order }",
         },
 
         toolSummary: {
           input: "resolved_params",
+
           output: "RefundDecisionDTO",
+
           toolName: "check_refund",
+
           dtoName: "RefundDecisionDTO",
         },
 
         responseSummary: {
           input: "tool_results",
-          output: "可读的回答",
+
+          output: "可读结果",
+
           notes: [],
+
           finalAnswer: "“根据查询结果，订单123因商品已发货，无法进行退款。”",
         },
 
         foundation: {
-          entities: ["Order", "RefundDecision", "ShippingState"],
+          entities: ["Order", "RefundDecision"],
 
           graphRelations: ["OrderSummary ──▶ RefundDecision"],
 
           graphNotes: [
-            "预构建的运行时依赖关系",
-            "这里只展示当前 use case 相关切片",
-            "用于帮助 planner 构建 tool 执行顺序",
+            "基于 entity relations 预构建",
+            "这里只展示当前 use-case 的切片",
+            "供 planner 推导执行顺序",
           ],
 
           entityMap: [
-            { entity: "OrderSummary", tool: "get_order" },
-            { entity: "RefundDecision", tool: "check_refund" },
+            {
+              entity: "Order",
+              tool: "get_order",
+            },
+
+            {
+              entity: "RefundDecision",
+              tool: "check_refund",
+            },
           ],
         },
       },
@@ -472,71 +516,127 @@ export const architectureFlowContent = {
           label: "扩展模式",
         },
 
-        query: `"哪些用户应该收到 retention coupon？"`,
+        query: `"哪些用户应该收到 留存优惠券？"`,
 
         layerHighlights: ["semantic", "planning"],
 
         semanticSummary: {
-          input: "用户问题",
-          output: "runtime_intent { intent, target_group }",
-          notes: ["解析营销 intent", "识别用户分群"],
+          input: "用户请求",
+
+          output: "runtime_intent { intent, campaign_id }",
+
+          notes: ["解析 campaign intent", "识别用户分群"],
         },
 
         planSummary: {
           input: "runtime_intent",
 
           output:
-            "execution_steps [ get_user_profile, check_coupon_policy, campaign_action ]",
+            "planned_steps [ \n\tget_user_profile, \n\tget_user_behavior, \n\tcompute_churn_risk, \n\tevaluate_campaign_policy, \n\tcompute_campaign_score, \n\tdecide_coupon \n]",
 
-          notes: ["映射用户上下文", "构建营销执行路径"],
+          notes: ["解析依赖关系", "构建 campaign 执行路径"],
         },
 
         parameterSummary: {
           input: "tool_results",
-          output: "resolved_params { user_profile, campaign }",
+
+          output: "resolved_params { CampaignScore }",
         },
 
         toolSummary: {
           input: "resolved_params",
+
           output: "CouponDecisionDTO",
-          toolName: "check_coupon_policy",
-          dtoName: "CouponDecisionDTO",
+
+          toolName: "evaluate_campaign_policy()",
+
+          dtoName: "CampaignEligibilityDTO",
+
+          secondaryTool: {
+            toolName: "compute_campaign_score()",
+
+            dtoName: "CampaignScore",
+
+            badgeLabel: "独立 Scoring Logic",
+          },
+
+          tertiaryTool: {
+            toolName: "decide_coupon()",
+
+            dtoName: "CouponDecisionDTO",
+          },
         },
 
         responseSummary: {
           input: "tool_results",
-          output: "可读的推荐结果",
-          notes: ["读取营销结果", "生成用户回答"],
-          finalAnswer: "“部分用户符合 retention coupon 发放条件。”",
+
+          output: "可读营销决策",
+
+          notes: [],
+
+          finalAnswer: "“高流失风险用户已被加入 立省20 留存活动。”",
         },
 
         foundation: {
-          entities: ["User", "CouponEligibility", "CampaignContext"],
+          entities: [
+            "UserProfile",
+            "UserBehavior",
+            "ChurnRisk",
+            "CampaignEligibility",
+            "CampaignScore",
+            "CouponDecision",
+          ],
 
           graphRelations: [
             "UserProfile ──▶ UserBehavior",
             "UserBehavior ──▶ ChurnRisk",
             "UserProfile, ChurnRisk ──▶ CampaignEligibility",
-            "CampaignEligibility, UserBehavior ──▶ CampaignScore",
+            "CampaignEligibility, ChurnRisk ──▶ CampaignScore",
             "CampaignScore ──▶ CouponDecision",
           ],
 
           graphNotes: [
-            "预构建的运行时依赖关系",
-            "这里只展示扩展模式相关切片",
-            "将营销上下文映射到可执行 tools",
+            "基于 entity relations 预构建",
+            "这里只展示该用例的相关切片",
+            "将 campaign context 映射到可执行 tools",
           ],
 
           entityMap: [
-            { entity: "User", tool: "get_user_profile" },
-            { entity: "CouponEligibility", tool: "check_coupon_policy" },
-            { entity: "CampaignContext", tool: "campaign_action" },
+            {
+              entity: "UserProfile",
+              tool: "get_user_profile",
+            },
+
+            {
+              entity: "UserBehavior",
+              tool: "get_user_behavior",
+            },
+
+            {
+              entity: "ChurnRisk",
+              tool: "comput_churn_risk",
+            },
+
+            {
+              entity: "CampaignEligibility",
+              tool: "evaluate_campaign_policy",
+            },
+
+            {
+              entity: "CampaignScore",
+              tool: "compute_campaign_score",
+            },
+
+            {
+              entity: "CouponDecision",
+              tool: "decide_coupon",
+            },
           ],
         },
       },
 
       workflow: {
-        label: "流程自动化",
+        label: "工作流自动化",
 
         status: {
           id: "future",
@@ -548,57 +648,97 @@ export const architectureFlowContent = {
         layerHighlights: ["execution", "planning"],
 
         semanticSummary: {
-          input: "用户问题",
-          output: "runtime_intent { intent, risk_level }",
-          notes: ["解析审批 intent", "识别风险信号"],
+          input: "用户请求",
+
+          output: "runtime_intent { intent, refund_request_id }",
+
+          notes: ["解析审批 intent", "提取 request id"],
         },
 
         planSummary: {
           input: "runtime_intent",
 
           output:
-            "execution_steps [ evaluate_risk, approval_gate, notify_reviewer ]",
+            "planned_steps [ \n\tget_refund_request, \n\tevaluate_risk, \n\tevaluate_approval_policy, \n\tdecide_approval_route \n]",
 
-          notes: ["映射审批依赖", "构建流程执行路径"],
+          notes: ["解析依赖关系", "规划执行步骤"],
         },
 
         parameterSummary: {
           input: "tool_results",
-          output: "resolved_params { risk_result, approval_context }",
+
+          output: "resolved_params { refund_request_id }",
         },
 
         toolSummary: {
           input: "resolved_params",
-          output: "ApprovalRouteDTO",
-          toolName: "approval_gate",
-          dtoName: "ApprovalDecisionDTO",
+
+          output: "ApprovalDecisionDTO",
+
+          toolName: "evaluate_approval_policy()",
+
+          dtoName: "ApprovalEligibilityDTO",
+
+          secondaryTool: {
+            toolName: "decide_approval_route()",
+
+            dtoName: "ApprovalRouteDTO",
+          },
         },
 
         responseSummary: {
+          blockTitle: "Workflow Status Response",
+
           input: "tool_results",
-          output: "可读的流程结果",
-          notes: ["读取审批结果", "生成用户回答"],
-          finalAnswer: "“该退款请求风险等级较高，已路由至 L2 人工审批流程。”",
+
+          output: "可读工作流状态",
+
+          notes: [],
+
+          finalAnswer:
+            "“该退款请求被识别为 高风险，并已路由至 L2 审批工作流。”",
         },
 
         foundation: {
-          entities: ["Request", "RiskLevel", "ApprovalRequirement"],
+          entities: [
+            "RefundRequest",
+            "RiskScore",
+            "ApprovalEligibility",
+            "ApprovalRoute",
+          ],
 
           graphRelations: [
-            "Request ──▶ RiskLevel",
-            "RiskLevel ──▶ ApprovalRequirement",
+            "RefundRequest ──▶ RiskScore",
+            "RiskScore ──▶ ApprovalEligibility",
+            "ApprovalEligibility ──▶ ApprovalRoute",
           ],
 
           graphNotes: [
-            "预构建的运行时依赖关系",
+            "基于 entity relations 预构建",
             "这里只展示 workflow 相关切片",
-            "用于路由审批执行路径",
+            "用于路由审批执行流程",
           ],
 
           entityMap: [
-            { entity: "RiskLevel", tool: "evaluate_risk" },
-            { entity: "ApprovalRequirement", tool: "approval_gate" },
-            { entity: "ReviewerNotification", tool: "notify_reviewer" },
+            {
+              entity: "RefundRequest",
+              tool: "get_refund_request",
+            },
+
+            {
+              entity: "RiskScore",
+              tool: "evaluate_risk",
+            },
+
+            {
+              entity: "ApprovalEligibility",
+              tool: "evaluate_approval_policy",
+            },
+
+            {
+              entity: "ApprovalRoute",
+              tool: "decide_approval_route",
+            },
           ],
         },
       },

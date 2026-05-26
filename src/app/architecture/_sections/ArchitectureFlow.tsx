@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { GitBranch, Megaphone, Receipt } from "lucide-react";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
@@ -13,6 +14,12 @@ import {
 
 type DetailLevel = 1 | 2 | 3;
 type FlowContent = (typeof architectureFlowContent)["en"];
+
+const useCaseIcons = {
+  refund: Receipt,
+  marketing: Megaphone,
+  workflow: GitBranch,
+} satisfies Record<UseCase, React.ComponentType<{ className?: string }>>;
 
 export default function ArchitectureFlow() {
   const { theme } = useTheme();
@@ -126,8 +133,15 @@ export default function ArchitectureFlow() {
                 </div>
 
                 <div className="relative mt-3 rounded-lg border border-[#1A2230]/80 bg-[#07110D] p-3">
-                  <div className="absolute top-3 right-3 rounded border border-emerald-500/20 bg-emerald-950/30 px-2 py-1 font-mono text-[9px] tracking-[0.14em] text-emerald-400 uppercase">
-                    {content.layers.execution.policyBadge}
+                  <div className="absolute top-3 right-3 flex flex-col items-end gap-1.5">
+                    <div className="rounded border border-emerald-500/20 bg-emerald-950/30 px-2 py-1 font-mono text-[9px] tracking-[0.14em] text-emerald-400 uppercase">
+                      {content.layers.execution.policyBadge}
+                    </div>
+                    {current.toolSummary.secondaryTool?.badgeLabel && (
+                      <div className="rounded border border-violet-500/20 bg-violet-950/30 px-2 py-1 font-mono text-[9px] tracking-[0.14em] text-violet-400 uppercase">
+                        {current.toolSummary.secondaryTool.badgeLabel}
+                      </div>
+                    )}
                   </div>
                   <div className="pr-36 font-mono text-[12px] leading-relaxed text-[#BFD7D0]">
                     <span className="text-white">
@@ -144,11 +158,27 @@ export default function ArchitectureFlow() {
                     </div>
                     {current.toolSummary.secondaryTool && (
                       <>
-                        <div className="text-white">
+                        <div
+                          className={
+                            current.toolSummary.secondaryTool.badgeLabel
+                              ? "text-violet-400"
+                              : "text-white"
+                          }
+                        >
                           {current.toolSummary.secondaryTool.toolName}
                         </div>
                         <div className="pl-4 text-[#9CA7B8]">
                           └─ {current.toolSummary.secondaryTool.dtoName}
+                        </div>
+                      </>
+                    )}
+                    {current.toolSummary.tertiaryTool && (
+                      <>
+                        <div className="text-white">
+                          {current.toolSummary.tertiaryTool.toolName}
+                        </div>
+                        <div className="pl-4 text-[#9CA7B8]">
+                          └─ {current.toolSummary.tertiaryTool.dtoName}
                         </div>
                       </>
                     )}
@@ -246,6 +276,7 @@ export default function ArchitectureFlow() {
               ([key, item]) => {
                 const selected = key === useCase;
                 const currentStatus = item.status.id === "current";
+                const Icon = useCaseIcons[key];
                 return (
                   <button
                     key={key}
@@ -261,16 +292,29 @@ export default function ArchitectureFlow() {
                     )}
                   >
                     <div className="mb-1.5 flex items-center justify-between gap-3">
-                      <div
-                        className={`text-sm font-semibold ${
-                          selected
-                            ? currentStatus
-                              ? "text-white"
-                              : "text-violet-50"
-                            : "text-[#B9C2D0]"
-                        }`}
-                      >
-                        {item.label}
+                      <div className="flex min-w-0 items-center gap-2.5">
+                        <Icon
+                          className={cn(
+                            "h-4 w-4 shrink-0",
+                            selected
+                              ? currentStatus
+                                ? "text-emerald-300"
+                                : "text-violet-300"
+                              : "text-[#647089]",
+                          )}
+                          aria-hidden
+                        />
+                        <div
+                          className={`text-sm font-semibold ${
+                            selected
+                              ? currentStatus
+                                ? "text-white"
+                                : "text-violet-50"
+                              : "text-[#B9C2D0]"
+                          }`}
+                        >
+                          {item.label}
+                        </div>
                       </div>
                       <StatusBadge current={currentStatus} selected={selected}>
                         {item.status.label}
