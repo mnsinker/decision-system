@@ -68,6 +68,10 @@ export const architectureFlowContent = {
       description:
         "A user query becomes a structured execution path, then a readable answer.",
     },
+    cta: {
+      description: "Why did the architecture evolve this way?",
+      button: "Open Evolution",
+    },
     slider: {
       steps: [
         { value: 1, label: "Layers" },
@@ -337,6 +341,11 @@ export const architectureFlowContent = {
       eyebrow: "SECTION 03 // RUNTIME FLOW",
       title: "运行时流程",
       description: "用户请求会被转换为结构化执行路径，并最终生成可读结果。",
+    },
+
+    cta: {
+      description: "架构是如何演化至此的?",
+      button: "查看演化过程",
     },
 
     slider: {

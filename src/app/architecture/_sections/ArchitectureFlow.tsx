@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { GitBranch, Megaphone, Receipt } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, GitBranch, Megaphone, Receipt } from "lucide-react";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
@@ -445,6 +446,26 @@ export default function ArchitectureFlow() {
             </div>
           </div>
         )}
+
+        <div className="mx-auto mt-12 max-w-xl border-t border-[#1A2230]/80 pt-12 text-center">
+          <p className="text-base leading-relaxed text-[#8791A5]">
+            {content.cta.description}
+          </p>
+
+          <Link
+            href="/evolution"
+            className={cn(
+              "group mt-6 inline-flex h-[54px] items-center gap-2.5 border border-blue-500/30 bg-blue-500/[0.1] px-7 text-[15px] font-semibold text-blue-100 transition-[border-color,background-color,box-shadow] duration-200 hover:border-blue-400/45 hover:bg-blue-500/[0.16] hover:shadow-[0_0_20px_rgba(59,130,246,0.14)]",
+              theme.radius.button,
+            )}
+          >
+            {content.cta.button}
+            <ArrowRight
+              size={16}
+              className="text-blue-300 transition-transform duration-200 group-hover:translate-x-1"
+            />
+          </Link>
+        </div>
       </div>
     </section>
   );
