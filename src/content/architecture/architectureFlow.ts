@@ -5,10 +5,64 @@ export type ArchitectureFlowLayerId =
   | "planning"
   | "execution"
   | "response";
+export type ArchitectureFlowLocale = "en" | "zh";
+
+export const architectureFlowUseCases: ArchitectureFlowUseCase[] = [
+  "refund",
+  "marketing",
+  "workflow",
+];
 
 type ArchitectureFlowStatus = {
   id: "current" | "future";
   label: string;
+};
+
+export type ToolNode = {
+  toolName: string;
+  dtoName: string;
+  badgeLabel?: string;
+};
+
+export type ToolSummary = {
+  input: string;
+  output: string;
+  toolName: string;
+  dtoName: string;
+  secondaryTool?: ToolNode;
+  tertiaryTool?: ToolNode;
+};
+
+export type ResponseSummary = {
+  blockTitle?: string;
+  input: string;
+  output: string;
+  notes: string[];
+  finalAnswer: string;
+};
+
+export type SemanticSummary = {
+  input: string;
+  output: string;
+  notes: string[];
+};
+
+export type PlanSummary = {
+  input: string;
+  output: string;
+  notes: string[];
+};
+
+export type ParameterSummary = {
+  input: string;
+  output: string;
+};
+
+export type FoundationSummary = {
+  entities: string[];
+  graphRelations: string[];
+  graphNotes: string[];
+  entityMap: { entity: string; tool: string }[];
 };
 
 export type ArchitectureFlowUseCaseData = {
@@ -16,51 +70,115 @@ export type ArchitectureFlowUseCaseData = {
   status: ArchitectureFlowStatus;
   query: string;
   layerHighlights: ArchitectureFlowLayerId[];
-  semanticSummary: {
-    input: string;
-    output: string;
-    notes: string[];
-  };
-  planSummary: {
-    input: string;
-    output: string;
-    notes: string[];
-  };
-  parameterSummary: {
-    input: string;
-    output: string;
-  };
-  toolSummary: {
-    input: string;
-    output: string;
-    toolName: string;
-    dtoName: string;
-    secondaryTool?: {
-      toolName: string;
-      dtoName: string;
-      badgeLabel?: string;
-    };
-    tertiaryTool?: {
-      toolName: string;
-      dtoName: string;
-    };
-  };
-  responseSummary: {
-    blockTitle?: string;
-    input: string;
-    output: string;
-    notes: string[];
-    finalAnswer: string;
-  };
-  foundation: {
-    entities: string[];
-    graphRelations: string[];
-    graphNotes: string[];
-    entityMap: { entity: string; tool: string }[];
-  };
+  semanticSummary: SemanticSummary;
+  planSummary: PlanSummary;
+  parameterSummary: ParameterSummary;
+  toolSummary: ToolSummary;
+  responseSummary: ResponseSummary;
+  foundation: FoundationSummary;
 };
 
-export const architectureFlowContent = {
+const defineSemanticSummary = (summary: SemanticSummary): SemanticSummary =>
+  summary;
+
+const definePlanSummary = (summary: PlanSummary): PlanSummary => summary;
+
+const defineParameterSummary = (
+  summary: ParameterSummary,
+): ParameterSummary => summary;
+
+const defineToolSummary = (summary: ToolSummary): ToolSummary => summary;
+
+const defineResponseSummary = (summary: ResponseSummary): ResponseSummary =>
+  summary;
+
+const defineFoundationSummary = (
+  summary: FoundationSummary,
+): FoundationSummary => summary;
+
+export type ArchitectureFlowContent = {
+  header: {
+    eyebrow: string;
+    title: string;
+    description: string;
+  };
+  cta: {
+    description: string;
+    button: string;
+  };
+  slider: {
+    steps: { value: 1 | 2 | 3; label: string }[];
+    ariaLabel: string;
+  };
+  columns: {
+    runtime: string;
+    foundation: string;
+  };
+  io: {
+    input: string;
+    output: string;
+  };
+  layers: {
+    input: {
+      title: string;
+      subtitle: string;
+      stageTitle: string;
+    };
+    semantic: {
+      title: string;
+      subtitle: string;
+      stageTitle: string;
+      blockTitle: string;
+    };
+    planning: {
+      title: string;
+      subtitle: string;
+      stageTitle: string;
+      blockTitle: string;
+    };
+    execution: {
+      title: string;
+      subtitle: string;
+      stageTitle: string;
+      loopInstruction: string;
+      loopLabel: string;
+      parameterBlockTitle: string;
+      toolBlockTitle: string;
+      policyMethod: string;
+      policyNarrative: string;
+      policyBadge: string;
+      resultBlockTitle: string;
+      resultPrefix: string;
+      resultTarget: string;
+    };
+    response: {
+      title: string;
+      subtitle: string;
+      stageTitle: string;
+      blockTitle: string;
+    };
+  };
+  foundationCards: {
+    entities: {
+      title: string;
+      label: string;
+    };
+    graph: {
+      title: string;
+      label: string;
+    };
+    mapping: {
+      title: string;
+      label: string;
+    };
+  };
+  cases: Record<ArchitectureFlowUseCase, ArchitectureFlowUseCaseData>;
+};
+
+export const architectureFlowContent: Record<
+  ArchitectureFlowLocale,
+  ArchitectureFlowContent
+> = {
   en: {
     header: {
       eyebrow: "SECTION 03 // RUNTIME FLOW",
@@ -151,33 +269,36 @@ export const architectureFlowContent = {
         },
         query: `"Can order 123 be refunded?"`,
         layerHighlights: ["planning", "execution"],
-        semanticSummary: {
+        semanticSummary: defineSemanticSummary({
           input: "User Query",
           output: "runtime_intent { intent, order_id }",
           notes: ["parse intent", "extract order_id"],
-        },
-        planSummary: {
+        }),
+        planSummary: definePlanSummary({
           input: "runtime_intent",
           output: "planned_steps [ get_order, check_refund ]",
           notes: ["resolve dependencies", "plan execution steps"],
-        },
-        parameterSummary: {
+        }),
+        parameterSummary: defineParameterSummary({
           input: "tool_results",
           output: "resolved_params { order }",
-        },
-        toolSummary: {
+        }),
+        toolSummary: defineToolSummary({
           input: "resolved_params",
           output: "RefundDecisionDTO",
           toolName: "check_refund",
           dtoName: "RefundDecisionDTO",
-        },
-        responseSummary: {
+          secondaryTool: undefined,
+          tertiaryTool: undefined,
+        }),
+        responseSummary: defineResponseSummary({
+          blockTitle: undefined,
           input: "tool_results",
           output: "human-readable answer",
           notes: [],
           finalAnswer: "“根据查询结果，订单123因商品已发货，无法进行退款。”",
-        },
-        foundation: {
+        }),
+        foundation: defineFoundationSummary({
           entities: ["Order", "RefundDecision"],
           graphRelations: ["OrderSummary ──▶ RefundDecision"],
           graphNotes: [
@@ -189,7 +310,7 @@ export const architectureFlowContent = {
             { entity: "Order", tool: "get_order" },
             { entity: "RefundDecision", tool: "check_refund" },
           ],
-        },
+        }),
       },
       marketing: {
         label: "Marketing Decision",
@@ -199,22 +320,22 @@ export const architectureFlowContent = {
         },
         query: `"Who should receive a retention coupon?"`,
         layerHighlights: ["semantic", "planning"],
-        semanticSummary: {
+        semanticSummary: defineSemanticSummary({
           input: "User Query",
           output: "runtime_intent { intent, campaign_id }",
           notes: ["parse campaign intent", "resolve user segment"],
-        },
-        planSummary: {
+        }),
+        planSummary: definePlanSummary({
           input: "runtime_intent",
           output:
             "planned_steps [  \n\tget_user_profile, \n\tget_user_behavior, \n\tcompute_churn_risk, \n\tevaluate_campaign_policy, \n\tcompute_campaign_score, \n\tdecide_coupon \n]",
           notes: ["resolve dependencies", "build campaign steps"],
-        },
-        parameterSummary: {
+        }),
+        parameterSummary: defineParameterSummary({
           input: "tool_results",
           output: "resolved_params { CampaignScore }",
-        },
-        toolSummary: {
+        }),
+        toolSummary: defineToolSummary({
           input: "resolved_params",
           output: "CouponDecisionDTO",
           toolName: "evaluate_campaign_policy()",
@@ -227,16 +348,18 @@ export const architectureFlowContent = {
           tertiaryTool: {
             toolName: "decide_coupon()",
             dtoName: "CouponDecisionDTO",
+            badgeLabel: undefined,
           },
-        },
-        responseSummary: {
+        }),
+        responseSummary: defineResponseSummary({
+          blockTitle: undefined,
           input: "tool_results",
           output: "human-readable campaign decision",
           notes: [],
           finalAnswer:
             "“High-risk users were selected for the SAVE20 retention coupon campaign.”",
-        },
-        foundation: {
+        }),
+        foundation: defineFoundationSummary({
           entities: [
             "UserProfile",
             "UserBehavior",
@@ -265,7 +388,7 @@ export const architectureFlowContent = {
             { entity: "CampaignScore", tool: "compute_campaign_score" },
             { entity: "CouponDecision", tool: "decide_coupon" },
           ],
-        },
+        }),
       },
       workflow: {
         label: "Workflow Automation",
@@ -275,22 +398,22 @@ export const architectureFlowContent = {
         },
         query: `"High-risk refunds require manual approval."`,
         layerHighlights: ["execution", "planning"],
-        semanticSummary: {
+        semanticSummary: defineSemanticSummary({
           input: "User Query",
           output: "runtime_intent { intent, refund_request_id }",
           notes: ["parse approval intent", "extract request id"],
-        },
-        planSummary: {
+        }),
+        planSummary: definePlanSummary({
           input: "runtime_intent",
           output:
             "planned_steps [ \n\tget_refund_request, \n\tevaluate_risk, \n\tevaluate_approval_policy, \n\tdecide_approval_route \n]",
           notes: ["resolve dependencies", "plan execution steps"],
-        },
-        parameterSummary: {
+        }),
+        parameterSummary: defineParameterSummary({
           input: "tool_results",
           output: "resolved_params { refund_request_id }",
-        },
-        toolSummary: {
+        }),
+        toolSummary: defineToolSummary({
           input: "resolved_params",
           output: "ApprovalDecisionDTO",
           toolName: "evaluate_approval_policy()",
@@ -298,17 +421,19 @@ export const architectureFlowContent = {
           secondaryTool: {
             toolName: "decide_approval_route()",
             dtoName: "ApprovalRouteDTO",
+            badgeLabel: undefined,
           },
-        },
-        responseSummary: {
+          tertiaryTool: undefined,
+        }),
+        responseSummary: defineResponseSummary({
           blockTitle: "Workflow Status Response",
           input: "tool_results",
           output: "human-readable workflow status",
           notes: [],
           finalAnswer:
             "“This refund request was classified as HIGH RISK,  and routed to the L2 approval workflow.”",
-        },
-        foundation: {
+        }),
+        foundation: defineFoundationSummary({
           entities: [
             "RefundRequest",
             "RiskScore",
@@ -331,9 +456,9 @@ export const architectureFlowContent = {
             { entity: "ApprovalEligibility", tool: "evaluate_approval_policy" },
             { entity: "ApprovalRoute", tool: "decide_approval_route" },
           ],
-        },
+        }),
       },
-    } satisfies Record<ArchitectureFlowUseCase, ArchitectureFlowUseCaseData>,
+    },
   },
 
   zh: {
@@ -450,29 +575,29 @@ export const architectureFlowContent = {
 
         layerHighlights: ["planning", "execution"],
 
-        semanticSummary: {
+        semanticSummary: defineSemanticSummary({
           input: "用户请求",
 
           output: "runtime_intent { intent, order_id }",
 
           notes: ["解析 intent", "提取 order_id"],
-        },
+        }),
 
-        planSummary: {
+        planSummary: definePlanSummary({
           input: "runtime_intent",
 
           output: "planned_steps [ get_order, check_refund ]",
 
           notes: ["解析依赖关系", "规划执行步骤"],
-        },
+        }),
 
-        parameterSummary: {
+        parameterSummary: defineParameterSummary({
           input: "tool_results",
 
           output: "resolved_params { order }",
-        },
+        }),
 
-        toolSummary: {
+        toolSummary: defineToolSummary({
           input: "resolved_params",
 
           output: "RefundDecisionDTO",
@@ -480,9 +605,14 @@ export const architectureFlowContent = {
           toolName: "check_refund",
 
           dtoName: "RefundDecisionDTO",
-        },
+          secondaryTool: undefined,
 
-        responseSummary: {
+          tertiaryTool: undefined,
+        }),
+
+        responseSummary: defineResponseSummary({
+          blockTitle: undefined,
+
           input: "tool_results",
 
           output: "可读结果",
@@ -490,9 +620,9 @@ export const architectureFlowContent = {
           notes: [],
 
           finalAnswer: "“根据查询结果，订单123因商品已发货，无法进行退款。”",
-        },
+        }),
 
-        foundation: {
+        foundation: defineFoundationSummary({
           entities: ["Order", "RefundDecision"],
 
           graphRelations: ["OrderSummary ──▶ RefundDecision"],
@@ -514,7 +644,7 @@ export const architectureFlowContent = {
               tool: "check_refund",
             },
           ],
-        },
+        }),
       },
 
       marketing: {
@@ -529,30 +659,30 @@ export const architectureFlowContent = {
 
         layerHighlights: ["semantic", "planning"],
 
-        semanticSummary: {
+        semanticSummary: defineSemanticSummary({
           input: "用户请求",
 
           output: "runtime_intent { intent, campaign_id }",
 
           notes: ["解析 campaign intent", "识别用户分群"],
-        },
+        }),
 
-        planSummary: {
+        planSummary: definePlanSummary({
           input: "runtime_intent",
 
           output:
             "planned_steps [ \n\tget_user_profile, \n\tget_user_behavior, \n\tcompute_churn_risk, \n\tevaluate_campaign_policy, \n\tcompute_campaign_score, \n\tdecide_coupon \n]",
 
           notes: ["解析依赖关系", "构建 campaign 执行路径"],
-        },
+        }),
 
-        parameterSummary: {
+        parameterSummary: defineParameterSummary({
           input: "tool_results",
 
           output: "resolved_params { CampaignScore }",
-        },
+        }),
 
-        toolSummary: {
+        toolSummary: defineToolSummary({
           input: "resolved_params",
 
           output: "CouponDecisionDTO",
@@ -573,10 +703,14 @@ export const architectureFlowContent = {
             toolName: "decide_coupon()",
 
             dtoName: "CouponDecisionDTO",
-          },
-        },
 
-        responseSummary: {
+            badgeLabel: undefined,
+          },
+        }),
+
+        responseSummary: defineResponseSummary({
+          blockTitle: undefined,
+
           input: "tool_results",
 
           output: "可读营销决策",
@@ -584,9 +718,9 @@ export const architectureFlowContent = {
           notes: [],
 
           finalAnswer: "“高流失风险用户已被加入 立省20 留存活动。”",
-        },
+        }),
 
-        foundation: {
+        foundation: defineFoundationSummary({
           entities: [
             "UserProfile",
             "UserBehavior",
@@ -641,7 +775,7 @@ export const architectureFlowContent = {
               tool: "decide_coupon",
             },
           ],
-        },
+        }),
       },
 
       workflow: {
@@ -656,30 +790,30 @@ export const architectureFlowContent = {
 
         layerHighlights: ["execution", "planning"],
 
-        semanticSummary: {
+        semanticSummary: defineSemanticSummary({
           input: "用户请求",
 
           output: "runtime_intent { intent, refund_request_id }",
 
           notes: ["解析审批 intent", "提取 request id"],
-        },
+        }),
 
-        planSummary: {
+        planSummary: definePlanSummary({
           input: "runtime_intent",
 
           output:
             "planned_steps [ \n\tget_refund_request, \n\tevaluate_risk, \n\tevaluate_approval_policy, \n\tdecide_approval_route \n]",
 
           notes: ["解析依赖关系", "规划执行步骤"],
-        },
+        }),
 
-        parameterSummary: {
+        parameterSummary: defineParameterSummary({
           input: "tool_results",
 
           output: "resolved_params { refund_request_id }",
-        },
+        }),
 
-        toolSummary: {
+        toolSummary: defineToolSummary({
           input: "resolved_params",
 
           output: "ApprovalDecisionDTO",
@@ -692,10 +826,13 @@ export const architectureFlowContent = {
             toolName: "decide_approval_route()",
 
             dtoName: "ApprovalRouteDTO",
-          },
-        },
 
-        responseSummary: {
+            badgeLabel: undefined,
+          },
+          tertiaryTool: undefined,
+        }),
+
+        responseSummary: defineResponseSummary({
           blockTitle: "Workflow Status Response",
 
           input: "tool_results",
@@ -706,9 +843,9 @@ export const architectureFlowContent = {
 
           finalAnswer:
             "“该退款请求被识别为 高风险，并已路由至 L2 审批工作流。”",
-        },
+        }),
 
-        foundation: {
+        foundation: defineFoundationSummary({
           entities: [
             "RefundRequest",
             "RiskScore",
@@ -749,8 +886,8 @@ export const architectureFlowContent = {
               tool: "decide_approval_route",
             },
           ],
-        },
+        }),
       },
-    } satisfies Record<ArchitectureFlowUseCase, ArchitectureFlowUseCaseData>,
+    },
   },
 };

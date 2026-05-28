@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import type { ReactNode } from "react";
 import {
-  Cpu,
-  Layers,
   CheckCircle2,
   AlertTriangle,
   ArrowDown,
@@ -11,10 +9,10 @@ import {
   Sliders,
   Terminal,
   Activity,
-  Zap,
-  Gauge,
-  ShieldAlert,
 } from "lucide-react";
+import { useTheme } from "@/design-system/runtime/useTheme";
+import { useLanguage } from "@/lib/LanguageProvider";
+import { cn } from "@/lib/cn";
 
 type EvolutionItem = {
   version: string;
@@ -24,8 +22,8 @@ type EvolutionItem = {
   beforeCode: string[];
   afterCode: string[];
   beforeTooltip: string;
-  beforeDiagram: React.ReactNode;
-  afterDiagram: React.ReactNode;
+  beforeDiagram: ReactNode;
+  afterDiagram: ReactNode;
 };
 
 // Precise syntax coloring optimizing depth against the refined background
@@ -43,7 +41,10 @@ const highlightCode = (line: string) => {
     .replace(/\/\/.*/g, '<span class="text-slate-600 italic">$&</span>');
 };
 
-export default function SystemEvolutionPortfolio() {
+export default function EvolutionUpTillNow() {
+  const { theme } = useTheme();
+  const { locale } = useLanguage();
+
   const evolutionData: EvolutionItem[] = [
     {
       version: "V1",
@@ -258,100 +259,27 @@ export default function SystemEvolutionPortfolio() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0e121a] font-sans text-[#a5b5c5] antialiased selection:bg-indigo-500/30 selection:text-white">
-      {/* SECTION 0: HEADER */}
-      <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-[#0e121a]/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-6 py-4 sm:flex-row sm:items-center">
-          <div className="flex items-center gap-3">
-            <div className="rounded-lg border border-slate-700/60 bg-slate-800/40 p-2 text-indigo-400 shadow-inner">
-              <Cpu size={16} />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5 font-mono text-[9px] font-bold tracking-[0.2em] text-slate-500 uppercase">
-                <span className="h-1.5 w-1.5 rounded-full bg-indigo-500"></span>
-                Runtime Capabilities Matrix
-              </div>
-              <h1 className="mt-0.5 text-xs font-bold tracking-tight text-slate-200">
-                AI Decision Engine System Architecture Evolution Review
-              </h1>
-            </div>
-          </div>
-          <div className="rounded border border-slate-700 bg-slate-800/50 px-3 py-1.5 font-mono text-[10px] text-slate-400">
-            METRIC LOG:{" "}
-            <span className="font-semibold text-indigo-400">
-              CORE_ENGINE_POSTMORTEM
-            </span>
-          </div>
-        </div>
-      </header>
-
-      {/* SECTION 0: HERO */}
-      <section className="relative overflow-hidden border-b border-slate-800/60 bg-gradient-to-b from-[#131924] via-[#0e121a] to-[#0e121a]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-950/15 via-transparent to-transparent" />
-
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-6 py-16 lg:grid-cols-12 lg:py-24">
-          <div className="relative z-10 lg:col-span-8">
-            <div className="mb-6 inline-flex items-center gap-1.5 rounded border border-indigo-500/20 bg-indigo-500/5 px-2.5 py-1 font-mono text-[10px] font-semibold tracking-widest text-indigo-400 uppercase">
-              <Layers size={11} /> ARCHITECTURE EVOLUTION
-            </div>
-            <h2 className="text-3xl leading-[1.15] font-semibold tracking-tight text-white md:text-5xl">
-              Transforming Core Loops into <br />
-              <span className="bg-gradient-to-r from-slate-200 via-indigo-300 to-indigo-400 bg-clip-text font-bold text-transparent">
-                AOT Static Phased Topologies
-              </span>
-            </h2>
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed font-light text-slate-400">
-              Each critical architectural paradigm was driven directly by
-              runtime survival under pressure. By leveraging clean spatial
-              alignments, this log displays how execution workloads were
-              decoupled out of dynamic multi-agent feedback loops and into
-              predictable, non-blocking ahead-of-time (AOT) stages.
-            </p>
-          </div>
-
-          {/* Infrastructure Metric Sidecard */}
-          <div className="space-y-3 rounded-xl border border-slate-800 bg-[#121722]/80 p-4 font-mono text-[11px] text-slate-400 shadow-2xl lg:col-span-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-1.5 font-bold text-slate-500">
-              <span>[ ENGINE_LIVE_METRICS ]</span>
-              <span className="rounded bg-emerald-500/10 px-1.5 text-[9px] text-emerald-400">
-                ACTIVE
-              </span>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <span className="block text-slate-600">CONCURRENCY_CAP</span>
-                <span className="text-xs font-bold text-slate-200">
-                  52,400 / s
-                </span>
-              </div>
-              <div>
-                <span className="block text-slate-600">COMPUTE_WASTE</span>
-                <span className="text-xs font-bold text-emerald-400">
-                  -82.4%
-                </span>
-              </div>
-              <div>
-                <span className="block text-slate-600">SLOT_STATUS</span>
-                <span className="text-xs font-semibold text-slate-200">
-                  COMPRESSED
-                </span>
-              </div>
-              <div>
-                <span className="block text-slate-600">AOT_PASSED_RATE</span>
-                <span className="text-xs font-bold text-indigo-400">100%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 1: BEFORE VS AFTER ARCHITECTURE REVIEWS */}
-      <section className="mx-auto max-w-6xl border-b border-slate-800/60 px-6 py-16">
+    <section
+      data-locale={locale}
+      className={cn(
+        "border-b border-slate-800/60 bg-[#0e121a] font-sans text-[#a5b5c5] antialiased selection:bg-indigo-500/30 selection:text-white",
+        theme.spacing.sectionXComfort,
+        theme.spacing.sectionYMid,
+      )}
+    >
+      <div className={cn("mx-auto", theme.spacing.container)}>
         <div className="mb-10">
-          <div className="font-mono text-xs font-semibold tracking-wider text-indigo-400 uppercase">
+          <div
+            className={cn(theme.typography.sectionEyebrow, "text-indigo-400")}
+          >
             STAGE 01
           </div>
-          <h3 className="mt-1 text-lg font-medium text-slate-200">
+          <h3
+            className={cn(
+              theme.typography.cardTitle,
+              "mt-1 text-slate-200",
+            )}
+          >
             Responsibility Boundary & Phase Separation Deep Dive
           </h3>
         </div>
@@ -368,13 +296,23 @@ export default function SystemEvolutionPortfolio() {
               >
                 {/* Visual Timeline Circular Node Tag */}
                 <div className="relative hidden md:col-span-1 md:block">
-                  <div className="sticky top-24 flex h-11 w-11 items-center justify-center rounded-full border border-slate-700 bg-[#0e121a] font-mono text-xs font-bold tracking-tight text-slate-300 shadow-xl">
+                  <div
+                    className={cn(
+                      "sticky top-24 flex h-11 w-11 items-center justify-center border border-slate-700 bg-[#0e121a] font-mono text-xs font-bold tracking-tight text-slate-300 shadow-xl",
+                      theme.radius.pill,
+                    )}
+                  >
                     {item.version}
                   </div>
                 </div>
 
                 {/* Main Component Card */}
-                <div className="group rounded-xl border border-slate-800/80 bg-gradient-to-b from-[#121721] to-[#0f131b] p-5 shadow-2xl md:col-span-11 lg:p-6">
+                <div
+                  className={cn(
+                    "group border border-slate-800/80 bg-gradient-to-b from-[#121721] to-[#0f131b] p-5 shadow-2xl md:col-span-11 lg:p-6",
+                    theme.radius.cardSm,
+                  )}
+                >
                   <div className="flex flex-col justify-between gap-4 border-b border-slate-800/80 pb-4 sm:flex-row sm:items-center">
                     <div>
                       <h4 className="text-base font-medium tracking-tight text-slate-200 transition-colors group-hover:text-white">
@@ -488,130 +426,7 @@ export default function SystemEvolutionPortfolio() {
             ))}
           </div>
         </div>
-      </section>
-
-      {/* SECTION 2: CURRENT SCOPE / LIMITATIONS (System Backpressure Thresholds) */}
-      <section className="mx-auto max-w-6xl border-b border-slate-800/60 px-6 py-16">
-        <div className="mb-10">
-          <div className="font-mono text-xs font-semibold tracking-wider text-indigo-400 uppercase">
-            STAGE 02
-          </div>
-          <h3 className="mt-1 text-lg font-medium text-slate-200">
-            System Capability Boundary & Backpressure Analysis
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 font-mono text-xs md:grid-cols-3">
-          <div className="space-y-2 rounded-xl border border-slate-800 bg-gradient-to-b from-[#121622] to-transparent p-4">
-            <div className="flex items-center gap-1.5 font-bold text-amber-400">
-              <ShieldAlert size={14} /> 01 / High-Dimensional Matrix Latency
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-400">
-              When processing inputs scaling over 10,000 dimensions of
-              heterogeneous states, the AOT Planner architecture experiences
-              ~14ms of initialization lookahead overhead, causing micro-jitters
-              under extreme cold starts.
-            </p>
-          </div>
-
-          <div className="space-y-2 rounded-xl border border-slate-800 bg-gradient-to-b from-[#121622] to-transparent p-4">
-            <div className="flex items-center gap-1.5 font-bold text-amber-400">
-              <ShieldAlert size={14} /> 02 / Hot-Swap Graph Lock Contention
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-400">
-              Mutating and replacing active DAG execution paths dynamically
-              inside V3 engines causes intense cache synchronization spikes.
-              Isolation is achieved by routing transient updates into
-              memory-mapped shadow subgraphs.
-            </p>
-          </div>
-
-          <div className="space-y-2 rounded-xl border border-slate-800 bg-gradient-to-b from-[#121622] to-transparent p-4">
-            <div className="flex items-center gap-1.5 font-bold text-amber-400">
-              <ShieldAlert size={14} /> 03 / Multi-Region Synchronization
-              Overhead
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-400">
-              Distributed edge-mesh deployments suffer from network
-              serialization costs when broadcasting state configurations via
-              consensus mechanics, preventing linear scaling across globally
-              separated server nodes.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: FUTURE ROADMAP */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="mb-10">
-          <div className="font-mono text-xs font-semibold tracking-wider text-indigo-400 uppercase">
-            STAGE 03
-          </div>
-          <h3 className="mt-1 text-lg font-medium text-slate-200">
-            Next Horizon: Distributed Elastic Mesh Blueprint
-          </h3>
-        </div>
-
-        <div className="relative grid grid-cols-1 gap-6 font-mono text-[11px] md:grid-cols-4">
-          <div className="space-y-2 border-l-2 border-slate-800 p-4 transition-colors hover:border-indigo-500">
-            <div className="font-bold tracking-wider text-slate-400 uppercase">
-              Phase I // Graph Sharding
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-500">
-              Decentralizing the AOT Planner architecture across localized
-              cluster grids, allowing decoupled partitions to resolve structural
-              pipelines autonomously and omitting central coordinator
-              bottlenecks.
-            </p>
-          </div>
-
-          <div className="space-y-2 border-l-2 border-slate-800 p-4 transition-colors hover:border-indigo-500">
-            <div className="font-bold tracking-wider text-slate-400 uppercase">
-              Phase II // Wasm Sandbox runtimes
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-500">
-              Porting primitive computational operational rules into WebAssembly
-              contexts, facilitating isolated microsecond runtime computations
-              securely on heterogeneous host infrastructures.
-            </p>
-          </div>
-
-          <div className="space-y-2 border-l-2 border-slate-800 p-4 transition-colors hover:border-indigo-500">
-            <div className="font-bold tracking-wider text-slate-400 uppercase">
-              Phase III // Mirror Topology Sweeps
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-500">
-              Architecting transactional split-stream routes to dynamically test
-              shadow execution paths alongside production instances without
-              adding cold overhead states to operational lanes.
-            </p>
-          </div>
-
-          <div className="space-y-2 border-l-2 border-slate-800 p-4 transition-colors hover:border-indigo-500">
-            <div className="font-bold tracking-wider text-slate-400 uppercase">
-              Phase IV // Auto-Refactoring Topologies
-            </div>
-            <p className="font-sans leading-relaxed font-light text-slate-500">
-              Utilizing live orchestration tracers to autonomously monitor
-              processing node networks and automatically re-link execution DAG
-              steps to continuously prune infrastructure latency.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-slate-800 bg-[#0c0f17] py-12">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 font-mono text-[11px] text-slate-500 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <Gauge size={12} /> System Design Blueprint Archive // Node Topology
-            Document
-          </div>
-          <div className="tracking-wider">
-            INTERNAL INFRASTRUCTURE PARADIGM © 2026
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </section>
   );
 }

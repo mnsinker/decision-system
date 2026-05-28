@@ -8,13 +8,14 @@ import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 import {
   architectureFlowContent,
+  architectureFlowUseCases,
+  type ArchitectureFlowContent,
   type ArchitectureFlowLayerId,
   type ArchitectureFlowUseCase as UseCase,
-  type ArchitectureFlowUseCaseData as UseCaseData,
 } from "@/content/architecture/architectureFlow";
 
 type DetailLevel = 1 | 2 | 3;
-type FlowContent = (typeof architectureFlowContent)["en"];
+type FlowContent = ArchitectureFlowContent;
 
 const useCaseIcons = {
   refund: Receipt,
@@ -31,7 +32,6 @@ export default function ArchitectureFlow() {
 
   const current = content.cases[useCase];
   const highlightedLayers: ArchitectureFlowLayerId[] = current.layerHighlights;
-  const showRuntime = detailLevel >= 2;
   const showFoundation = detailLevel >= 3;
 
   const rows = [
@@ -273,62 +273,61 @@ export default function ArchitectureFlow() {
           )}
         >
           <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
-            {(Object.entries(content.cases) as [UseCase, UseCaseData][]).map(
-              ([key, item]) => {
-                const selected = key === useCase;
-                const currentStatus = item.status.id === "current";
-                const Icon = useCaseIcons[key];
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setUseCase(key)}
-                    className={cn(
-                      "border p-3 text-left transition-all duration-300",
-                      theme.radius.cardSm,
-                      selected
-                        ? currentStatus
-                          ? "border-emerald-400/30 bg-emerald-500/[0.1] shadow-[0_0_22px_rgba(16,185,129,0.1)]"
-                          : "border-violet-400/30 border-t-violet-400/45 bg-[#171523] shadow-[0_10px_26px_rgba(76,29,149,0.18),0_0_18px_rgba(139,92,246,0.08)]"
-                        : "border-[#151C28] bg-[#0B0F15] hover:border-[#2A3445]",
-                    )}
-                  >
-                    <div className="mb-1.5 flex items-center justify-between gap-3">
-                      <div className="flex min-w-0 items-center gap-2.5">
-                        <Icon
-                          className={cn(
-                            "h-4 w-4 shrink-0",
-                            selected
-                              ? currentStatus
-                                ? "text-emerald-300"
-                                : "text-violet-300"
-                              : "text-[#647089]",
-                          )}
-                          aria-hidden
-                        />
-                        <div
-                          className={`text-sm font-semibold ${
-                            selected
-                              ? currentStatus
-                                ? "text-white"
-                                : "text-violet-50"
-                              : "text-[#B9C2D0]"
-                          }`}
-                        >
-                          {item.label}
-                        </div>
+            {architectureFlowUseCases.map((key) => {
+              const item = content.cases[key];
+              const selected = key === useCase;
+              const currentStatus = item.status.id === "current";
+              const Icon = useCaseIcons[key];
+              return (
+                <button
+                  key={key}
+                  onClick={() => setUseCase(key)}
+                  className={cn(
+                    "border p-3 text-left transition-all duration-300",
+                    theme.radius.cardSm,
+                    selected
+                      ? currentStatus
+                        ? "border-emerald-400/30 bg-emerald-500/[0.1] shadow-[0_0_22px_rgba(16,185,129,0.1)]"
+                        : "border-violet-400/30 border-t-violet-400/45 bg-[#171523] shadow-[0_10px_26px_rgba(76,29,149,0.18),0_0_18px_rgba(139,92,246,0.08)]"
+                      : "border-[#151C28] bg-[#0B0F15] hover:border-[#2A3445]",
+                  )}
+                >
+                  <div className="mb-1.5 flex items-center justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-2.5">
+                      <Icon
+                        className={cn(
+                          "h-4 w-4 shrink-0",
+                          selected
+                            ? currentStatus
+                              ? "text-emerald-300"
+                              : "text-violet-300"
+                            : "text-[#647089]",
+                        )}
+                        aria-hidden
+                      />
+                      <div
+                        className={`text-sm font-semibold ${
+                          selected
+                            ? currentStatus
+                              ? "text-white"
+                              : "text-violet-50"
+                            : "text-[#B9C2D0]"
+                        }`}
+                      >
+                        {item.label}
                       </div>
-                      <StatusBadge current={currentStatus} selected={selected}>
-                        {item.status.label}
-                      </StatusBadge>
                     </div>
+                    <StatusBadge current={currentStatus} selected={selected}>
+                      {item.status.label}
+                    </StatusBadge>
+                  </div>
 
-                    <div className="truncate font-mono text-[11px] text-[#647089]">
-                      {item.query}
-                    </div>
-                  </button>
-                );
-              },
-            )}
+                  <div className="truncate font-mono text-[11px] text-[#647089]">
+                    {item.query}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 

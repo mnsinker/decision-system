@@ -1,0 +1,6 @@
+mkdir -p src/app/evolution/_sections
+
+touch \
+src/app/evolution/_sections/EvolutionUpTillNow.tsx \
+src/app/evolution/_sections/EvolutionLimitations.tsx \
+src/app/evolution/_sections/EvolutionRoadmap.tsx
