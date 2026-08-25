@@ -5,7 +5,7 @@ import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 
-export default function EvolutionLimitations() {
+export default function EvolutionConstraints() {
   const { theme } = useTheme();
   const { locale } = useLanguage();
 
@@ -23,15 +23,10 @@ export default function EvolutionLimitations() {
           <div
             className={cn(theme.typography.sectionEyebrow, "text-indigo-400")}
           >
-            STAGE 02
+            SECTION 02
           </div>
-          <h3
-            className={cn(
-              theme.typography.cardTitle,
-              "mt-1 text-slate-200",
-            )}
-          >
-            System Capability Boundary & Backpressure Analysis
+          <h3 className={cn(theme.typography.cardTitle, "mt-1 text-slate-200")}>
+            Current Constraints
           </h3>
         </div>
 

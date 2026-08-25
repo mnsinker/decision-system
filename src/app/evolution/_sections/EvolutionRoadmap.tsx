@@ -22,15 +22,10 @@ export default function EvolutionRoadmap() {
           <div
             className={cn(theme.typography.sectionEyebrow, "text-indigo-400")}
           >
-            STAGE 03
+            SECTION 03
           </div>
-          <h3
-            className={cn(
-              theme.typography.cardTitle,
-              "mt-1 text-slate-200",
-            )}
-          >
-            Next Horizon: Distributed Elastic Mesh Blueprint
+          <h3 className={cn(theme.typography.cardTitle, "mt-1 text-slate-200")}>
+            Future Roadmap
           </h3>
         </div>
 

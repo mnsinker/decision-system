@@ -6,7 +6,7 @@ import { useTheme } from "@/design-system/runtime/useTheme";
 import { cn } from "@/lib/cn";
 
 import EvolutionUpTillNow from "./_sections/EvolutionUpTillNow";
-import EvolutionLimitations from "./_sections/EvolutionLimitations";
+import EvolutionConstraints from "./_sections/EvolutionConstraints";
 import EvolutionRoadmap from "./_sections/EvolutionRoadmap";
 import EvolutionHero from "@/app/evolution/_sections/EvolutionHero";
 
@@ -27,7 +27,7 @@ export default function EvolutionPage() {
 
       <EvolutionUpTillNow />
 
-      <EvolutionLimitations />
+      <EvolutionConstraints />
 
       <EvolutionRoadmap />
 

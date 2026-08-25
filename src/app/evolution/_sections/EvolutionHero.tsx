@@ -41,9 +41,9 @@ export default function EvolutionHero() {
               theme.colors.textOnDark,
             )}
           >
-            Transforming Core Loops into <br />
+            Architecture Is <br />
             <span className="bg-gradient-to-r from-slate-200 via-indigo-300 to-indigo-400 bg-clip-text font-bold text-transparent">
-              AOT Static Phased Topologies
+              the Management of Complexity
             </span>
           </h2>
           <p
@@ -52,50 +52,10 @@ export default function EvolutionHero() {
               theme.typography.bodyDark,
             )}
           >
-            Each critical architectural paradigm was driven directly by runtime
-            survival under pressure. By leveraging clean spatial alignments,
-            this log displays how execution workloads were decoupled out of
-            dynamic multi-agent feedback loops and into predictable,
-            non-blocking ahead-of-time (AOT) stages.
+            The architecture evolved through a series of boundary corrections,
+            gradually moving uncertainty out of runtime execution paths and into
+            deterministic system layers.
           </p>
-        </div>
-
-        <div
-          className={cn(
-            "space-y-3 border border-slate-800 bg-[#121722]/80 p-4 font-mono text-[11px] text-slate-400 shadow-2xl lg:col-span-4",
-            theme.radius.cardSm,
-          )}
-        >
-          <div className="flex items-center justify-between border-b border-slate-800 pb-1.5 font-bold text-slate-500">
-            <span>[ ENGINE_LIVE_METRICS ]</span>
-            <span className="rounded bg-emerald-500/10 px-1.5 text-[9px] text-emerald-400">
-              ACTIVE
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <span className="block text-slate-600">CONCURRENCY_CAP</span>
-              <span className="text-xs font-bold text-slate-200">
-                52,400 / s
-              </span>
-            </div>
-            <div>
-              <span className="block text-slate-600">COMPUTE_WASTE</span>
-              <span className="text-xs font-bold text-emerald-400">
-                -82.4%
-              </span>
-            </div>
-            <div>
-              <span className="block text-slate-600">SLOT_STATUS</span>
-              <span className="text-xs font-semibold text-slate-200">
-                COMPRESSED
-              </span>
-            </div>
-            <div>
-              <span className="block text-slate-600">AOT_PASSED_RATE</span>
-              <span className="text-xs font-bold text-indigo-400">100%</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

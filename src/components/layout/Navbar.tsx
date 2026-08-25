@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Sparkles } from "lucide-react";
+import Link from "next/link";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
@@ -21,7 +22,8 @@ export default function Navbar() {
         )}
       >
         <div className={cn("flex items-center", theme.spacing.inlineGap)}>
-          <div
+          <Link
+            href="/overview"
             className={cn(
               "flex h-10 w-10 items-center justify-center",
               theme.radius.icon,
@@ -30,15 +32,15 @@ export default function Navbar() {
             )}
           >
             <Sparkles size={20} fill="currentColor" />
-          </div>
+          </Link>
 
-          <div>
+          <Link href="/overview">
             <div className={theme.typography.navBrand}>AI DECISION SYSTEM</div>
 
             <div className={theme.typography.navMeta}>
               Ontology • Planning • Execution
             </div>
-          </div>
+          </Link>
         </div>
 
         <div
@@ -48,20 +50,23 @@ export default function Navbar() {
             theme.typography.navLink,
           )}
         >
-          <a href="#" className={theme.colors.textAccentStrong}>
+          <Link href="/overview" className={theme.colors.textAccentStrong}>
             {locale === "en" ? "Overview" : "概览"}
-          </a>
+          </Link>
 
-          <a href="#" className={cn("transition", theme.colors.textNavLinkHover)}>
-            {locale === "en" ? "Demo" : "演示"}
-          </a>
-
-          <a href="#" className={cn("transition", theme.colors.textNavLinkHover)}>
+          <Link href="/architecture" className={cn("transition", theme.colors.textNavLinkHover)}>
             {locale === "en" ? "Architecture" : "架构"}
-          </a>
+          </Link>
 
-          <a href="#" className={cn("transition", theme.colors.textNavLinkHover)}>
+          <Link href="/evolution" className={cn("transition", theme.colors.textNavLinkHover)}>
             {locale === "en" ? "Evolution" : "演化"}
+          </Link>
+
+          <a
+            href="https://rag-agent-order-assistant-pmylymnsvoae742ilijbs7.streamlit.app/"
+            className={cn("transition", theme.colors.textNavLinkHover)}
+          >
+            {locale === "en" ? "Demo" : "演示"}
           </a>
         </div>
 
@@ -79,7 +84,8 @@ export default function Navbar() {
             {locale === "en" ? "中文" : "EN"}
           </button>
 
-          <button
+          <a
+            href="https://rag-agent-order-assistant-pmylymnsvoae742ilijbs7.streamlit.app/"
             className={cn(
               "transition-all active:scale-95",
               theme.radius.chip,
@@ -90,7 +96,7 @@ export default function Navbar() {
             )}
           >
             {locale === "en" ? "Launch Demo" : "启动 Demo"}
-          </button>
+          </a>
         </div>
       </div>
     </nav>
