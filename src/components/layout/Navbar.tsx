@@ -3,6 +3,7 @@
 import React from "react";
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
@@ -10,6 +11,16 @@ import { cn } from "@/lib/cn";
 export default function Navbar() {
   const { theme } = useTheme();
   const { locale, setLocale } = useLanguage();
+  const pathname = usePathname();
+
+  const isActive = (path: string) => pathname === path;
+  const navItemClass = (active: boolean) =>
+    cn(
+      "relative pb-1 transition after:absolute after:right-0 after:bottom-0 after:left-0 after:h-0.5 after:rounded-full after:bg-indigo-600 after:transition-transform",
+      active
+        ? theme.colors.textAccentStrong
+        : cn(theme.colors.textNavLinkHover, "after:scale-x-0 hover:after:scale-x-100"),
+    );
 
   return (
     <nav className={cn("sticky top-0 z-50", theme.colors.surfaceNav)}>
@@ -50,21 +61,34 @@ export default function Navbar() {
             theme.typography.navLink,
           )}
         >
-          <Link href="/overview" className={theme.colors.textAccentStrong}>
+          <Link
+            href="/overview"
+            className={navItemClass(isActive("/overview"))}
+            aria-current={isActive("/overview") ? "page" : undefined}
+          >
             {locale === "en" ? "Overview" : "概览"}
           </Link>
 
-          <Link href="/architecture" className={cn("transition", theme.colors.textNavLinkHover)}>
+          <Link
+            href="/architecture"
+            className={navItemClass(isActive("/architecture"))}
+            aria-current={isActive("/architecture") ? "page" : undefined}
+          >
             {locale === "en" ? "Architecture" : "架构"}
           </Link>
 
-          <Link href="/evolution" className={cn("transition", theme.colors.textNavLinkHover)}>
+          <Link
+            href="/evolution"
+            className={navItemClass(isActive("/evolution"))}
+            aria-current={isActive("/evolution") ? "page" : undefined}
+          >
             {locale === "en" ? "Evolution" : "演化"}
           </Link>
 
           <a
             href="https://rag-agent-order-assistant-pmylymnsvoae742ilijbs7.streamlit.app/"
-            className={cn("transition", theme.colors.textNavLinkHover)}
+            className={navItemClass(isActive("/demo"))}
+            aria-current={isActive("/demo") ? "page" : undefined}
           >
             {locale === "en" ? "Demo" : "演示"}
           </a>
