@@ -14,6 +14,7 @@ import {
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
+import { evolutionHistoryContent } from "@/content/evolution/evolutionHistory";
 
 type EvolutionItem = {
   version: string;
@@ -50,6 +51,7 @@ const highlightCode = (line: string) => {
 export default function EvolutionUpTillNow() {
   const { theme } = useTheme();
   const { locale } = useLanguage();
+  const content = evolutionHistoryContent[locale];
   const panelRadius = theme.radius.cardSm;
   const diagramBoxWidth = "mx-auto w-full max-w-[420px]";
   const [isValidatorExpanded, setIsValidatorExpanded] = useState(false);
@@ -63,18 +65,16 @@ export default function EvolutionUpTillNow() {
       capability: "Dependency-aware execution planning",
       beforeTooltip: (
         <ul className="list-disc space-y-1 pl-4">
-          <li>Graph correctness could not be validated upfront</li>
-          <li>Execution paths emerged during runtime</li>
-          <li>
-            Dependency issues could only be surfaced after execution started
-          </li>
+          {content.versions[0].beforeTooltip.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
         </ul>
       ),
       afterTooltip: (
         <ul className="list-disc space-y-1 pl-4">
-          <li>Execution steps became deterministic</li>
-          <li>Graph correctness became testable upfront</li>
-          <li>Runtime loop no longer mutates execution paths</li>
+          {content.versions[0].afterTooltip.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
         </ul>
       ),
       beforeCode: [
@@ -109,7 +109,7 @@ export default function EvolutionUpTillNow() {
             )}
             aria-hidden="true"
           >
-            [ Missing Pre-Flight Domain ]
+            [ {content.versions[0].diagram.before.helperLabel} ]
           </div>
           <div
             className={cn(
@@ -119,7 +119,7 @@ export default function EvolutionUpTillNow() {
             )}
           >
             <div className="mb-1 flex items-center justify-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400 uppercase">
-              <RefreshCw size={10} className="text-slate-500" /> Runtime Loop
+              <RefreshCw size={10} className="text-slate-500" /> {content.versions[0].diagram.before.nodes[0]}
             </div>
             <div className="flex items-center justify-center gap-4 py-1 text-[10px] text-slate-400">
               <span
@@ -128,7 +128,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Missing dep
+                {content.versions[0].diagram.before.nodes[1]}
               </span>
               <span className="text-slate-600">→</span>
               <span
@@ -137,7 +137,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Insert step
+                {content.versions[0].diagram.before.nodes[2]}
               </span>
               <span className="text-slate-600">→</span>
               <span
@@ -146,7 +146,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Execute
+                {content.versions[0].diagram.before.nodes[3]}
               </span>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function EvolutionUpTillNow() {
               panelRadius,
             )}
           >
-            <Sliders size={11} className="text-indigo-400" /> Planned Steps
+            <Sliders size={11} className="text-indigo-400" /> {content.versions[0].diagram.after.nodes[0]}
           </div>
           <div className="mb-1 flex justify-center text-slate-600">
             <ArrowDown size={12} />
@@ -174,7 +174,7 @@ export default function EvolutionUpTillNow() {
             )}
           >
             <div className="mb-1 flex items-center justify-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400 uppercase">
-              <RefreshCw size={10} className="text-slate-500" /> Runtime Loop
+              <RefreshCw size={10} className="text-slate-500" /> {content.versions[0].diagram.after.nodes[1]}
             </div>
             <div className="flex items-center justify-center py-1 text-[10px] text-slate-400">
               <span
@@ -183,7 +183,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Execute
+                {content.versions[0].diagram.after.nodes[2]}
               </span>
             </div>
           </div>
@@ -199,17 +199,13 @@ export default function EvolutionUpTillNow() {
       beforeTooltip: (
         <div className="space-y-2">
           <p>
-            Cycle safety existed,
-            <br />
-            but validation only happened
-            <br />
-            during active execution.
+            {content.versions[1].beforeTooltip[0]}
           </p>
           <div className="border-t border-slate-700/70 pt-2">
             <ul className="list-disc space-y-1 pl-4">
-              <li>graph integrity was still unknown</li>
-              <li>missing producers were undetected</li>
-              <li>failures surfaced after execution started</li>
+              {content.versions[1].beforeTooltip.slice(1).map((point) => (
+                <li key={point}>{point}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -217,14 +213,13 @@ export default function EvolutionUpTillNow() {
       afterTooltip: (
         <div className="space-y-2">
           <p>
-            Validation became
-            <br />a dedicated pre-runtime layer.
+            {content.versions[1].diagram.after.expandedPoints?.[2]}
           </p>
           <div className="border-t border-slate-700/70 pt-2">
             <ul className="list-disc space-y-1 pl-4">
-              <li>Graph correctness became testable upfront.</li>
-              <li>Execution paths became deterministic.</li>
-              <li>Failures moved into pre-flight validation.</li>
+              {content.versions[1].diagram.after.expandedPoints?.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -259,7 +254,7 @@ export default function EvolutionUpTillNow() {
             )}
             aria-hidden="true"
           >
-            [ Missing Evaluation Gates ]
+            [ {content.versions[1].diagram.before.helperLabel} ]
           </div>
           <div
             className={cn(
@@ -269,7 +264,7 @@ export default function EvolutionUpTillNow() {
             )}
           >
             <div className="mb-1 flex items-center justify-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400 uppercase">
-              RUNTIME LOOP
+              {content.versions[1].diagram.before.nodes[0]}
             </div>
             <div className="flex items-center justify-center gap-4 py-1 text-[10px] text-slate-400">
               <span
@@ -278,7 +273,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Cycle Detection
+                {content.versions[1].diagram.before.nodes[1]}
               </span>
               <span className="text-slate-600">→</span>
               <span
@@ -287,7 +282,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Execute
+                {content.versions[1].diagram.before.nodes[2]}
               </span>
             </div>
           </div>
@@ -307,7 +302,7 @@ export default function EvolutionUpTillNow() {
           >
             <span className="flex items-center justify-center gap-1.5">
               <ShieldCheck size={11} className="text-indigo-400" />
-              VALIDATOR
+              {content.versions[1].diagram.after.nodes[0]}
               <ChevronRight
                 size={12}
                 aria-hidden="true"
@@ -319,10 +314,9 @@ export default function EvolutionUpTillNow() {
             </span>
             {isValidatorExpanded && (
               <span className="block max-w-[330px] border-t border-indigo-400/20 pt-2 text-left font-sans text-[11px] leading-relaxed font-medium text-slate-300">
-                • Graph correctness became testable upfront.
-                <br />
-                • Execution paths became deterministic.
-                <br />• Failures moved into pre-flight validation.
+                {content.versions[1].diagram.after.expandedPoints?.map((point) => (
+                  <span key={point} className="block">• {point}</span>
+                ))}
               </span>
             )}
           </button>
@@ -337,7 +331,7 @@ export default function EvolutionUpTillNow() {
             )}
           >
             <div className="mb-1 flex items-center justify-center gap-1.5 text-[10px] font-medium tracking-wider text-slate-400 uppercase">
-              RUNTIME LOOP
+              {content.versions[1].diagram.after.nodes[1]}
             </div>
             <div className="flex items-center justify-center gap-4 py-1 text-[10px] text-slate-400">
               <span
@@ -346,7 +340,7 @@ export default function EvolutionUpTillNow() {
                   panelRadius,
                 )}
               >
-                Execute
+                {content.versions[1].diagram.after.nodes[2]}
               </span>
             </div>
           </div>
@@ -361,11 +355,12 @@ export default function EvolutionUpTillNow() {
       capability:
         "Decoupled validation, feature scoring, and strategy branches",
       beforeTooltip:
-        "Architectural Bottleneck: Monolithic black boxes combine schema constraints, deep neural feature transforms, and fallback strategies, resulting in regression collisions across teams.",
+        content.versions[2].beforeTooltip[0],
       afterTooltip: (
         <ul className="list-disc space-y-1 pl-4">
-          <li>Metadata defined once</li>
-          <li>Graph derived automatically</li>
+          {content.versions[2].afterTooltip.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
         </ul>
       ),
       beforeCode: [
@@ -404,7 +399,7 @@ export default function EvolutionUpTillNow() {
       beforeDiagram: (
         <div className="flex min-h-[205px] w-full flex-col items-center justify-center font-mono text-[11px]">
           <div className="mb-2 text-center text-[11px] font-bold tracking-wider text-slate-300 uppercase">
-            3 Sources of Truth
+            {content.versions[2].diagram.before.title}
           </div>
           <div className="mb-3 h-px w-48 bg-slate-700/60" />
           <div className="flex w-full max-w-[270px] flex-col items-center gap-2 text-slate-400">
@@ -414,7 +409,7 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Tool Signature
+              {content.versions[2].diagram.before.nodes[0]}
             </div>
             <div
               className={cn(
@@ -422,10 +417,10 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Dependency Args
+              {content.versions[2].diagram.before.nodes[1]}
               <span className="inline-flex items-center gap-1 text-[10px] text-slate-400">
                 <PencilLine size={10} />
-                manual
+                {content.versions[2].diagram.before.manualLabel}
               </span>
             </div>
             <div
@@ -434,10 +429,10 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Entity-to-Tool Mapping
+              {content.versions[2].diagram.before.nodes[2]}
               <span className="inline-flex items-center gap-1 text-[10px] text-slate-400">
                 <PencilLine size={10} />
-                manual
+                {content.versions[2].diagram.before.manualLabel}
               </span>
             </div>
             <div
@@ -446,10 +441,10 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Execution Graph
+              {content.versions[2].diagram.before.nodes[3]}
               <span className="inline-flex items-center gap-1 text-[10px] text-slate-400">
                 <PencilLine size={10} />
-                manual assembly
+                {content.versions[2].diagram.before.manualLabel}
               </span>
             </div>
           </div>
@@ -458,7 +453,7 @@ export default function EvolutionUpTillNow() {
       afterDiagram: (
         <div className="flex min-h-[205px] w-full flex-col items-center justify-center font-mono text-[11px]">
           <div className="mb-2 text-center text-[11px] font-bold tracking-wider text-slate-300 uppercase">
-            Single Source of Truth
+            {content.versions[2].diagram.after.title}
           </div>
           <div className="mb-3 h-px w-48 bg-slate-700/60" />
           <div className="relative h-[152px] w-full max-w-[270px] text-slate-400">
@@ -468,7 +463,7 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Tool Signature
+              {content.versions[2].diagram.after.nodes[0]}
             </div>
             <ArrowDown
               size={13}
@@ -480,7 +475,7 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Requires / Provides
+              {content.versions[2].diagram.after.nodes[1]}
             </div>
             <ArrowDown
               size={13}
@@ -492,7 +487,7 @@ export default function EvolutionUpTillNow() {
                 panelRadius,
               )}
             >
-              Execution Graph
+              {content.versions[2].diagram.after.nodes[2]}
             </div>
           </div>
         </div>
@@ -512,10 +507,10 @@ export default function EvolutionUpTillNow() {
       <div className={cn("mx-auto", theme.spacing.container)}>
         <div className="mb-12">
           <div className={cn(theme.typography.moduleLabel, "text-indigo-400")}>
-            SECTION 01
+            {content.sectionLabel}
           </div>
           <h3 className={cn(theme.typography.cardTitle, "mt-1 text-slate-200")}>
-            How the Architecture Evolved
+            {content.title}
           </h3>
         </div>
 
@@ -524,7 +519,10 @@ export default function EvolutionUpTillNow() {
           <div className="absolute top-4 bottom-4 left-[21px] hidden w-px bg-slate-800 md:block" />
 
           <div className="space-y-12">
-            {evolutionData.map((item) => (
+            {evolutionData.map((item, index) => {
+              const localizedItem = content.versions[index];
+
+              return (
               <div
                 key={item.version}
                 className="relative gap-5 md:grid md:grid-cols-12"
@@ -537,7 +535,7 @@ export default function EvolutionUpTillNow() {
                       theme.radius.pill,
                     )}
                   >
-                    {item.version}
+                    {localizedItem.version}
                   </div>
                 </div>
 
@@ -556,18 +554,14 @@ export default function EvolutionUpTillNow() {
                           "text-[22px] text-slate-200 transition-colors group-hover:text-white md:text-[24px]",
                         )}
                       >
-                        {item.title}
+                        {localizedItem.title}
                       </h4>
                     </div>
 
                     <div className="max-w-sm shrink-0 rounded border border-emerald-500/10 bg-emerald-500/[0.01] px-3 py-1.5 sm:text-right">
                       <div className="flex items-center gap-1.5 font-mono text-[11px] font-semibold tracking-wider text-emerald-400/80 sm:justify-end">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.55)]" />
-                        {item.version === "V1"
-                          ? "Move planning out of execution"
-                          : item.version === "V3"
-                            ? "Move metadata out of manual wiring"
-                            : "Move validation out of execution"}
+                        {localizedItem.changeSummary}
                       </div>
                     </div>
                   </div>
@@ -579,7 +573,7 @@ export default function EvolutionUpTillNow() {
                       <div className="flex items-center rounded-t-lg border-b border-slate-800 bg-[#111520] px-4 py-2">
                         <span className="flex items-center gap-1.5 font-mono text-[11px] font-medium text-slate-400">
                           <span className="h-1.5 w-1.5 rounded-full bg-slate-600" />{" "}
-                          BEFORE
+                          {content.beforeLabel}
                         </span>
                       </div>
 
@@ -634,7 +628,7 @@ export default function EvolutionUpTillNow() {
                                     </div>
                                     <div className="pointer-events-none absolute top-0 right-6 z-[80] w-64 rounded border border-slate-700 bg-[#141924] p-3 font-sans text-xs leading-relaxed font-normal text-slate-300 opacity-0 shadow-xl transition-opacity duration-150 group-hover/line:opacity-100">
                                       <div className="mb-1.5 flex items-center gap-1 font-mono text-[10px] font-bold text-red-400 uppercase">
-                                        <AlertTriangle size={11} /> Problems
+                                        <AlertTriangle size={11} /> {content.problemsLabel}
                                       </div>
                                       {item.beforeTooltip}
                                     </div>
@@ -652,7 +646,7 @@ export default function EvolutionUpTillNow() {
                       <div className="flex items-center rounded-t-lg border-b border-slate-800 bg-[#111520] px-4 py-2">
                         <span className="flex items-center gap-1.5 font-mono text-[11px] font-medium text-indigo-400">
                           <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />{" "}
-                          AFTER
+                          {content.afterLabel}
                         </span>
                       </div>
 
@@ -739,8 +733,8 @@ export default function EvolutionUpTillNow() {
                                       <div className="mb-1.5 flex items-center gap-1 font-mono text-[10px] font-bold text-emerald-400 uppercase">
                                         <Check size={11} />{" "}
                                         {item.version === "V2"
-                                          ? "Integrity Guarantees"
-                                          : "New Capabilities"}
+                                          ? content.integrityGuaranteesLabel
+                                          : content.capabilitiesLabel}
                                       </div>
                                       {successTooltip}
                                     </div>
@@ -755,7 +749,8 @@ export default function EvolutionUpTillNow() {
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

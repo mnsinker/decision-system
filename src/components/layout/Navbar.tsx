@@ -85,13 +85,13 @@ export default function Navbar() {
             {locale === "en" ? "Evolution" : "演化"}
           </Link>
 
-          <a
-            href="https://rag-agent-order-assistant-pmylymnsvoae742ilijbs7.streamlit.app/"
+          <Link
+            href="/demo"
             className={navItemClass(isActive("/demo"))}
             aria-current={isActive("/demo") ? "page" : undefined}
           >
             {locale === "en" ? "Demo" : "演示"}
-          </a>
+          </Link>
         </div>
 
         <div className={cn("flex items-center", theme.spacing.inlineGap)}>

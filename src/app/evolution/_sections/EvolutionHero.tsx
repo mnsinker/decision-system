@@ -4,10 +4,12 @@ import { Layers } from "lucide-react";
 import { useTheme } from "@/design-system/runtime/useTheme";
 import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
+import { evolutionHeroContent } from "@/content/evolution/evolutionHero";
 
 export default function EvolutionHero() {
   const { theme } = useTheme();
   const { locale } = useLanguage();
+  const content = evolutionHeroContent[locale];
 
   return (
     <section
@@ -33,7 +35,7 @@ export default function EvolutionHero() {
               theme.typography.monoLabel,
             )}
           >
-            <Layers size={11} /> ARCHITECTURE EVOLUTION
+            <Layers size={11} /> {content.badge}
           </div>
           <h2
             className={cn(
@@ -41,9 +43,10 @@ export default function EvolutionHero() {
               theme.colors.textOnDark,
             )}
           >
-            Architecture Is <br />
+            {content.title.line1}
+            {locale === "en" && <br />}{" "}
             <span className="bg-gradient-to-r from-slate-200 via-indigo-300 to-indigo-400 bg-clip-text font-bold text-transparent">
-              the Management of Complexity
+              {content.title.highlight}
             </span>
           </h2>
           <p
@@ -52,9 +55,7 @@ export default function EvolutionHero() {
               theme.typography.bodyDark,
             )}
           >
-            The architecture evolved through a series of boundary corrections,
-            gradually moving uncertainty out of runtime execution paths and into
-            deterministic system layers.
+            {content.subtitle}
           </p>
         </div>
       </div>
