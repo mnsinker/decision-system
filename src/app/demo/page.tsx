@@ -8,7 +8,7 @@ import { useLanguage } from "@/lib/LanguageProvider";
 import { cn } from "@/lib/cn";
 
 const VIDEO_URL =
-  "https://cmdxtl84mcsrbwug.public.blob.vercel-storage.com/demo_decision_system.mov";
+  "https://cmdxtl84mcsrbwug.public.blob.vercel-storage.com/demo_decision_system.mp4";
 const STREAMLIT_DEMO_URL =
   "https://rag-agent-order-assistant-pmylymnsvoae742ilijbs7.streamlit.app/";
 
@@ -59,7 +59,7 @@ export default function DemoPage() {
                 playsInline
                 preload="metadata"
               >
-                <source src={VIDEO_URL} type="video/quicktime" />
+                <source src={VIDEO_URL} type="video/mp4" />
                 {content.videoFallback}
               </video>
             </div>
